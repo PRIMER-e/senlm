@@ -73,7 +73,9 @@
 
     
     
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(senlm)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"devtools"</span>)</a>
+<a class="sourceLine" id="cb1-2" title="2">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"PRIMER-e/senlm"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(senlm)</a></code></pre></div>
 <div id="models" class="section level1">
 <h1 class="hasAnchor">
 <a href="#models" class="anchor"></a>Models</h1>
@@ -162,8 +164,8 @@ H &amp;= \mbox{Mean response (}H &gt; 0, ~0 &lt; H &lt; 1, ~0 &lt; H &lt; n) \\
 \mu_{\theta_M}(x) &amp;= H \\
 \end{aligned}
 \]</span></p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="../reference/get_mean_fun_parnames.html">get_mean_fun_parnames</a></span>(<span class="st">"constant"</span>)</a>
-<a class="sourceLine" id="cb2-2" title="2">[<span class="dv">1</span>] <span class="st">"H"</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="../reference/get_mean_fun_parnames.html">get_mean_fun_parnames</a></span>(<span class="st">"constant"</span>)</a>
+<a class="sourceLine" id="cb3-2" title="2">[<span class="dv">1</span>] <span class="st">"H"</span></a></code></pre></div>
 </div>
 <div id="uniform-test" class="section level3">
 <h3 class="hasAnchor">
@@ -182,8 +184,8 @@ d &amp;= \mbox{Upper bound} ~(-\infty &lt; d &lt; \infty, ~c &lt; d) \\
            \end{array} \right . 
 \end{aligned}
 \]</span></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="../reference/get_mean_fun_parnames.html">get_mean_fun_parnames</a></span>(<span class="st">"uniform"</span>)</a>
-<a class="sourceLine" id="cb3-2" title="2">[<span class="dv">1</span>] <span class="st">"H"</span> <span class="st">"c"</span> <span class="st">"d"</span></a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="../reference/get_mean_fun_parnames.html">get_mean_fun_parnames</a></span>(<span class="st">"uniform"</span>)</a>
+<a class="sourceLine" id="cb4-2" title="2">[<span class="dv">1</span>] <span class="st">"H"</span> <span class="st">"c"</span> <span class="st">"d"</span></a></code></pre></div>
 </div>
 <div id="beta-main" class="section level3">
 <h3 class="hasAnchor">
@@ -255,8 +257,8 @@ v &amp;= \mbox{Shape parameter} ~(v &gt; 0)
 \left(\frac{d-x}{d-c}\right)^{b-1}
 \end{aligned}
 \]</span> where <span class="math inline">\(a=\frac{u}{v}\)</span> and <span class="math inline">\(b=\frac{1-u}{v}\)</span>, and <span class="math inline">\(H_m\)</span> is the maximum value of the beta distribution.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="../reference/get_mean_fun_parnames.html">get_mean_fun_parnames</a></span>(<span class="st">"beta"</span>)</a>
-<a class="sourceLine" id="cb4-2" title="2">[<span class="dv">1</span>] <span class="st">"H"</span> <span class="st">"c"</span> <span class="st">"d"</span> <span class="st">"u"</span> <span class="st">"v"</span></a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="../reference/get_mean_fun_parnames.html">get_mean_fun_parnames</a></span>(<span class="st">"beta"</span>)</a>
+<a class="sourceLine" id="cb5-2" title="2">[<span class="dv">1</span>] <span class="st">"H"</span> <span class="st">"c"</span> <span class="st">"d"</span> <span class="st">"u"</span> <span class="st">"v"</span></a></code></pre></div>
 </div>
 <div id="sech-main" class="section level3">
 <h3 class="hasAnchor">
@@ -278,22 +280,22 @@ p &amp;= \mbox{Peakedness parameter} ~(p &gt; 0)
 \left(\mbox{sech}\left(\frac{x-(m-x_m)}{s}\right)\right)^p
 \end{aligned}
 \]</span> where <span class="math inline">\(x_m = \frac{s}{2}\log\left(\frac{1+r}{1-r}\right)\)</span> and <span class="math inline">\(H_m = \exp\left(\frac{rp}{s}x_m\right)\left(\sqrt{1 - r^2}\right)^p\)</span> The values <span class="math inline">\(x_m\)</span> and <span class="math inline">\(H_m\)</span> are used to fix the curve so <span class="math inline">\(m\)</span> is the location of the mode, and <span class="math inline">\(H\)</span> is the maximum height of the curve (at <span class="math inline">\(m\)</span>). If <span class="math inline">\(r\)</span> is positive the curve is positively skewed.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="../reference/get_mean_fun_parnames.html">get_mean_fun_parnames</a></span>(<span class="st">"sech"</span>)</a>
-<a class="sourceLine" id="cb5-2" title="2">[<span class="dv">1</span>] <span class="st">"H"</span> <span class="st">"m"</span> <span class="st">"s"</span> <span class="st">"r"</span> <span class="st">"p"</span></a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw"><a href="../reference/get_mean_fun_parnames.html">get_mean_fun_parnames</a></span>(<span class="st">"sech"</span>)</a>
+<a class="sourceLine" id="cb6-2" title="2">[<span class="dv">1</span>] <span class="st">"H"</span> <span class="st">"m"</span> <span class="st">"s"</span> <span class="st">"r"</span> <span class="st">"p"</span></a></code></pre></div>
 </div>
 <div id="sech_p1-sub" class="section level3">
 <h3 class="hasAnchor">
 <a href="#sech_p1-sub" class="anchor"></a><tt>sech_p1</tt> (sub)</h3>
 <p>This is the same mean function as <tt>sech</tt> but with <span class="math inline">\(p = 1\)</span>.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw"><a href="../reference/get_mean_fun_parnames.html">get_mean_fun_parnames</a></span>(<span class="st">"sech_p1"</span>)</a>
-<a class="sourceLine" id="cb6-2" title="2">[<span class="dv">1</span>] <span class="st">"H"</span> <span class="st">"m"</span> <span class="st">"s"</span> <span class="st">"r"</span></a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw"><a href="../reference/get_mean_fun_parnames.html">get_mean_fun_parnames</a></span>(<span class="st">"sech_p1"</span>)</a>
+<a class="sourceLine" id="cb7-2" title="2">[<span class="dv">1</span>] <span class="st">"H"</span> <span class="st">"m"</span> <span class="st">"s"</span> <span class="st">"r"</span></a></code></pre></div>
 </div>
 <div id="sech_r0p1-sub" class="section level3">
 <h3 class="hasAnchor">
 <a href="#sech_r0p1-sub" class="anchor"></a><tt>sech_r0p1</tt> (sub)</h3>
 <p>This is the same mean function as <tt>sech</tt> but with <span class="math inline">\(r = 0\)</span>, and <span class="math inline">\(p = 1\)</span>.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw"><a href="../reference/get_mean_fun_parnames.html">get_mean_fun_parnames</a></span>(<span class="st">"sech_r0p1"</span>)</a>
-<a class="sourceLine" id="cb7-2" title="2">[<span class="dv">1</span>] <span class="st">"H"</span> <span class="st">"m"</span> <span class="st">"s"</span></a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw"><a href="../reference/get_mean_fun_parnames.html">get_mean_fun_parnames</a></span>(<span class="st">"sech_r0p1"</span>)</a>
+<a class="sourceLine" id="cb8-2" title="2">[<span class="dv">1</span>] <span class="st">"H"</span> <span class="st">"m"</span> <span class="st">"s"</span></a></code></pre></div>
 </div>
 <div id="gaussian-main" class="section level3">
 <h3 class="hasAnchor">
@@ -310,8 +312,8 @@ s &amp;= \mbox{Standard deviation of mean function} ~(s &gt; 0) \\
 \mu_{\theta_M}(x) &amp;= H \exp\left(-\frac{1}{2}\left(\frac{x-m}{s}\right)^2\right)
 \end{aligned}
 \]</span></p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw"><a href="../reference/get_mean_fun_parnames.html">get_mean_fun_parnames</a></span>(<span class="st">"gaussian"</span>)</a>
-<a class="sourceLine" id="cb8-2" title="2">[<span class="dv">1</span>] <span class="st">"H"</span> <span class="st">"m"</span> <span class="st">"s"</span></a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw"><a href="../reference/get_mean_fun_parnames.html">get_mean_fun_parnames</a></span>(<span class="st">"gaussian"</span>)</a>
+<a class="sourceLine" id="cb9-2" title="2">[<span class="dv">1</span>] <span class="st">"H"</span> <span class="st">"m"</span> <span class="st">"s"</span></a></code></pre></div>
 </div>
 <div id="mixgaussian-main" class="section level3">
 <h3 class="hasAnchor">
@@ -333,15 +335,15 @@ H &amp;= \mbox{Maximum value of mean function} ~(H &gt; 0, ~~\mbox{or}~~ 0 &lt; 
 \end{aligned}
 \]</span></p>
 <p>where <span class="math inline">\(H_m\)</span> is the maximum value of the unscaled (<span class="math inline">\(H=1\)</span>) gaussian mixture curve. This is determined numerically.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw"><a href="../reference/get_mean_fun_parnames.html">get_mean_fun_parnames</a></span>(<span class="st">"mixgaussian"</span>)</a>
-<a class="sourceLine" id="cb9-2" title="2">[<span class="dv">1</span>] <span class="st">"H"</span>  <span class="st">"a"</span>  <span class="st">"m1"</span> <span class="st">"m2"</span> <span class="st">"s1"</span> <span class="st">"s2"</span></a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw"><a href="../reference/get_mean_fun_parnames.html">get_mean_fun_parnames</a></span>(<span class="st">"mixgaussian"</span>)</a>
+<a class="sourceLine" id="cb10-2" title="2">[<span class="dv">1</span>] <span class="st">"H"</span>  <span class="st">"a"</span>  <span class="st">"m1"</span> <span class="st">"m2"</span> <span class="st">"s1"</span> <span class="st">"s2"</span></a></code></pre></div>
 </div>
 <div id="mixgaussian_equal-sub" class="section level3">
 <h3 class="hasAnchor">
 <a href="#mixgaussian_equal-sub" class="anchor"></a><tt>mixgaussian_equal</tt> (sub)</h3>
 <p>This mean function is a the same as the <tt>mixgaussian</tt> mean function, but with the constraint that <span class="math inline">\(s_1 = s_2 ~(=s)\)</span>.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw"><a href="../reference/get_mean_fun_parnames.html">get_mean_fun_parnames</a></span>(<span class="st">"mixgaussian_equal"</span>)</a>
-<a class="sourceLine" id="cb10-2" title="2">[<span class="dv">1</span>] <span class="st">"H"</span>  <span class="st">"a"</span>  <span class="st">"m1"</span> <span class="st">"m2"</span> <span class="st">"s"</span> </a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw"><a href="../reference/get_mean_fun_parnames.html">get_mean_fun_parnames</a></span>(<span class="st">"mixgaussian_equal"</span>)</a>
+<a class="sourceLine" id="cb11-2" title="2">[<span class="dv">1</span>] <span class="st">"H"</span>  <span class="st">"a"</span>  <span class="st">"m1"</span> <span class="st">"m2"</span> <span class="st">"s"</span> </a></code></pre></div>
 </div>
 <div id="hofv-main" class="section level3">
 <h3 class="hasAnchor">
@@ -364,8 +366,8 @@ H &amp;= \mbox{Maximum value of mean function} ~(H &gt; 0, ~~\mbox{or}~~ 0 &lt; 
 \end{aligned}
 \]</span></p>
 <p>The variable <span class="math inline">\(H_m\)</span> is the maximum value of the unscaled product of the sigmoidal functions. The value of <span class="math inline">\(H_m\)</span> is determined numerically.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw"><a href="../reference/get_mean_fun_parnames.html">get_mean_fun_parnames</a></span>(<span class="st">"hofV"</span>)</a>
-<a class="sourceLine" id="cb11-2" title="2">[<span class="dv">1</span>] <span class="st">"H"</span>  <span class="st">"m"</span>  <span class="st">"w1"</span> <span class="st">"w2"</span> <span class="st">"k"</span> </a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw"><a href="../reference/get_mean_fun_parnames.html">get_mean_fun_parnames</a></span>(<span class="st">"hofV"</span>)</a>
+<a class="sourceLine" id="cb12-2" title="2">[<span class="dv">1</span>] <span class="st">"H"</span>  <span class="st">"m"</span>  <span class="st">"w1"</span> <span class="st">"w2"</span> <span class="st">"k"</span> </a></code></pre></div>
 </div>
 <div id="hofii-sub" class="section level3">
 <h3 class="hasAnchor">
@@ -381,8 +383,8 @@ H &amp;= \mbox{Maximum value of mean function} ~(H &gt; 0, ~~\mbox{or}~~ 0 &lt; 
 \mu_{\theta_M}(x) &amp;= H\left(\frac{1}{1 + \exp{(-\omega_0(x-m))}}\right)
 \end{aligned}
 \]</span></p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw"><a href="../reference/get_mean_fun_parnames.html">get_mean_fun_parnames</a></span>(<span class="st">"hofII"</span>)</a>
-<a class="sourceLine" id="cb12-2" title="2">[<span class="dv">1</span>] <span class="st">"H"</span>  <span class="st">"m"</span>  <span class="st">"w0"</span></a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="kw"><a href="../reference/get_mean_fun_parnames.html">get_mean_fun_parnames</a></span>(<span class="st">"hofII"</span>)</a>
+<a class="sourceLine" id="cb13-2" title="2">[<span class="dv">1</span>] <span class="st">"H"</span>  <span class="st">"m"</span>  <span class="st">"w0"</span></a></code></pre></div>
 </div>
 <div id="hofiv-sub" class="section level3">
 <h3 class="hasAnchor">
@@ -402,8 +404,8 @@ H &amp;= \mbox{Maximum value of mean function} ~(H &gt; 0, ~~\mbox{or}~~ 0 &lt; 
 \end{aligned}
 \]</span></p>
 <p>The variable <span class="math inline">\(H_m\)</span> is the maximum value of the unscaled product of the sigmoidal functions. <span class="math inline">\(H_m = (1 + \exp(−\omega k))^{−2}\)</span>.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="kw"><a href="../reference/get_mean_fun_parnames.html">get_mean_fun_parnames</a></span>(<span class="st">"hofIV"</span>)</a>
-<a class="sourceLine" id="cb13-2" title="2">[<span class="dv">1</span>] <span class="st">"H"</span> <span class="st">"m"</span> <span class="st">"w"</span> <span class="st">"k"</span></a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="kw"><a href="../reference/get_mean_fun_parnames.html">get_mean_fun_parnames</a></span>(<span class="st">"hofIV"</span>)</a>
+<a class="sourceLine" id="cb14-2" title="2">[<span class="dv">1</span>] <span class="st">"H"</span> <span class="st">"m"</span> <span class="st">"w"</span> <span class="st">"k"</span></a></code></pre></div>
 </div>
 <div id="hofivb-sub" class="section level3">
 <h3 class="hasAnchor">
@@ -421,8 +423,8 @@ H &amp;= \mbox{Maximum value of mean function} ~(H &gt; 0, ~~\mbox{or}~~ 0 &lt; 
 \left(\frac{1}{1 + \exp{(\omega(x-m)}}\right)
 \end{aligned}
 \]</span></p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="kw"><a href="../reference/get_mean_fun_parnames.html">get_mean_fun_parnames</a></span>(<span class="st">"hofIVb"</span>)</a>
-<a class="sourceLine" id="cb14-2" title="2">[<span class="dv">1</span>] <span class="st">"H"</span> <span class="st">"m"</span> <span class="st">"w"</span></a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="kw"><a href="../reference/get_mean_fun_parnames.html">get_mean_fun_parnames</a></span>(<span class="st">"hofIVb"</span>)</a>
+<a class="sourceLine" id="cb15-2" title="2">[<span class="dv">1</span>] <span class="st">"H"</span> <span class="st">"m"</span> <span class="st">"w"</span></a></code></pre></div>
 </div>
 <div id="hofvb-sub" class="section level3">
 <h3 class="hasAnchor">
@@ -443,8 +445,8 @@ H &amp;= \mbox{Maximum value of mean function} ~(H &gt; 0, ~~\mbox{or}~~ 0 &lt; 
 \left(\frac{1}{1 + \exp{(\omega_2(x-m)}}\right)
 \end{aligned}
 \]</span></p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="kw"><a href="../reference/get_mean_fun_parnames.html">get_mean_fun_parnames</a></span>(<span class="st">"hofVb"</span>)</a>
-<a class="sourceLine" id="cb15-2" title="2">[<span class="dv">1</span>] <span class="st">"H"</span>  <span class="st">"m"</span>  <span class="st">"w1"</span> <span class="st">"w2"</span></a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="kw"><a href="../reference/get_mean_fun_parnames.html">get_mean_fun_parnames</a></span>(<span class="st">"hofVb"</span>)</a>
+<a class="sourceLine" id="cb16-2" title="2">[<span class="dv">1</span>] <span class="st">"H"</span>  <span class="st">"m"</span>  <span class="st">"w1"</span> <span class="st">"w2"</span></a></code></pre></div>
 </div>
 </div>
 <div id="error-disributions" class="section level2">
@@ -559,8 +561,8 @@ P (Y_i = y_i \mid ~\theta_M , ~\theta_C , ~x_i)
 &amp;\sim \mbox{Binomial}(n, ~\mu_i) \\
 \end{aligned}
 \]</span></p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="kw"><a href="../reference/get_constant_parnames.html">get_constant_parnames</a></span>(<span class="st">"binomial_count"</span>)</a>
-<a class="sourceLine" id="cb16-2" title="2">[<span class="dv">1</span>] <span class="st">"binomial_n"</span></a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="kw"><a href="../reference/get_constant_parnames.html">get_constant_parnames</a></span>(<span class="st">"binomial_count"</span>)</a>
+<a class="sourceLine" id="cb17-2" title="2">[<span class="dv">1</span>] <span class="st">"binomial_n"</span></a></code></pre></div>
 </div>
 <div id="binomial_prop-binomial" class="section level3">
 <h3 class="hasAnchor">
@@ -575,8 +577,8 @@ P (Y_i = ny_i \mid ~\theta_M , ~\theta_C , ~x_i)
 &amp;\sim \mbox{Binomial}(n, ~\mu_i) \\
 \end{aligned}
 \]</span></p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="kw"><a href="../reference/get_constant_parnames.html">get_constant_parnames</a></span>(<span class="st">"binomial_prop"</span>)</a>
-<a class="sourceLine" id="cb17-2" title="2">[<span class="dv">1</span>] <span class="st">"binomial_n"</span></a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="kw"><a href="../reference/get_constant_parnames.html">get_constant_parnames</a></span>(<span class="st">"binomial_prop"</span>)</a>
+<a class="sourceLine" id="cb18-2" title="2">[<span class="dv">1</span>] <span class="st">"binomial_n"</span></a></code></pre></div>
 </div>
 <div id="poisson-count" class="section level3">
 <h3 class="hasAnchor">
@@ -616,8 +618,8 @@ y_i &amp;\in \{0, 1, 2, \ldots \} \\
             &amp;\sim \mbox{Gamma-Poisson}(\mu_i, ~\phi)
 \end{aligned}
 \]</span></p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="kw"><a href="../reference/get_err_dist_parnames.html">get_err_dist_parnames</a></span>(<span class="st">"negbin"</span>)</a>
-<a class="sourceLine" id="cb18-2" title="2">[<span class="dv">1</span>] <span class="st">"phi"</span></a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1"><span class="kw"><a href="../reference/get_err_dist_parnames.html">get_err_dist_parnames</a></span>(<span class="st">"negbin"</span>)</a>
+<a class="sourceLine" id="cb19-2" title="2">[<span class="dv">1</span>] <span class="st">"phi"</span></a></code></pre></div>
 </div>
 <div id="zip-count" class="section level3">
 <h3 class="hasAnchor">
@@ -637,8 +639,8 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~x_i)
                \end{array}\right.
 \end{aligned}
 \]</span></p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1"><span class="kw"><a href="../reference/get_err_dist_parnames.html">get_err_dist_parnames</a></span>(<span class="st">"zip"</span>)</a>
-<a class="sourceLine" id="cb19-2" title="2">[<span class="dv">1</span>] <span class="st">"pi"</span></a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="kw"><a href="../reference/get_err_dist_parnames.html">get_err_dist_parnames</a></span>(<span class="st">"zip"</span>)</a>
+<a class="sourceLine" id="cb20-2" title="2">[<span class="dv">1</span>] <span class="st">"pi"</span></a></code></pre></div>
 </div>
 <div id="zinb-count" class="section level3">
 <h3 class="hasAnchor">
@@ -659,8 +661,8 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~x_i)
            \end{array}\right.
 \end{aligned}
 \]</span></p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="kw"><a href="../reference/get_err_dist_parnames.html">get_err_dist_parnames</a></span>(<span class="st">"zinb"</span>)</a>
-<a class="sourceLine" id="cb20-2" title="2">[<span class="dv">1</span>] <span class="st">"pi"</span>  <span class="st">"phi"</span></a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1"><span class="kw"><a href="../reference/get_err_dist_parnames.html">get_err_dist_parnames</a></span>(<span class="st">"zinb"</span>)</a>
+<a class="sourceLine" id="cb21-2" title="2">[<span class="dv">1</span>] <span class="st">"pi"</span>  <span class="st">"phi"</span></a></code></pre></div>
 </div>
 <div id="zipl-count" class="section level3">
 <h3 class="hasAnchor">
@@ -685,8 +687,8 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~x_i)
            \end{array}\right.
 \end{aligned}
 \]</span></p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1"><span class="kw"><a href="../reference/get_err_dist_parnames.html">get_err_dist_parnames</a></span>(<span class="st">"zipl"</span>)</a>
-<a class="sourceLine" id="cb21-2" title="2">[<span class="dv">1</span>] <span class="st">"g0"</span> <span class="st">"g1"</span></a></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="kw"><a href="../reference/get_err_dist_parnames.html">get_err_dist_parnames</a></span>(<span class="st">"zipl"</span>)</a>
+<a class="sourceLine" id="cb22-2" title="2">[<span class="dv">1</span>] <span class="st">"g0"</span> <span class="st">"g1"</span></a></code></pre></div>
 </div>
 <div id="zinbl-count" class="section level3">
 <h3 class="hasAnchor">
@@ -712,8 +714,8 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~x_i)
            \end{array}\right.
 \end{aligned}
 \]</span></p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="kw"><a href="../reference/get_err_dist_parnames.html">get_err_dist_parnames</a></span>(<span class="st">"zinbl"</span>)</a>
-<a class="sourceLine" id="cb22-2" title="2">[<span class="dv">1</span>] <span class="st">"g0"</span>  <span class="st">"g1"</span>  <span class="st">"phi"</span></a></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1"><span class="kw"><a href="../reference/get_err_dist_parnames.html">get_err_dist_parnames</a></span>(<span class="st">"zinbl"</span>)</a>
+<a class="sourceLine" id="cb23-2" title="2">[<span class="dv">1</span>] <span class="st">"g0"</span>  <span class="st">"g1"</span>  <span class="st">"phi"</span></a></code></pre></div>
 </div>
 <div id="zipl-mu-count" class="section level3">
 <h3 class="hasAnchor">
@@ -738,8 +740,8 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~x_i)
            \end{array}\right.
 \end{aligned}
 \]</span></p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1"><span class="kw"><a href="../reference/get_err_dist_parnames.html">get_err_dist_parnames</a></span>(<span class="st">"zipl.mu"</span>)</a>
-<a class="sourceLine" id="cb23-2" title="2">[<span class="dv">1</span>] <span class="st">"g0"</span> <span class="st">"g1"</span></a></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1"><span class="kw"><a href="../reference/get_err_dist_parnames.html">get_err_dist_parnames</a></span>(<span class="st">"zipl.mu"</span>)</a>
+<a class="sourceLine" id="cb24-2" title="2">[<span class="dv">1</span>] <span class="st">"g0"</span> <span class="st">"g1"</span></a></code></pre></div>
 </div>
 <div id="zinbl-mu-count" class="section level3">
 <h3 class="hasAnchor">
@@ -765,8 +767,8 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~x_i)
            \end{array}\right.
 \end{aligned}
 \]</span></p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1"><span class="kw"><a href="../reference/get_err_dist_parnames.html">get_err_dist_parnames</a></span>(<span class="st">"zinbl.mu"</span>)</a>
-<a class="sourceLine" id="cb24-2" title="2">[<span class="dv">1</span>] <span class="st">"g0"</span>  <span class="st">"g1"</span>  <span class="st">"phi"</span></a></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1"><span class="kw"><a href="../reference/get_err_dist_parnames.html">get_err_dist_parnames</a></span>(<span class="st">"zinbl.mu"</span>)</a>
+<a class="sourceLine" id="cb25-2" title="2">[<span class="dv">1</span>] <span class="st">"g0"</span>  <span class="st">"g1"</span>  <span class="st">"phi"</span></a></code></pre></div>
 </div>
 <div id="gaussian-abundance" class="section level3">
 <h3 class="hasAnchor">
@@ -781,8 +783,8 @@ P(Y_i=y_i \mid ~\theta_M, ~\theta_E, ~x_i)
         &amp;\sim \mbox{Normal}(\mu_i, ~\sigma^2)
 \end{aligned}
 \]</span> Since our data is non-negative, any data simulated via this model will have negative values set to zero.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1"><span class="kw"><a href="../reference/get_err_dist_parnames.html">get_err_dist_parnames</a></span>(<span class="st">"gaussian"</span>)</a>
-<a class="sourceLine" id="cb25-2" title="2">[<span class="dv">1</span>] <span class="st">"sigma"</span></a></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1"><span class="kw"><a href="../reference/get_err_dist_parnames.html">get_err_dist_parnames</a></span>(<span class="st">"gaussian"</span>)</a>
+<a class="sourceLine" id="cb26-2" title="2">[<span class="dv">1</span>] <span class="st">"sigma"</span></a></code></pre></div>
 </div>
 <div id="tweedie-abundance" class="section level3">
 <h3 class="hasAnchor">
@@ -802,8 +804,8 @@ P(Y_i=y_i \mid ~\theta_M, ~\theta_E, ~x_i)
 \mbox{var}(Y_i) &amp;= \phi(\mu_i)^\rho 
 \end{aligned}
 \]</span></p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1"><span class="kw"><a href="../reference/get_err_dist_parnames.html">get_err_dist_parnames</a></span>(<span class="st">"tweedie"</span>)</a>
-<a class="sourceLine" id="cb26-2" title="2">[<span class="dv">1</span>] <span class="st">"phi"</span> <span class="st">"rho"</span></a></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1"><span class="kw"><a href="../reference/get_err_dist_parnames.html">get_err_dist_parnames</a></span>(<span class="st">"tweedie"</span>)</a>
+<a class="sourceLine" id="cb27-2" title="2">[<span class="dv">1</span>] <span class="st">"phi"</span> <span class="st">"rho"</span></a></code></pre></div>
 </div>
 <div id="zig-abundance" class="section level3">
 <h3 class="hasAnchor">
@@ -827,8 +829,8 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~x_i)
 \mbox{var}(Y_i) &amp;= (1-\pi)^2\phi\mu_i^2
 \end{aligned}
 \]</span></p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1"><span class="kw"><a href="../reference/get_err_dist_parnames.html">get_err_dist_parnames</a></span>(<span class="st">"zig"</span>)</a>
-<a class="sourceLine" id="cb27-2" title="2">[<span class="dv">1</span>] <span class="st">"pi"</span>  <span class="st">"phi"</span></a></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1"><span class="kw"><a href="../reference/get_err_dist_parnames.html">get_err_dist_parnames</a></span>(<span class="st">"zig"</span>)</a>
+<a class="sourceLine" id="cb28-2" title="2">[<span class="dv">1</span>] <span class="st">"pi"</span>  <span class="st">"phi"</span></a></code></pre></div>
 </div>
 <div id="zigl-abundance" class="section level3">
 <h3 class="hasAnchor">
@@ -857,8 +859,8 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~x_i)
 \mbox{var}(Y_i) &amp;= (1-\pi)^2\phi\mu_i^2
 \end{aligned}
 \]</span></p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1"><span class="kw"><a href="../reference/get_err_dist_parnames.html">get_err_dist_parnames</a></span>(<span class="st">"zigl"</span>)</a>
-<a class="sourceLine" id="cb28-2" title="2">[<span class="dv">1</span>] <span class="st">"g0"</span>  <span class="st">"g1"</span>  <span class="st">"phi"</span></a></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1"><span class="kw"><a href="../reference/get_err_dist_parnames.html">get_err_dist_parnames</a></span>(<span class="st">"zigl"</span>)</a>
+<a class="sourceLine" id="cb29-2" title="2">[<span class="dv">1</span>] <span class="st">"g0"</span>  <span class="st">"g1"</span>  <span class="st">"phi"</span></a></code></pre></div>
 </div>
 <div id="zigl-mu-abundance" class="section level3">
 <h3 class="hasAnchor">
@@ -887,8 +889,8 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~x_i)
 \mbox{var}(Y_i) &amp;= (1-\pi)^2\phi\mu_i^2
 \end{aligned}
 \]</span></p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1"><span class="kw"><a href="../reference/get_err_dist_parnames.html">get_err_dist_parnames</a></span>(<span class="st">"zigl.mu"</span>)</a>
-<a class="sourceLine" id="cb29-2" title="2">[<span class="dv">1</span>] <span class="st">"g0"</span>  <span class="st">"g1"</span>  <span class="st">"phi"</span></a></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1"><span class="kw"><a href="../reference/get_err_dist_parnames.html">get_err_dist_parnames</a></span>(<span class="st">"zigl.mu"</span>)</a>
+<a class="sourceLine" id="cb30-2" title="2">[<span class="dv">1</span>] <span class="st">"g0"</span>  <span class="st">"g1"</span>  <span class="st">"phi"</span></a></code></pre></div>
 </div>
 <div id="tab-percentage" class="section level3">
 <h3 class="hasAnchor">
@@ -921,10 +923,10 @@ p^{(1)}_i &amp; y_i &gt; 1 - \delta \\
 <p>We restrict ourselves to <span class="math inline">\(\alpha_i \geq 1\)</span> and <span class="math inline">\(\beta \geq 1\)</span> (uniform, triangular, and unimodal shapes).</p>
 <p>The <span class="math inline">\(\delta\)</span> parameter is not estimated via maximum likelihood like other parameters, it is estimated as the minimum of: the smallest non-zero <span class="math inline">\(y_i\)</span>, and one minus the largest non-one <span class="math inline">\(y_i\)</span>. In other words:</p>
 <p><span class="math display">\[ \hat{\delta} = \min( \min_i(y_i : y_i&gt;0), ~\min_i(1-y_i : y_i &lt; 1) ). \]</span></p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1"><span class="kw"><a href="../reference/get_err_dist_parnames.html">get_err_dist_parnames</a></span>(<span class="st">"tab"</span>)</a>
-<a class="sourceLine" id="cb30-2" title="2">[<span class="dv">1</span>] <span class="st">"sigma"</span></a>
-<a class="sourceLine" id="cb30-3" title="3"><span class="kw"><a href="../reference/get_constant_parnames.html">get_constant_parnames</a></span>(<span class="st">"tab"</span>)</a>
-<a class="sourceLine" id="cb30-4" title="4">[<span class="dv">1</span>] <span class="st">"delta"</span></a></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1"><span class="kw"><a href="../reference/get_err_dist_parnames.html">get_err_dist_parnames</a></span>(<span class="st">"tab"</span>)</a>
+<a class="sourceLine" id="cb31-2" title="2">[<span class="dv">1</span>] <span class="st">"sigma"</span></a>
+<a class="sourceLine" id="cb31-3" title="3"><span class="kw"><a href="../reference/get_constant_parnames.html">get_constant_parnames</a></span>(<span class="st">"tab"</span>)</a>
+<a class="sourceLine" id="cb31-4" title="4">[<span class="dv">1</span>] <span class="st">"delta"</span></a></code></pre></div>
 </div>
 <div id="zitab-percentage" class="section level3">
 <h3 class="hasAnchor">
@@ -948,10 +950,10 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i)
             \end{array}\right.\\
 \end{aligned}
 \]</span></p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1"><span class="kw"><a href="../reference/get_err_dist_parnames.html">get_err_dist_parnames</a></span>(<span class="st">"zitab"</span>)</a>
-<a class="sourceLine" id="cb31-2" title="2">[<span class="dv">1</span>] <span class="st">"pi"</span>    <span class="st">"sigma"</span></a>
-<a class="sourceLine" id="cb31-3" title="3"><span class="kw"><a href="../reference/get_constant_parnames.html">get_constant_parnames</a></span>(<span class="st">"zitab"</span>)</a>
-<a class="sourceLine" id="cb31-4" title="4">[<span class="dv">1</span>] <span class="st">"delta"</span></a></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1"><span class="kw"><a href="../reference/get_err_dist_parnames.html">get_err_dist_parnames</a></span>(<span class="st">"zitab"</span>)</a>
+<a class="sourceLine" id="cb32-2" title="2">[<span class="dv">1</span>] <span class="st">"pi"</span>    <span class="st">"sigma"</span></a>
+<a class="sourceLine" id="cb32-3" title="3"><span class="kw"><a href="../reference/get_constant_parnames.html">get_constant_parnames</a></span>(<span class="st">"zitab"</span>)</a>
+<a class="sourceLine" id="cb32-4" title="4">[<span class="dv">1</span>] <span class="st">"delta"</span></a></code></pre></div>
 </div>
 </div>
 </div>
@@ -962,54 +964,54 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i)
 <h2 class="hasAnchor">
 <a href="#setting-models-to-fit" class="anchor"></a>Setting models to fit</h2>
 <p>The <tt>set_models()</tt> function is used to create a data frame that contains the mean functions, error distributions, and if appropriate the binomial <span class="math inline">\(n\)</span> parameter, of all models that one would wish to fit or simulate data from.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1"><span class="co">## All possible combinations of mean functions and error distrbiutions</span></a>
-<a class="sourceLine" id="cb32-2" title="2"><span class="kw"><a href="../reference/set_models.html">set_models</a></span> (<span class="dt">mean_fun=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"gaussian"</span>, <span class="st">"beta"</span>), <span class="dt">err_dist=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"zinb"</span>, <span class="st">"zinbl"</span>),</a>
-<a class="sourceLine" id="cb32-3" title="3">            <span class="dt">method=</span><span class="st">"crossed"</span>)</a>
-<a class="sourceLine" id="cb32-4" title="4">  mean_fun err_dist binomial_n</a>
-<a class="sourceLine" id="cb32-5" title="5"><span class="dv">1</span>     beta     zinb         <span class="ot">NA</span></a>
-<a class="sourceLine" id="cb32-6" title="6"><span class="dv">2</span>     beta    zinbl         <span class="ot">NA</span></a>
-<a class="sourceLine" id="cb32-7" title="7"><span class="dv">3</span> gaussian     zinb         <span class="ot">NA</span></a>
-<a class="sourceLine" id="cb32-8" title="8"><span class="dv">4</span> gaussian    zinbl         <span class="ot">NA</span></a>
-<a class="sourceLine" id="cb32-9" title="9"><span class="co">## Fit specific models</span></a>
-<a class="sourceLine" id="cb32-10" title="10"><span class="kw"><a href="../reference/set_models.html">set_models</a></span> (<span class="dt">mean_fun=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"gaussian"</span>, <span class="st">"beta"</span>), <span class="dt">err_dist=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"zinb"</span>, <span class="st">"zinbl"</span>),</a>
-<a class="sourceLine" id="cb32-11" title="11">            <span class="dt">method=</span><span class="st">"paired"</span>)</a>
-<a class="sourceLine" id="cb32-12" title="12">  mean_fun err_dist binomial_n</a>
-<a class="sourceLine" id="cb32-13" title="13"><span class="dv">1</span>     beta    zinbl         <span class="ot">NA</span></a>
-<a class="sourceLine" id="cb32-14" title="14"><span class="dv">2</span> gaussian     zinb         <span class="ot">NA</span></a>
-<a class="sourceLine" id="cb32-15" title="15"><span class="co">## Fit binomial model - with n=40</span></a>
-<a class="sourceLine" id="cb32-16" title="16"><span class="kw"><a href="../reference/set_models.html">set_models</a></span> (<span class="dt">mean_fun=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"gaussian"</span>), </a>
-<a class="sourceLine" id="cb32-17" title="17">            <span class="dt">err_dist=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"poisson"</span>, <span class="st">"binomial_prop"</span>, <span class="st">"binomial_count"</span>),</a>
-<a class="sourceLine" id="cb32-18" title="18">            <span class="dt">binomial_n=</span><span class="dv">40</span>, <span class="dt">method=</span><span class="st">"paired"</span>)</a>
-<a class="sourceLine" id="cb32-19" title="19">  mean_fun       err_dist binomial_n</a>
-<a class="sourceLine" id="cb32-20" title="20"><span class="dv">1</span> gaussian        poisson         <span class="ot">NA</span></a>
-<a class="sourceLine" id="cb32-21" title="21"><span class="dv">2</span> gaussian  binomial_prop         <span class="dv">40</span></a>
-<a class="sourceLine" id="cb32-22" title="22"><span class="dv">3</span> gaussian binomial_count         <span class="dv">40</span></a>
-<a class="sourceLine" id="cb32-23" title="23"><span class="co">## Can also specify via mean and error class</span></a>
-<a class="sourceLine" id="cb32-24" title="24"><span class="kw"><a href="../reference/set_models.html">set_models</a></span> (<span class="dt">mean_class=</span><span class="st">"main"</span>, <span class="dt">err_class=</span><span class="st">"percentage"</span>)</a>
-<a class="sourceLine" id="cb32-25" title="25">      mean_fun err_dist binomial_n</a>
-<a class="sourceLine" id="cb32-26" title="26"><span class="dv">1</span>         beta      tab         <span class="ot">NA</span></a>
-<a class="sourceLine" id="cb32-27" title="27"><span class="dv">2</span>         beta    zitab         <span class="ot">NA</span></a>
-<a class="sourceLine" id="cb32-28" title="28"><span class="dv">3</span>     gaussian      tab         <span class="ot">NA</span></a>
-<a class="sourceLine" id="cb32-29" title="29"><span class="dv">4</span>     gaussian    zitab         <span class="ot">NA</span></a>
-<a class="sourceLine" id="cb32-30" title="30"><span class="dv">5</span>         hofV      tab         <span class="ot">NA</span></a>
-<a class="sourceLine" id="cb32-31" title="31"><span class="dv">6</span>         hofV    zitab         <span class="ot">NA</span></a>
-<a class="sourceLine" id="cb32-32" title="32"><span class="dv">7</span>  mixgaussian      tab         <span class="ot">NA</span></a>
-<a class="sourceLine" id="cb32-33" title="33"><span class="dv">8</span>  mixgaussian    zitab         <span class="ot">NA</span></a>
-<a class="sourceLine" id="cb32-34" title="34"><span class="dv">9</span>         sech      tab         <span class="ot">NA</span></a>
-<a class="sourceLine" id="cb32-35" title="35"><span class="dv">10</span>        sech    zitab         <span class="ot">NA</span></a></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1"><span class="co">## All possible combinations of mean functions and error distrbiutions</span></a>
+<a class="sourceLine" id="cb33-2" title="2"><span class="kw"><a href="../reference/set_models.html">set_models</a></span> (<span class="dt">mean_fun=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"gaussian"</span>, <span class="st">"beta"</span>), <span class="dt">err_dist=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"zinb"</span>, <span class="st">"zinbl"</span>),</a>
+<a class="sourceLine" id="cb33-3" title="3">            <span class="dt">method=</span><span class="st">"crossed"</span>)</a>
+<a class="sourceLine" id="cb33-4" title="4">  mean_fun err_dist binomial_n</a>
+<a class="sourceLine" id="cb33-5" title="5"><span class="dv">1</span>     beta     zinb         <span class="ot">NA</span></a>
+<a class="sourceLine" id="cb33-6" title="6"><span class="dv">2</span>     beta    zinbl         <span class="ot">NA</span></a>
+<a class="sourceLine" id="cb33-7" title="7"><span class="dv">3</span> gaussian     zinb         <span class="ot">NA</span></a>
+<a class="sourceLine" id="cb33-8" title="8"><span class="dv">4</span> gaussian    zinbl         <span class="ot">NA</span></a>
+<a class="sourceLine" id="cb33-9" title="9"><span class="co">## Fit specific models</span></a>
+<a class="sourceLine" id="cb33-10" title="10"><span class="kw"><a href="../reference/set_models.html">set_models</a></span> (<span class="dt">mean_fun=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"gaussian"</span>, <span class="st">"beta"</span>), <span class="dt">err_dist=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"zinb"</span>, <span class="st">"zinbl"</span>),</a>
+<a class="sourceLine" id="cb33-11" title="11">            <span class="dt">method=</span><span class="st">"paired"</span>)</a>
+<a class="sourceLine" id="cb33-12" title="12">  mean_fun err_dist binomial_n</a>
+<a class="sourceLine" id="cb33-13" title="13"><span class="dv">1</span>     beta    zinbl         <span class="ot">NA</span></a>
+<a class="sourceLine" id="cb33-14" title="14"><span class="dv">2</span> gaussian     zinb         <span class="ot">NA</span></a>
+<a class="sourceLine" id="cb33-15" title="15"><span class="co">## Fit binomial model - with n=40</span></a>
+<a class="sourceLine" id="cb33-16" title="16"><span class="kw"><a href="../reference/set_models.html">set_models</a></span> (<span class="dt">mean_fun=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"gaussian"</span>), </a>
+<a class="sourceLine" id="cb33-17" title="17">            <span class="dt">err_dist=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"poisson"</span>, <span class="st">"binomial_prop"</span>, <span class="st">"binomial_count"</span>),</a>
+<a class="sourceLine" id="cb33-18" title="18">            <span class="dt">binomial_n=</span><span class="dv">40</span>, <span class="dt">method=</span><span class="st">"paired"</span>)</a>
+<a class="sourceLine" id="cb33-19" title="19">  mean_fun       err_dist binomial_n</a>
+<a class="sourceLine" id="cb33-20" title="20"><span class="dv">1</span> gaussian        poisson         <span class="ot">NA</span></a>
+<a class="sourceLine" id="cb33-21" title="21"><span class="dv">2</span> gaussian  binomial_prop         <span class="dv">40</span></a>
+<a class="sourceLine" id="cb33-22" title="22"><span class="dv">3</span> gaussian binomial_count         <span class="dv">40</span></a>
+<a class="sourceLine" id="cb33-23" title="23"><span class="co">## Can also specify via mean and error class</span></a>
+<a class="sourceLine" id="cb33-24" title="24"><span class="kw"><a href="../reference/set_models.html">set_models</a></span> (<span class="dt">mean_class=</span><span class="st">"main"</span>, <span class="dt">err_class=</span><span class="st">"percentage"</span>)</a>
+<a class="sourceLine" id="cb33-25" title="25">      mean_fun err_dist binomial_n</a>
+<a class="sourceLine" id="cb33-26" title="26"><span class="dv">1</span>         beta      tab         <span class="ot">NA</span></a>
+<a class="sourceLine" id="cb33-27" title="27"><span class="dv">2</span>         beta    zitab         <span class="ot">NA</span></a>
+<a class="sourceLine" id="cb33-28" title="28"><span class="dv">3</span>     gaussian      tab         <span class="ot">NA</span></a>
+<a class="sourceLine" id="cb33-29" title="29"><span class="dv">4</span>     gaussian    zitab         <span class="ot">NA</span></a>
+<a class="sourceLine" id="cb33-30" title="30"><span class="dv">5</span>         hofV      tab         <span class="ot">NA</span></a>
+<a class="sourceLine" id="cb33-31" title="31"><span class="dv">6</span>         hofV    zitab         <span class="ot">NA</span></a>
+<a class="sourceLine" id="cb33-32" title="32"><span class="dv">7</span>  mixgaussian      tab         <span class="ot">NA</span></a>
+<a class="sourceLine" id="cb33-33" title="33"><span class="dv">8</span>  mixgaussian    zitab         <span class="ot">NA</span></a>
+<a class="sourceLine" id="cb33-34" title="34"><span class="dv">9</span>         sech      tab         <span class="ot">NA</span></a>
+<a class="sourceLine" id="cb33-35" title="35"><span class="dv">10</span>        sech    zitab         <span class="ot">NA</span></a></code></pre></div>
 </div>
 <div id="simulated-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#simulated-data" class="anchor"></a>Simulated data</h2>
 <p>This section describes how to simulate data sets for any possible model. The <tt>create_default_par_list()</tt> function set default parameter values for each selected model.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1"><span class="co">## --- Set models</span></a>
-<a class="sourceLine" id="cb33-2" title="2">Models &lt;-<span class="st"> </span><span class="kw"><a href="../reference/set_models.html">set_models</a></span> (<span class="dt">mean_fun=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"gaussian"</span>), <span class="dt">err_dist=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"zip"</span>, <span class="st">"zinb"</span>))</a>
-<a class="sourceLine" id="cb33-3" title="3"></a>
-<a class="sourceLine" id="cb33-4" title="4"><span class="co">## --- Set default parameters list</span></a>
-<a class="sourceLine" id="cb33-5" title="5">Pars &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_default_par_list.html">create_default_par_list</a></span> (Models)</a>
-<a class="sourceLine" id="cb33-6" title="6"></a>
-<a class="sourceLine" id="cb33-7" title="7"><span class="co">## --- Simulate data</span></a>
-<a class="sourceLine" id="cb33-8" title="8">Data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_simulated_datasets.html">create_simulated_datasets</a></span> (Pars, <span class="dt">N=</span><span class="dv">200</span>, <span class="dt">xmin=</span><span class="dv">0</span>, <span class="dt">xmax=</span><span class="dv">100</span>, <span class="dt">seed=</span><span class="dv">12345</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1"><span class="co">## --- Set models</span></a>
+<a class="sourceLine" id="cb34-2" title="2">Models &lt;-<span class="st"> </span><span class="kw"><a href="../reference/set_models.html">set_models</a></span> (<span class="dt">mean_fun=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"gaussian"</span>), <span class="dt">err_dist=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"zip"</span>, <span class="st">"zinb"</span>))</a>
+<a class="sourceLine" id="cb34-3" title="3"></a>
+<a class="sourceLine" id="cb34-4" title="4"><span class="co">## --- Set default parameters list</span></a>
+<a class="sourceLine" id="cb34-5" title="5">Pars &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_default_par_list.html">create_default_par_list</a></span> (Models)</a>
+<a class="sourceLine" id="cb34-6" title="6"></a>
+<a class="sourceLine" id="cb34-7" title="7"><span class="co">## --- Simulate data</span></a>
+<a class="sourceLine" id="cb34-8" title="8">Data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_simulated_datasets.html">create_simulated_datasets</a></span> (Pars, <span class="dt">N=</span><span class="dv">200</span>, <span class="dt">xmin=</span><span class="dv">0</span>, <span class="dt">xmax=</span><span class="dv">100</span>, <span class="dt">seed=</span><span class="dv">12345</span>)</a></code></pre></div>
 <p>This code creates simulates data for the <tt>gaussian-zip</tt>, and <tt>gaussian-zinb</tt> models. The objects <tt>Pars</tt> is a list containing parameters for each model. The object <tt>Data</tt> is a list containing the data for each model; <tt>Data[[1]]</tt> is the data for the first model, etc.</p>
 </div>
 <div id="real-data" class="section level2">
@@ -1020,48 +1022,48 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i)
 <li><tt>haul</tt></li>
 </ul>
 <p>The first few rows of data are shown below.</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(haul, <span class="dt">package=</span><span class="st">"senlm"</span>)</a>
-<a class="sourceLine" id="cb34-2" title="2"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span> (haul)</a>
-<a class="sourceLine" id="cb34-3" title="3">     year  x_depth x_lattitude y_Albatrossia.pectoralis y_Sebastolobus.altivelis</a>
-<a class="sourceLine" id="cb34-4" title="4"><span class="dv">1717</span> <span class="dv">2003</span> <span class="fl">527.5357</span>    <span class="fl">46.30425</span>                        <span class="dv">0</span>                       <span class="dv">37</span></a>
-<a class="sourceLine" id="cb34-5" title="5"><span class="dv">1718</span> <span class="dv">2003</span> <span class="fl">673.7497</span>    <span class="fl">46.73217</span>                        <span class="dv">0</span>                      <span class="dv">397</span></a>
-<a class="sourceLine" id="cb34-6" title="6"><span class="dv">1719</span> <span class="dv">2003</span> <span class="fl">276.1650</span>    <span class="fl">46.71926</span>                        <span class="dv">0</span>                        <span class="dv">0</span></a>
-<a class="sourceLine" id="cb34-7" title="7"><span class="dv">1720</span> <span class="dv">2003</span> <span class="fl">823.6656</span>    <span class="fl">46.92419</span>                        <span class="dv">3</span>                      <span class="dv">711</span></a>
-<a class="sourceLine" id="cb34-8" title="8"><span class="dv">1721</span> <span class="dv">2003</span> <span class="fl">172.6837</span>    <span class="fl">47.01439</span>                        <span class="dv">0</span>                        <span class="dv">0</span></a>
-<a class="sourceLine" id="cb34-9" title="9"><span class="dv">1722</span> <span class="dv">2003</span> <span class="fl">985.7053</span>    <span class="fl">47.56385</span>                       <span class="dv">18</span>                      <span class="dv">534</span></a></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" title="1"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(haul, <span class="dt">package=</span><span class="st">"senlm"</span>)</a>
+<a class="sourceLine" id="cb35-2" title="2"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span> (haul)</a>
+<a class="sourceLine" id="cb35-3" title="3">     year  x_depth x_lattitude y_Albatrossia.pectoralis y_Sebastolobus.altivelis</a>
+<a class="sourceLine" id="cb35-4" title="4"><span class="dv">1717</span> <span class="dv">2003</span> <span class="fl">527.5357</span>    <span class="fl">46.30425</span>                        <span class="dv">0</span>                       <span class="dv">37</span></a>
+<a class="sourceLine" id="cb35-5" title="5"><span class="dv">1718</span> <span class="dv">2003</span> <span class="fl">673.7497</span>    <span class="fl">46.73217</span>                        <span class="dv">0</span>                      <span class="dv">397</span></a>
+<a class="sourceLine" id="cb35-6" title="6"><span class="dv">1719</span> <span class="dv">2003</span> <span class="fl">276.1650</span>    <span class="fl">46.71926</span>                        <span class="dv">0</span>                        <span class="dv">0</span></a>
+<a class="sourceLine" id="cb35-7" title="7"><span class="dv">1720</span> <span class="dv">2003</span> <span class="fl">823.6656</span>    <span class="fl">46.92419</span>                        <span class="dv">3</span>                      <span class="dv">711</span></a>
+<a class="sourceLine" id="cb35-8" title="8"><span class="dv">1721</span> <span class="dv">2003</span> <span class="fl">172.6837</span>    <span class="fl">47.01439</span>                        <span class="dv">0</span>                        <span class="dv">0</span></a>
+<a class="sourceLine" id="cb35-9" title="9"><span class="dv">1722</span> <span class="dv">2003</span> <span class="fl">985.7053</span>    <span class="fl">47.56385</span>                       <span class="dv">18</span>                      <span class="dv">534</span></a></code></pre></div>
 </div>
 <div id="fitting-models-to-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#fitting-models-to-data" class="anchor"></a>Fitting models to data</h2>
 <p>To fit one model to a data set we use the <tt>senlm()</tt> function. We illustrate this with the <tt>haul&lt;/</tt></p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" title="1">Fit &lt;-<span class="st"> </span><span class="kw"><a href="../reference/senlm.html">senlm</a></span> (<span class="dt">data=</span>haul, <span class="dt">xvar=</span><span class="st">"x_depth"</span>, <span class="dt">yvar=</span><span class="st">"y_Sebastolobus.altivelis"</span>, </a>
-<a class="sourceLine" id="cb35-2" title="2">              <span class="dt">mean_fun=</span><span class="st">"gaussian"</span>, <span class="dt">err_dist=</span><span class="st">"zip"</span>)</a>
-<a class="sourceLine" id="cb35-3" title="3"><span class="kw"><a href="https://rdrr.io/r/base/summary.html">summary</a></span> (Fit)</a>
-<a class="sourceLine" id="cb35-4" title="4"><span class="op">$</span>model</a>
-<a class="sourceLine" id="cb35-5" title="5">[<span class="dv">1</span>] <span class="st">"gaussian-zip"</span></a>
-<a class="sourceLine" id="cb35-6" title="6"></a>
-<a class="sourceLine" id="cb35-7" title="7"><span class="op">$</span>theta</a>
-<a class="sourceLine" id="cb35-8" title="8">          H           m           s          pi </a>
-<a class="sourceLine" id="cb35-9" title="9"><span class="fl">817.5307914</span> <span class="fl">917.8020752</span> <span class="fl">225.5627489</span>   <span class="fl">0.5954252</span> </a>
-<a class="sourceLine" id="cb35-10" title="10"></a>
-<a class="sourceLine" id="cb35-11" title="11"><span class="op">$</span>IC</a>
-<a class="sourceLine" id="cb35-12" title="12">    npar      nll      AIC     AICc      BIC </a>
-<a class="sourceLine" id="cb35-13" title="13">    <span class="fl">4.00</span> <span class="fl">36950.05</span> <span class="fl">73908.10</span> <span class="fl">73908.14</span> <span class="fl">73928.01</span> </a></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1">Fit &lt;-<span class="st"> </span><span class="kw"><a href="../reference/senlm.html">senlm</a></span> (<span class="dt">data=</span>haul, <span class="dt">xvar=</span><span class="st">"x_depth"</span>, <span class="dt">yvar=</span><span class="st">"y_Sebastolobus.altivelis"</span>, </a>
+<a class="sourceLine" id="cb36-2" title="2">              <span class="dt">mean_fun=</span><span class="st">"gaussian"</span>, <span class="dt">err_dist=</span><span class="st">"zip"</span>)</a>
+<a class="sourceLine" id="cb36-3" title="3"><span class="kw"><a href="https://rdrr.io/r/base/summary.html">summary</a></span> (Fit)</a>
+<a class="sourceLine" id="cb36-4" title="4"><span class="op">$</span>model</a>
+<a class="sourceLine" id="cb36-5" title="5">[<span class="dv">1</span>] <span class="st">"gaussian-zip"</span></a>
+<a class="sourceLine" id="cb36-6" title="6"></a>
+<a class="sourceLine" id="cb36-7" title="7"><span class="op">$</span>theta</a>
+<a class="sourceLine" id="cb36-8" title="8">          H           m           s          pi </a>
+<a class="sourceLine" id="cb36-9" title="9"><span class="fl">817.5307759</span> <span class="fl">917.8020758</span> <span class="fl">225.5627617</span>   <span class="fl">0.5954254</span> </a>
+<a class="sourceLine" id="cb36-10" title="10"></a>
+<a class="sourceLine" id="cb36-11" title="11"><span class="op">$</span>IC</a>
+<a class="sourceLine" id="cb36-12" title="12">    npar      nll      AIC     AICc      BIC </a>
+<a class="sourceLine" id="cb36-13" title="13">    <span class="fl">4.00</span> <span class="fl">36950.05</span> <span class="fl">73908.10</span> <span class="fl">73908.14</span> <span class="fl">73928.01</span> </a></code></pre></div>
 <p>To fit multiple models to multiple data sets, one can use the <tt>senlm.multi()</tt> function. The models to fit are specified with the <tt>set_models()</tt> function. The data should be stored in a list. It could be simulated data create using the <tt>create_simulated_datasets()</tt> function.</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1">Models &lt;-<span class="st"> </span><span class="kw"><a href="../reference/set_models.html">set_models</a></span> (<span class="dt">mean_class=</span><span class="st">"test"</span>, <span class="dt">err_class=</span><span class="st">"binary"</span>)</a>
-<a class="sourceLine" id="cb36-2" title="2">Pars   &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_default_par_list.html">create_default_par_list</a></span> (<span class="dt">models=</span>Models)</a>
-<a class="sourceLine" id="cb36-3" title="3">Data   &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_simulated_datasets.html">create_simulated_datasets</a></span> (Pars, <span class="dt">seed=</span><span class="dv">12345</span>)</a>
-<a class="sourceLine" id="cb36-4" title="4">Fits   &lt;-<span class="st"> </span><span class="kw"><a href="../reference/senlm.multi.html">senlm.multi</a></span> (<span class="dt">models=</span>Models, <span class="dt">data=</span>Data, <span class="dt">xvar=</span><span class="st">"x_depth"</span>, <span class="dt">yvar=</span><span class="st">"y_Sebastolobus.altivelis"</span>)</a>
-<a class="sourceLine" id="cb36-5" title="5"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span> (Models)</a>
-<a class="sourceLine" id="cb36-6" title="6"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span> (Fits)</a></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" title="1">Models &lt;-<span class="st"> </span><span class="kw"><a href="../reference/set_models.html">set_models</a></span> (<span class="dt">mean_class=</span><span class="st">"test"</span>, <span class="dt">err_class=</span><span class="st">"binary"</span>)</a>
+<a class="sourceLine" id="cb37-2" title="2">Pars   &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_default_par_list.html">create_default_par_list</a></span> (<span class="dt">models=</span>Models)</a>
+<a class="sourceLine" id="cb37-3" title="3">Data   &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_simulated_datasets.html">create_simulated_datasets</a></span> (Pars, <span class="dt">seed=</span><span class="dv">12345</span>)</a>
+<a class="sourceLine" id="cb37-4" title="4">Fits   &lt;-<span class="st"> </span><span class="kw"><a href="../reference/senlm.multi.html">senlm.multi</a></span> (<span class="dt">models=</span>Models, <span class="dt">data=</span>Data, <span class="dt">xvar=</span><span class="st">"x_depth"</span>, <span class="dt">yvar=</span><span class="st">"y_Sebastolobus.altivelis"</span>)</a>
+<a class="sourceLine" id="cb37-5" title="5"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span> (Models)</a>
+<a class="sourceLine" id="cb37-6" title="6"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span> (Fits)</a></code></pre></div>
 <p>Alternatively, one can fit multiple models to real data.</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" title="1">Models &lt;-<span class="st"> </span><span class="kw"><a href="../reference/set_models.html">set_models</a></span> (<span class="dt">mean_fun=</span><span class="st">"gaussian"</span>, <span class="dt">err_dist=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"zip"</span>, <span class="st">"zinb"</span>))</a>
-<a class="sourceLine" id="cb37-2" title="2">Data &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/vector.html">vector</a></span> (<span class="dt">length=</span><span class="dv">2</span>, <span class="dt">mode=</span><span class="st">"list"</span>)</a>
-<a class="sourceLine" id="cb37-3" title="3">Data[[<span class="dv">1</span>]]<span class="op">$</span>x &lt;-<span class="st"> </span>haul<span class="op">$</span>x_depth</a>
-<a class="sourceLine" id="cb37-4" title="4">Data[[<span class="dv">1</span>]]<span class="op">$</span>y &lt;-<span class="st"> </span>haul<span class="op">$</span>y_Albatrossia.pectoralis</a>
-<a class="sourceLine" id="cb37-5" title="5">Data[[<span class="dv">2</span>]]<span class="op">$</span>x &lt;-<span class="st"> </span>haul<span class="op">$</span>x_depth</a>
-<a class="sourceLine" id="cb37-6" title="6">Data[[<span class="dv">2</span>]]<span class="op">$</span>y &lt;-<span class="st"> </span>haul<span class="op">$</span>y_Sebastolobus.altivelis</a>
-<a class="sourceLine" id="cb37-7" title="7">Fits   &lt;-<span class="st"> </span><span class="kw"><a href="../reference/senlm.multi.html">senlm.multi</a></span> (Models, Data)</a></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1">Models &lt;-<span class="st"> </span><span class="kw"><a href="../reference/set_models.html">set_models</a></span> (<span class="dt">mean_fun=</span><span class="st">"gaussian"</span>, <span class="dt">err_dist=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"zip"</span>, <span class="st">"zinb"</span>))</a>
+<a class="sourceLine" id="cb38-2" title="2">Data &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/vector.html">vector</a></span> (<span class="dt">length=</span><span class="dv">2</span>, <span class="dt">mode=</span><span class="st">"list"</span>)</a>
+<a class="sourceLine" id="cb38-3" title="3">Data[[<span class="dv">1</span>]]<span class="op">$</span>x &lt;-<span class="st"> </span>haul<span class="op">$</span>x_depth</a>
+<a class="sourceLine" id="cb38-4" title="4">Data[[<span class="dv">1</span>]]<span class="op">$</span>y &lt;-<span class="st"> </span>haul<span class="op">$</span>y_Albatrossia.pectoralis</a>
+<a class="sourceLine" id="cb38-5" title="5">Data[[<span class="dv">2</span>]]<span class="op">$</span>x &lt;-<span class="st"> </span>haul<span class="op">$</span>x_depth</a>
+<a class="sourceLine" id="cb38-6" title="6">Data[[<span class="dv">2</span>]]<span class="op">$</span>y &lt;-<span class="st"> </span>haul<span class="op">$</span>y_Sebastolobus.altivelis</a>
+<a class="sourceLine" id="cb38-7" title="7">Fits   &lt;-<span class="st"> </span><span class="kw"><a href="../reference/senlm.multi.html">senlm.multi</a></span> (Models, Data)</a></code></pre></div>
 </div>
 </div>
 <div id="code-organisation" class="section level1">
