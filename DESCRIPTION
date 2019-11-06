@@ -15,7 +15,7 @@ Imports:
 	bbmle,
 	tweedie,
 	tidyverse
-License: file LICENSE
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1.9000
