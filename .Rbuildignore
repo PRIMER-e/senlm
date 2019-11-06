@@ -1,0 +1,7 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^Makefile$
+^code$
+^run$
+^doc$
+^Meta$
