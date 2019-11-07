@@ -1,1 +1,11 @@
 destination: docs
+reference:
+  - title: "Fitting models"
+    desc: >
+      Functions for fitting models to data.
+    contents:
+      - senlm
+  - title: "All functions"
+    desc: "All functions exported by the package."
+    contents:
+      - matches("*")
