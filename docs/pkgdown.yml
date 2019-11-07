@@ -3,4 +3,7 @@ pkgdown: 1.4.1
 pkgdown_sha: ~
 articles:
   senlm: senlm.html
+urls:
+  reference: https://primer-e.github.io/senlm/reference
+  article: https://primer-e.github.io/senlm/articles
 
