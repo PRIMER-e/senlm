@@ -20,9 +20,14 @@ knitr::opts_chunk$set(
 options(width = 100)
 ```
 
+# Installing the senlm package
+
 ```{r installation, eval=FALSE}
 install.packages("devtools")
 devtools::install_github("PRIMER-e/senlm")
+```
+
+# Loading the senlm package
 
 ```{r setup}
 library(senlm)
