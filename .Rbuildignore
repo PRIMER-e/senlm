@@ -10,3 +10,4 @@
 ^pkgdown$
 index.md
 ^\.travis\.yml$
+^codecov\.yml$
