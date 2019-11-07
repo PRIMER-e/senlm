@@ -44,3 +44,4 @@ Suggests:
     R.utils
 VignetteBuilder: knitr
 URL: https://primer-e.github.io/senlm/, https://github.com/PRIMER-e/senlm
+
