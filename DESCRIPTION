@@ -22,7 +22,7 @@ Authors@R: c(
            email = "nurudeen@primer-e.co.nz",
            comment = c(ORCID = "0000-0001-7592-5460")),
     person(given = "",
-           family = "PRIMER-e",
+           family = "Quest Research Ltd trading as PRIMER-e",
            role = c("cph"),
            email = "primer@primer-e.co.nz"))
 Description: System for ecological non-linear modelling.
