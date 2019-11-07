@@ -1038,7 +1038,7 @@ head (haul)
 ## Fitting models to data
 
 To fit one model to a data set we use the <tt>senlm()</tt> function. We illustrate this with the 
-<tt>haul</
+<tt>haul</tt> dataset.
 
 ```{r}
 Fit <- senlm (data=haul, xvar="x_depth", yvar="y_Sebastolobus.altivelis", 
