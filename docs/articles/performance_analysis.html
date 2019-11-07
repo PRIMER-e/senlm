@@ -140,63 +140,60 @@
 <a class="sourceLine" id="cb2-4" title="4"><span class="co">## --- Summarise the Profiling Data --- #</span></a>
 <a class="sourceLine" id="cb2-5" title="5"><span class="kw">pathSummary</span>(pd)</a>
 <a class="sourceLine" id="cb2-6" title="6"><span class="co">#&gt;                                                    total.pct</span></a>
-<a class="sourceLine" id="cb2-7" title="7"><span class="co">#&gt; ...  fn -&gt; do.call -&gt; minuslogl -&gt; NLL.discrete        26.60</span></a>
-<a class="sourceLine" id="cb2-8" title="8"><span class="co">#&gt; ...  NLL.discrete -&gt; do.call -&gt; mu_gaussian            13.79</span></a>
-<a class="sourceLine" id="cb2-9" title="9"><span class="co">#&gt; ...  check_par_valid -&gt; make_bounded                    7.88</span></a>
-<a class="sourceLine" id="cb2-10" title="10"><span class="co">#&gt; ...  minuslogl -&gt; NLL.discrete -&gt; NLL.negbin            4.43</span></a>
-<a class="sourceLine" id="cb2-11" title="11"><span class="co">#&gt; ...  minuslogl -&gt; NLL.discrete -&gt; make_bounded          3.94</span></a>
-<a class="sourceLine" id="cb2-12" title="12"><span class="co">#&gt; ...  NLL.discrete -&gt; NLL.negbin -&gt; lfactorial           3.45</span></a>
-<a class="sourceLine" id="cb2-13" title="13"><span class="co">#&gt; ...  optim -&gt; .External2 -&gt; &lt;Anonymous&gt; -&gt; fn           2.96</span></a>
-<a class="sourceLine" id="cb2-14" title="14"><span class="co">#&gt; ...  do.call -&gt; mu_gaussian -&gt; as.list                  2.96</span></a>
-<a class="sourceLine" id="cb2-15" title="15"><span class="co">#&gt; ...  relist2 -&gt; sapply -&gt; simplify2array -&gt; unique      2.46</span></a>
-<a class="sourceLine" id="cb2-16" title="16"><span class="co">#&gt; ...  fn -&gt; relist2 -&gt; sapply -&gt; lapply                  2.46</span></a>
-<a class="sourceLine" id="cb2-17" title="17"><span class="co">#&gt; ...  fn -&gt; do.call -&gt; namedrop -&gt; seq                   2.46</span></a>
-<a class="sourceLine" id="cb2-18" title="18"><span class="co">#&gt; ...  simplify2array -&gt; unique -&gt; unique.default         1.48</span></a>
-<a class="sourceLine" id="cb2-19" title="19"><span class="co">#&gt; ...  NLL.discrete -&gt; NLL.negbin -&gt; sum                  1.48</span></a>
-<a class="sourceLine" id="cb2-20" title="20"><span class="co">#&gt; ...  NLL.discrete -&gt; check_par_valid -&gt; $               1.48</span></a>
-<a class="sourceLine" id="cb2-21" title="21"><span class="co">#&gt; ...  fn -&gt; relist2 -&gt; sapply -&gt; lapply -&gt; FUN           1.48</span></a>
-<a class="sourceLine" id="cb2-22" title="22"><span class="co">#&gt; ...  &lt;Anonymous&gt; -&gt; fn -&gt; do.call -&gt; namedrop           1.48</span></a>
-<a class="sourceLine" id="cb2-23" title="23"><span class="co">#&gt; ...  relist2 -&gt; sapply -&gt; simplify2array -&gt; unlist      0.99</span></a>
-<a class="sourceLine" id="cb2-24" title="24"><span class="co">#&gt; ...  minuslogl -&gt; NLL.discrete -&gt; do.call               0.99</span></a>
-<a class="sourceLine" id="cb2-25" title="25"><span class="co">#&gt; ...  func -&gt; do.call -&gt; minuslogl -&gt; NLL.discrete       0.99</span></a>
-<a class="sourceLine" id="cb2-26" title="26"><span class="co">#&gt; ...  fn -&gt; relist2 -&gt; as.list -&gt; as.list.default        0.99</span></a>
-<a class="sourceLine" id="cb2-27" title="27"><span class="co">#&gt; ...  fn -&gt; do.call -&gt; namedrop -&gt; unique                0.99</span></a>
-<a class="sourceLine" id="cb2-28" title="28"><span class="co">#&gt; ...  do.call -&gt; namedrop -&gt; seq -&gt; seq.default          0.99</span></a>
-<a class="sourceLine" id="cb2-29" title="29"><span class="co">#&gt; ...  &lt;Anonymous&gt; -&gt; fn -&gt; relist2 -&gt; sapply             0.99</span></a>
-<a class="sourceLine" id="cb2-30" title="30"><span class="co">#&gt; ...  sapply -&gt; simplify2array -&gt; unique -&gt; lengths      0.49</span></a>
-<a class="sourceLine" id="cb2-31" title="31"><span class="co">#&gt; ...  registerS3methods -&gt; get -&gt; lazyLoadDBfetch        0.49</span></a>
-<a class="sourceLine" id="cb2-32" title="32"><span class="co">#&gt; ...  nlminb -&gt; .Call -&gt; objective -&gt; do.call            0.49</span></a>
-<a class="sourceLine" id="cb2-33" title="33"><span class="co">#&gt; ...  NLL.discrete -&gt; check_par_valid -&gt; any             0.49</span></a>
-<a class="sourceLine" id="cb2-34" title="34"><span class="co">#&gt; ...  mu_gaussian -&gt; as.list -&gt; as.list.default          0.49</span></a>
-<a class="sourceLine" id="cb2-35" title="35"><span class="co">#&gt; ...  minuslogl -&gt; NLL.discrete -&gt; do.call -&gt; paste      0.49</span></a>
-<a class="sourceLine" id="cb2-36" title="36"><span class="co">#&gt; ...  minuslogl -&gt; NLL.discrete -&gt; check_par_valid       0.49</span></a>
-<a class="sourceLine" id="cb2-37" title="37"><span class="co">#&gt; ...  fn -&gt; relist2 -&gt; sapply -&gt; simplify2array          0.49</span></a>
-<a class="sourceLine" id="cb2-38" title="38"><span class="co">#&gt; ...  fn -&gt; relist2 -&gt; sapply -&gt; match.fun               0.49</span></a>
-<a class="sourceLine" id="cb2-39" title="39"><span class="co">#&gt; ...  fn -&gt; relist2 -&gt; sapply -&gt; isFALSE                 0.49</span></a>
-<a class="sourceLine" id="cb2-40" title="40"><span class="co">#&gt; ...  fn -&gt; namedrop -&gt; seq -&gt; seq.default -&gt; nargs      0.49</span></a>
-<a class="sourceLine" id="cb2-41" title="41"><span class="co">#&gt; ...  fit_information_criteria -&gt; make_unbounded         0.49</span></a>
-<a class="sourceLine" id="cb2-42" title="42"><span class="co">#&gt; ...  eval -&gt; senlm -&gt; set_nll -&gt; lazyLoadDBfetch        0.49</span></a>
-<a class="sourceLine" id="cb2-43" title="43"><span class="co">#&gt; ...  do.call -&gt; optim -&gt; .External2 -&gt; &lt;Anonymous&gt;      0.49</span></a>
-<a class="sourceLine" id="cb2-44" title="44"><span class="co">#&gt; ...  do.call -&gt; minuslogl -&gt; NLL.discrete -&gt; sum        0.49</span></a>
-<a class="sourceLine" id="cb2-45" title="45"><span class="co">#&gt; ...  do.call -&gt; minuslogl -&gt; NLL.discrete -&gt; $          0.49</span></a>
-<a class="sourceLine" id="cb2-46" title="46"><span class="co">#&gt; ...  &lt;Anonymous&gt; -&gt; lazyLoadDBfetch                     0.49</span></a>
-<a class="sourceLine" id="cb2-47" title="47"><span class="co">#&gt; ...  &lt;Anonymous&gt; -&gt; fn -&gt; relist2 -&gt; as.list            0.49</span></a>
-<a class="sourceLine" id="cb2-48" title="48"><span class="co">#&gt; ...  &lt;Anonymous&gt; -&gt; fn -&gt; namedrop -&gt; seq               0.49</span></a>
-<a class="sourceLine" id="cb2-49" title="49"><span class="co">#&gt; ...  &lt;Anonymous&gt; -&gt; fn -&gt; namedrop -&gt; length            0.49</span></a>
-<a class="sourceLine" id="cb2-50" title="50"><span class="co">#&gt; ...  .TableMetaName -&gt; methodsPackageMetaName           0.49</span></a>
-<a class="sourceLine" id="cb2-51" title="51"><span class="co">#&gt; ...  .External2 -&gt; &lt;Anonymous&gt; -&gt; fn -&gt; relist2         0.49</span></a>
-<a class="sourceLine" id="cb2-52" title="52"><span class="co">#&gt; ...  .External2 -&gt; &lt;Anonymous&gt; -&gt; fn -&gt; order           0.49</span></a>
-<a class="sourceLine" id="cb2-53" title="53"><span class="co">#&gt; ...  .External2 -&gt; &lt;Anonymous&gt; -&gt; fn -&gt; namedrop        0.49</span></a>
-<a class="sourceLine" id="cb2-54" title="54"><span class="co">#&gt; ...  .External2 -&gt; &lt;Anonymous&gt; -&gt; fn -&gt; do.call         0.49</span></a>
-<a class="sourceLine" id="cb2-55" title="55"><span class="co">##funSummary(pd)</span></a>
-<a class="sourceLine" id="cb2-56" title="56"><span class="co">##callSummary(pd)</span></a>
-<a class="sourceLine" id="cb2-57" title="57"><span class="co">##hotPaths(pd)</span></a>
-<a class="sourceLine" id="cb2-58" title="58"><span class="co">##flatProfile(pd)</span></a>
-<a class="sourceLine" id="cb2-59" title="59"></a>
-<a class="sourceLine" id="cb2-60" title="60"><span class="co">## --- Annotate Sourcecode with Profiling Data -- #</span></a>
-<a class="sourceLine" id="cb2-61" title="61"><span class="co"># annotateSource is very useful, but won't work within a vignette.</span></a>
-<a class="sourceLine" id="cb2-62" title="62"><span class="co">#annotateSource(pd, show = TRUE)</span></a>
-<a class="sourceLine" id="cb2-63" title="63"><span class="co">##srcSummary(pd)</span></a></code></pre></div>
+<a class="sourceLine" id="cb2-7" title="7"><span class="co">#&gt; ...  fn -&gt; do.call -&gt; minuslogl -&gt; NLL.discrete        26.94</span></a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="co">#&gt; ...  NLL.discrete -&gt; do.call -&gt; mu_gaussian            12.44</span></a>
+<a class="sourceLine" id="cb2-9" title="9"><span class="co">#&gt; ...  NLL.discrete -&gt; NLL.negbin -&gt; lfactorial           6.74</span></a>
+<a class="sourceLine" id="cb2-10" title="10"><span class="co">#&gt; ...  minuslogl -&gt; NLL.discrete -&gt; NLL.negbin            6.22</span></a>
+<a class="sourceLine" id="cb2-11" title="11"><span class="co">#&gt; ...  relist2 -&gt; sapply -&gt; simplify2array -&gt; unique      3.11</span></a>
+<a class="sourceLine" id="cb2-12" title="12"><span class="co">#&gt; ...  optim -&gt; .External2 -&gt; &lt;Anonymous&gt; -&gt; fn           3.11</span></a>
+<a class="sourceLine" id="cb2-13" title="13"><span class="co">#&gt; ...  minuslogl -&gt; NLL.discrete -&gt; make_bounded          3.11</span></a>
+<a class="sourceLine" id="cb2-14" title="14"><span class="co">#&gt; ...  check_par_valid -&gt; make_bounded                    3.11</span></a>
+<a class="sourceLine" id="cb2-15" title="15"><span class="co">#&gt; ...  minuslogl -&gt; NLL.discrete -&gt; do.call -&gt; paste      2.59</span></a>
+<a class="sourceLine" id="cb2-16" title="16"><span class="co">#&gt; ...  do.call -&gt; mu_gaussian -&gt; as.list                  2.59</span></a>
+<a class="sourceLine" id="cb2-17" title="17"><span class="co">#&gt; ...  minuslogl -&gt; NLL.discrete -&gt; check_par_valid       2.07</span></a>
+<a class="sourceLine" id="cb2-18" title="18"><span class="co">#&gt; ...  &lt;Anonymous&gt; -&gt; fn -&gt; do.call -&gt; minuslogl          2.07</span></a>
+<a class="sourceLine" id="cb2-19" title="19"><span class="co">#&gt; ...  simplify2array -&gt; unique -&gt; unique.default         1.55</span></a>
+<a class="sourceLine" id="cb2-20" title="20"><span class="co">#&gt; ...  mu_gaussian -&gt; as.list -&gt; as.list.default          1.55</span></a>
+<a class="sourceLine" id="cb2-21" title="21"><span class="co">#&gt; ...  fn -&gt; relist2 -&gt; sapply -&gt; match.fun               1.55</span></a>
+<a class="sourceLine" id="cb2-22" title="22"><span class="co">#&gt; ...  &lt;Anonymous&gt; -&gt; fn -&gt; relist2 -&gt; as.list            1.55</span></a>
+<a class="sourceLine" id="cb2-23" title="23"><span class="co">#&gt; ...  minuslogl -&gt; NLL.discrete -&gt; do.call               1.04</span></a>
+<a class="sourceLine" id="cb2-24" title="24"><span class="co">#&gt; ...  fn -&gt; relist2 -&gt; sapply -&gt; lapply                  1.04</span></a>
+<a class="sourceLine" id="cb2-25" title="25"><span class="co">#&gt; ...  fn -&gt; relist2 -&gt; sapply -&gt; isFALSE                 1.04</span></a>
+<a class="sourceLine" id="cb2-26" title="26"><span class="co">#&gt; ...  fn -&gt; do.call -&gt; namedrop -&gt; seq                   1.04</span></a>
+<a class="sourceLine" id="cb2-27" title="27"><span class="co">#&gt; ...  do.call -&gt; minuslogl -&gt; NLL.discrete -&gt; $          1.04</span></a>
+<a class="sourceLine" id="cb2-28" title="28"><span class="co">#&gt; ...  &lt;Anonymous&gt; -&gt; fn -&gt; relist2 -&gt; sapply             1.04</span></a>
+<a class="sourceLine" id="cb2-29" title="29"><span class="co">#&gt; ...  &lt;Anonymous&gt; -&gt; fn -&gt; namedrop -&gt; seq               1.04</span></a>
+<a class="sourceLine" id="cb2-30" title="30"><span class="co">#&gt; ...  .External2 -&gt; &lt;Anonymous&gt; -&gt; fn -&gt; relist2         1.04</span></a>
+<a class="sourceLine" id="cb2-31" title="31"><span class="co">#&gt; ...  .External2 -&gt; &lt;Anonymous&gt; -&gt; fn -&gt; namedrop        1.04</span></a>
+<a class="sourceLine" id="cb2-32" title="32"><span class="co">#&gt; ...  sapply -&gt; simplify2array -&gt; unique -&gt; lengths      0.52</span></a>
+<a class="sourceLine" id="cb2-33" title="33"><span class="co">#&gt; ...  relist2 -&gt; sapply -&gt; simplify2array -&gt; unlist      0.52</span></a>
+<a class="sourceLine" id="cb2-34" title="34"><span class="co">#&gt; ...  NLL.discrete -&gt; NLL.negbin -&gt; sum                  0.52</span></a>
+<a class="sourceLine" id="cb2-35" title="35"><span class="co">#&gt; ...  NLL.discrete -&gt; check_par_valid -&gt; is.nan          0.52</span></a>
+<a class="sourceLine" id="cb2-36" title="36"><span class="co">#&gt; ...  NLL.discrete -&gt; check_par_valid -&gt; is.finite       0.52</span></a>
+<a class="sourceLine" id="cb2-37" title="37"><span class="co">#&gt; ...  NLL.discrete -&gt; check_par_valid -&gt; any             0.52</span></a>
+<a class="sourceLine" id="cb2-38" title="38"><span class="co">#&gt; ...  NLL.discrete -&gt; check_par_valid -&gt; $               0.52</span></a>
+<a class="sourceLine" id="cb2-39" title="39"><span class="co">#&gt; ...  namedrop -&gt; unique -&gt; unique.default               0.52</span></a>
+<a class="sourceLine" id="cb2-40" title="40"><span class="co">#&gt; ...  lattice.options -&gt; .defaultLatticeOptions          0.52</span></a>
+<a class="sourceLine" id="cb2-41" title="41"><span class="co">#&gt; ...  getExportedValue -&gt; get0 -&gt; lazyLoadDBfetch        0.52</span></a>
+<a class="sourceLine" id="cb2-42" title="42"><span class="co">#&gt; ...  get -&gt; lazyLoadDBfetch                             0.52</span></a>
+<a class="sourceLine" id="cb2-43" title="43"><span class="co">#&gt; ...  func -&gt; do.call -&gt; minuslogl -&gt; NLL.discrete       0.52</span></a>
+<a class="sourceLine" id="cb2-44" title="44"><span class="co">#&gt; ...  fn -&gt; do.call -&gt; namedrop -&gt; unique                0.52</span></a>
+<a class="sourceLine" id="cb2-45" title="45"><span class="co">#&gt; ...  do.call -&gt; minuslogl -&gt; NLL.discrete -&gt; sum        0.52</span></a>
+<a class="sourceLine" id="cb2-46" title="46"><span class="co">#&gt; ...  do.call -&gt; minuslogl -&gt; NLL.discrete               0.52</span></a>
+<a class="sourceLine" id="cb2-47" title="47"><span class="co">#&gt; ...  bbmle::mle2 -&gt; do.call -&gt; optim -&gt; .External2      0.52</span></a>
+<a class="sourceLine" id="cb2-48" title="48"><span class="co">#&gt; ...  all.equal -&gt; all.equal.numeric -&gt; any              0.52</span></a>
+<a class="sourceLine" id="cb2-49" title="49"><span class="co">#&gt; ...  &lt;Anonymous&gt; -&gt; lazyLoadDBfetch                     0.52</span></a>
+<a class="sourceLine" id="cb2-50" title="50"><span class="co">#&gt; ...  &lt;Anonymous&gt; -&gt; fn -&gt; relist2 -&gt; all                0.52</span></a>
+<a class="sourceLine" id="cb2-51" title="51"><span class="co">#&gt; ...  .External2 -&gt; &lt;Anonymous&gt; -&gt; fn -&gt; unlist          0.52</span></a>
+<a class="sourceLine" id="cb2-52" title="52"><span class="co">##funSummary(pd)</span></a>
+<a class="sourceLine" id="cb2-53" title="53"><span class="co">##callSummary(pd)</span></a>
+<a class="sourceLine" id="cb2-54" title="54"><span class="co">##hotPaths(pd)</span></a>
+<a class="sourceLine" id="cb2-55" title="55"><span class="co">##flatProfile(pd)</span></a>
+<a class="sourceLine" id="cb2-56" title="56"></a>
+<a class="sourceLine" id="cb2-57" title="57"><span class="co">## --- Annotate Sourcecode with Profiling Data -- #</span></a>
+<a class="sourceLine" id="cb2-58" title="58"><span class="co"># annotateSource is very useful, but won't work within a vignette.</span></a>
+<a class="sourceLine" id="cb2-59" title="59"><span class="co">#annotateSource(pd, show = TRUE)</span></a>
+<a class="sourceLine" id="cb2-60" title="60"><span class="co">##srcSummary(pd)</span></a></code></pre></div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
