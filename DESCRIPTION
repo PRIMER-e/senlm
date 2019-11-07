@@ -1,12 +1,30 @@
 Package: senlm
 Title: SENLM - Species environment non-linear modelling
 Version: 0.1
-Authors@R: 
+Authors@R: c(
     person(given = "Daniel",
            family = "Walsh",
+           role = c("aut"),
+           email = "dciwalsh@gmail.com"),
+    person(given = "Marti",
+           family = "Anderson",
+           role = c("aut"),
+           email = "marti@primer-e.co.nz",
+           comment = c(ORCID = "0000-0002-4018-4049")),
+    person(given = "Andrew",
+           family = "Punnett",
            role = c("aut", "cre"),
-           email = "dciwalsh@gmail.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+           email = "andrew@primer-e.co.nz",
+           comment = c(ORCID = "0000-0002-6733-4123")),
+    person(given = "Nurudeen",
+           family = "Adegoke",
+           role = c("aut"),
+           email = "nurudeen@primer-e.co.nz",
+           comment = c(ORCID = "0000-0001-7592-5460")),
+    person(given = "",
+           family = "PRIMER-e",
+           role = c("cph"),
+           email = "primer@primer-e.co.nz"))
 Description: System for ecological non-linear modelling.
 Depends:
 	R (>= 3.6.0)
