@@ -1,4 +1,5 @@
 destination: docs
+url: https://primer-e.github.io/senlm
 reference:
   - title: "Fitting models"
     desc: >
@@ -11,4 +12,4 @@ reference:
       - matches("*")
 template:
   params:
-    bootswatch: cosmos
+    bootswatch: cosmo
