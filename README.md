@@ -2,4 +2,6 @@
 
 An R package for modelling ecological data across gradients.
 
-# Contributing
+For installation and usage details, please visit the package website:
+
+  (https://primer-e.github.io/senlm/)
