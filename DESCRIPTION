@@ -32,7 +32,6 @@ Imports:
 	stats,
 	bbmle,
 	tweedie,
-	tidyverse
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
@@ -41,7 +40,6 @@ Suggests:
     testthat (>= 2.1.0),
     knitr,
     rmarkdown,
-    R.utils,
     Rgraphviz,
     proftools
 VignetteBuilder: knitr
