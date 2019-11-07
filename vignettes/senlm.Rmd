@@ -1,5 +1,5 @@
 ---
-title: "Using the <tt>senlm</tt> package"
+title: "Using the `senlm` package"
 package: senlm
 output: rmarkdown::html_vignette
 vignette: >
