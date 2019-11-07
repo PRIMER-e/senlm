@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+<title>Using the senlm package</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#header {
+text-align: center;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Using the <code>senlm</code> package</h1>
+
+
+
+<div id="installing-the-senlm-package" class="section level1">
+<h1>Installing the senlm package</h1>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)</a>
+<a class="sourceLine" id="cb1-2" title="2">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;PRIMER-e/senlm&quot;</span>)</a></code></pre></div>
+</div>
+<div id="loading-the-senlm-package" class="section level1">
+<h1>Loading the senlm package</h1>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">library</span>(senlm)</a></code></pre></div>
+</div>
+<div id="models" class="section level1">
+<h1>Models</h1>
+<p>The models (mean functions and error distributions) described here are for non-negative data. If it is possible to simulate negative data from these models (e.g. Gaussian error) then it is understood that those data points will be set to zero. Also, if a mean function takes a negative value, then the mean function should be set to zero at that location. Any data simulated from a mean function equal to zero, must be zero.</p>
+<p>If the data is Bernoulli or percentage data then the data is bounded inclusively between 0 and 1.</p>
+<p>If the data is binomial count data, then then the data is bounded inclusively between 0 and <span class="math inline">\(n\)</span>.</p>
+<p>The parameters for the mean function are stored in <span class="math inline">\(\theta_M\)</span>, the parameters for the error distribution are stored in <span class="math inline">\(\theta_E\)</span>. The binomial <span class="math inline">\(n\)</span> value, and the <span class="math inline">\(\delta\)</span> parameter of the tail-adjusted beta are stored in <span class="math inline">\(\theta_C\)</span>.</p>
+<div id="mean-functions" class="section level2">
+<h2>Mean functions</h2>
+<p>The available mean functions can be printed via the <tt>mean_function()</tt> function. The mean functions are further classified as being of type <tt>test</tt>, <tt>main</tt>, or <tt>sub</tt>. The <tt>test</tt> class functions are mainly used for testing code, and the <tt>sub</tt> class functions are special cases of the <tt>main</tt> functions.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">mean_fun</th>
+<th align="left">mean_class</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">constant</td>
+<td align="left">test</td>
+</tr>
+<tr class="even">
+<td align="left">uniform</td>
+<td align="left">test</td>
+</tr>
+<tr class="odd">
+<td align="left">beta</td>
+<td align="left">main</td>
+</tr>
+<tr class="even">
+<td align="left">sech</td>
+<td align="left">main</td>
+</tr>
+<tr class="odd">
+<td align="left">gaussian</td>
+<td align="left">main</td>
+</tr>
+<tr class="even">
+<td align="left">mixgaussian</td>
+<td align="left">main</td>
+</tr>
+<tr class="odd">
+<td align="left">hofV</td>
+<td align="left">main</td>
+</tr>
+<tr class="even">
+<td align="left">sech_p1</td>
+<td align="left">sub</td>
+</tr>
+<tr class="odd">
+<td align="left">sech_r0p1</td>
+<td align="left">sub</td>
+</tr>
+<tr class="even">
+<td align="left">mixgaussian_equal</td>
+<td align="left">sub</td>
+</tr>
+<tr class="odd">
+<td align="left">hofII</td>
+<td align="left">sub</td>
+</tr>
+<tr class="even">
+<td align="left">hofIV</td>
+<td align="left">sub</td>
+</tr>
+<tr class="odd">
+<td align="left">hofIVb</td>
+<td align="left">sub</td>
+</tr>
+<tr class="even">
+<td align="left">hofVb</td>
+<td align="left">sub</td>
+</tr>
+</tbody>
+</table>
+<p>All mean functions have an <span class="math inline">\(H\)</span> parameter determining the maximum height of the mean function. The range of this parameter depends on the the error distribution (see next section). If the error distribution class is <tt>binary</tt> or <tt>percentage</tt>, then <span class="math inline">\(H\)</span> is between 0 and 1; if the error distribution class <tt>binomial</tt>, then <span class="math inline">\(H\)</span> is between 0 and <span class="math inline">\(n\)</span>; otherwise <span class="math inline">\(H\)</span> must be positive.</p>
+<p>The mean functions, <span class="math inline">\(\mu_{\theta_M}(x)\)</span>, are listed below in detail, with parameter descriptions, and their classification in parentheses in the title. The <tt>get_mean_fun_parnames()</tt> output displays the name of the parameters used in the package - sometimes the code uses a simpler roman character rather than a greek spelling e.g. <tt>w</tt> for <span class="math inline">\(\omega\)</span> (<tt>omega</tt>).</p>
+<div id="constant-test" class="section level3">
+<h3><tt>constant</tt> (test)</h3>
+<p>The constant mean function.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\theta_M &amp;= \{H\} \\
+H &amp;= \mbox{Mean response (}H &gt; 0, ~0 &lt; H &lt; 1, ~0 &lt; H &lt; n) \\
+\mu_{\theta_M}(x) &amp;= H \\
+\end{aligned}
+\]</span></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">get_mean_fun_parnames</span>(<span class="st">&quot;constant&quot;</span>)</a>
+<a class="sourceLine" id="cb3-2" title="2">[<span class="dv">1</span>] <span class="st">&quot;H&quot;</span></a></code></pre></div>
+</div>
+<div id="uniform-test" class="section level3">
+<h3><tt>uniform</tt> (test)</h3>
+<p>This mean function is uniform between <span class="math inline">\(c\)</span> and <span class="math inline">\(d\)</span>, with constant value between <span class="math inline">\(c\)</span> and <span class="math inline">\(d\)</span> of <span class="math inline">\(H\)</span>, and zero elsewhere.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\theta_M  &amp;= \{H, c, d\} \\
+H &amp;= \mbox{Mean response} ~(H &gt; 0 ~~\mbox{or}~~ 0 &lt; H &lt; 1 ~~\mbox{or}~~ 0 &lt; H &lt; n) \\
+c &amp;= \mbox{Lower bound} ~(-\infty &lt; c &lt; \infty) \\
+d &amp;= \mbox{Upper bound} ~(-\infty &lt; d &lt; \infty, ~c &lt; d) \\
+\mu_{\theta_M}(x) &amp;= H \times 1_{[c,d]}(x) \\
+&amp;= \left\{ \begin{array}{cl} 0, &amp; x &lt; c \\
+            H, &amp; c \leq x \leq d \\
+            0, &amp; x &gt; d \\
+           \end{array} \right . 
+\end{aligned}
+\]</span></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">get_mean_fun_parnames</span>(<span class="st">&quot;uniform&quot;</span>)</a>
+<a class="sourceLine" id="cb4-2" title="2">[<span class="dv">1</span>] <span class="st">&quot;H&quot;</span> <span class="st">&quot;c&quot;</span> <span class="st">&quot;d&quot;</span></a></code></pre></div>
+</div>
+<div id="beta-main" class="section level3">
+<h3><tt>beta</tt> (main)</h3>
+<p>This mean curve is a modified version of the p.d.f. of a beta distribution. A standard beta distribution p.d.f. has the form:</p>
+<p><span class="math display">\[ f(x) = \frac{x^{a-1} (1-x)^{b-1}}{B(a,b)}, \]</span></p>
+<p>where <span class="math inline">\(a,b &gt; 0\)</span>, <span class="math inline">\(0 \leq x \leq 1\)</span>, and <span class="math inline">\(B(a,b)\)</span> is the beta function (normalising constant). The density curve takes different shapes as follows:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="right"><span class="math inline">\(a\)</span></th>
+<th align="right"><span class="math inline">\(b\)</span></th>
+<th align="left">Shape</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right"><span class="math inline">\(&lt; 1\)</span></td>
+<td align="right"><span class="math inline">\(~~~&lt; 1\)</span></td>
+<td align="left"><span class="math inline">\(U\)</span>-shaped</td>
+</tr>
+<tr class="even">
+<td align="right"><span class="math inline">\(1\)</span></td>
+<td align="right"><span class="math inline">\(~~~1\)</span></td>
+<td align="left">Uniform</td>
+</tr>
+<tr class="odd">
+<td align="right"><span class="math inline">\(2\)</span></td>
+<td align="right"><span class="math inline">\(~~~1\)</span></td>
+<td align="left">Triangular (positive)</td>
+</tr>
+<tr class="even">
+<td align="right"><span class="math inline">\(1\)</span></td>
+<td align="right"><span class="math inline">\(~~~2\)</span></td>
+<td align="left">Triangular (negative)</td>
+</tr>
+<tr class="odd">
+<td align="right"><span class="math inline">\(&gt; 1\)</span></td>
+<td align="right"><span class="math inline">\(~~~&lt; 1\)</span></td>
+<td align="left"><span class="math inline">\(J\)</span>-shaped (positive)</td>
+</tr>
+<tr class="even">
+<td align="right"><span class="math inline">\(&lt; 1\)</span></td>
+<td align="right"><span class="math inline">\(~~~&gt; 1\)</span></td>
+<td align="left"><span class="math inline">\(J\)</span>-shaped (negative)</td>
+</tr>
+<tr class="odd">
+<td align="right"><span class="math inline">\(&gt; 1\)</span></td>
+<td align="right"><span class="math inline">\(~~~&gt; 1\)</span></td>
+<td align="left">Unimodal</td>
+</tr>
+</tbody>
+</table>
+<p>We modify this by translating the <span class="math inline">\(x\)</span>-domain from <span class="math inline">\((0,1)\)</span> to <span class="math inline">\((c,d)\)</span>, and multiplying by a height parameter <span class="math inline">\(H\)</span>. We also transform the <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> parameters to the <span class="math inline">\(u\)</span> and <span class="math inline">\(v\)</span> as follows:</p>
+<p><span class="math display">\[ u = \frac{a}{a+b}, ~~~v=\frac{1}{a+b}. \]</span></p>
+<p>Under this parameterisation, <span class="math inline">\(u\)</span> (<span class="math inline">\(0&lt;u&lt;1\)</span>) is the mean of the beta distribution, and <span class="math inline">\(v\)</span> (<span class="math inline">\(v&gt;0\)</span>) is a shape parameter. We restrict ourselves to functions that are not <span class="math inline">\(U\)</span> or <span class="math inline">\(J\)</span> shaped (i.e <span class="math inline">\(a \geq 1\)</span>, and <span class="math inline">\(b \geq 1\)</span>).</p>
+<p><span class="math display">\[
+\begin{aligned}
+\theta_M &amp;= \{H, c, d, u, v\} \\
+H &amp;= \mbox{Mean response} ~(H &gt; 0 ~~\mbox{or}~~ 0 &lt; H &lt; 1 ~~\mbox{or}~~ 0 &lt; H &lt; n) \\
+c &amp;= \mbox{Lower bound} ~(-\infty &lt; c &lt; \infty)  \\
+d &amp;= \mbox{Upper bound} ~(-\infty &lt; d &lt; \infty, ~c &lt; d)  \\
+u &amp;= \mbox{Mean of the beta distribution} ~(0 &lt; u &lt; 1) \\
+v &amp;= \mbox{Shape parameter} ~(v &gt; 0)
+~ &amp; ~ \\
+\mu_{\theta_M}(x) &amp;= \frac{H}{H_m}\frac{1}{B(a,b)}
+\left(\frac{x-c}{d-c}\right)^{a-1}
+\left(\frac{d-x}{d-c}\right)^{b-1}
+\end{aligned}
+\]</span> where <span class="math inline">\(a=\frac{u}{v}\)</span> and <span class="math inline">\(b=\frac{1-u}{v}\)</span>, and <span class="math inline">\(H_m\)</span> is the maximum value of the beta distribution.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">get_mean_fun_parnames</span>(<span class="st">&quot;beta&quot;</span>)</a>
+<a class="sourceLine" id="cb5-2" title="2">[<span class="dv">1</span>] <span class="st">&quot;H&quot;</span> <span class="st">&quot;c&quot;</span> <span class="st">&quot;d&quot;</span> <span class="st">&quot;u&quot;</span> <span class="st">&quot;v&quot;</span></a></code></pre></div>
+</div>
+<div id="sech-main" class="section level3">
+<h3><tt>sech</tt> (main)</h3>
+<p>This mean function is a modified sech function. The basic sech function has the following form:</p>
+<p><span class="math display">\[ \mbox{sech} (x) = \frac{2}{e^x + e^{-x}}. \]</span></p>
+<p>This is a symmetric, unimodal function centered around zero. This function is modified as follows.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\theta_M &amp;= \{H, m, s, r, p\} \\
+H &amp;= \mbox{Mean response} ~(H &gt; 0 ~~\mbox{or}~~ 0 &lt; H &lt; 1 ~~\mbox{or}~~ 0 &lt; H &lt; n) \\
+m &amp;= \mbox{Mode} ~(-\infty &lt; m &lt; \infty)  \\
+s &amp;= \mbox{Spread parameter} ~(s &gt; \infty)  \\
+r &amp;= \mbox{Skewness parameter} ~(-1 &lt; r &lt; 1) \\
+p &amp;= \mbox{Peakedness parameter} ~(p &gt; 0)
+~ &amp; ~ \\
+\mu_{\theta_M}(x) &amp;= \frac{H}{H_m}
+\exp\left(\frac{rp}{s}(x - (m-x_m))\right)
+\left(\mbox{sech}\left(\frac{x-(m-x_m)}{s}\right)\right)^p
+\end{aligned}
+\]</span> where <span class="math inline">\(x_m = \frac{s}{2}\log\left(\frac{1+r}{1-r}\right)\)</span> and <span class="math inline">\(H_m = \exp\left(\frac{rp}{s}x_m\right)\left(\sqrt{1 - r^2}\right)^p\)</span> The values <span class="math inline">\(x_m\)</span> and <span class="math inline">\(H_m\)</span> are used to fix the curve so <span class="math inline">\(m\)</span> is the location of the mode, and <span class="math inline">\(H\)</span> is the maximum height of the curve (at <span class="math inline">\(m\)</span>). If <span class="math inline">\(r\)</span> is positive the curve is positively skewed.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">get_mean_fun_parnames</span>(<span class="st">&quot;sech&quot;</span>)</a>
+<a class="sourceLine" id="cb6-2" title="2">[<span class="dv">1</span>] <span class="st">&quot;H&quot;</span> <span class="st">&quot;m&quot;</span> <span class="st">&quot;s&quot;</span> <span class="st">&quot;r&quot;</span> <span class="st">&quot;p&quot;</span></a></code></pre></div>
+</div>
+<div id="sech_p1-sub" class="section level3">
+<h3><tt>sech_p1</tt> (sub)</h3>
+<p>This is the same mean function as <tt>sech</tt> but with <span class="math inline">\(p = 1\)</span>.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">get_mean_fun_parnames</span>(<span class="st">&quot;sech_p1&quot;</span>)</a>
+<a class="sourceLine" id="cb7-2" title="2">[<span class="dv">1</span>] <span class="st">&quot;H&quot;</span> <span class="st">&quot;m&quot;</span> <span class="st">&quot;s&quot;</span> <span class="st">&quot;r&quot;</span></a></code></pre></div>
+</div>
+<div id="sech_r0p1-sub" class="section level3">
+<h3><tt>sech_r0p1</tt> (sub)</h3>
+<p>This is the same mean function as <tt>sech</tt> but with <span class="math inline">\(r = 0\)</span>, and <span class="math inline">\(p = 1\)</span>.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">get_mean_fun_parnames</span>(<span class="st">&quot;sech_r0p1&quot;</span>)</a>
+<a class="sourceLine" id="cb8-2" title="2">[<span class="dv">1</span>] <span class="st">&quot;H&quot;</span> <span class="st">&quot;m&quot;</span> <span class="st">&quot;s&quot;</span></a></code></pre></div>
+</div>
+<div id="gaussian-main" class="section level3">
+<h3><tt>gaussian</tt> (main)</h3>
+<p>This mean function is a Gaussian curve with a maximum height <span class="math inline">\(H\)</span>, located at mean/mode <span class="math inline">\(m\)</span>, and a standard deviation of <span class="math inline">\(s\)</span>.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\theta_M  &amp;= \{H, m, s\} \\
+H &amp;= \mbox{Maximum value of mean function} ~(H &gt; 0, ~~\mbox{or}~~ 0 &lt; H &lt; 1, ~~\mbox{or}~~ 0 &lt; H &lt; n)  \\
+m &amp;= \mbox{Location of maximum of mean function} 
+          ~(-\infty &lt; m &lt; \infty)  \\
+s &amp;= \mbox{Standard deviation of mean function} ~(s &gt; 0) \\
+~ &amp; ~ \\
+\mu_{\theta_M}(x) &amp;= H \exp\left(-\frac{1}{2}\left(\frac{x-m}{s}\right)^2\right)
+\end{aligned}
+\]</span></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">get_mean_fun_parnames</span>(<span class="st">&quot;gaussian&quot;</span>)</a>
+<a class="sourceLine" id="cb9-2" title="2">[<span class="dv">1</span>] <span class="st">&quot;H&quot;</span> <span class="st">&quot;m&quot;</span> <span class="st">&quot;s&quot;</span></a></code></pre></div>
+</div>
+<div id="mixgaussian-main" class="section level3">
+<h3><tt>mixgaussian</tt> (main)</h3>
+<p>This mean function is a mixture of two Gaussian curves. The first component has a maximum height located at mean/mode <span class="math inline">\(m_1\)</span>, with a standard deviation of <span class="math inline">\(s_1\)</span>. Similarly the second component has a maximum height located at mean/mode <span class="math inline">\(m_2\)</span>, with a standard deviation of <span class="math inline">\(s_2\)</span>. The mixture probability is given by <span class="math inline">\(\alpha\)</span>, and the maximum height of the curve is given by <span class="math inline">\(H\)</span>. The condition, <span class="math inline">\(m_1 \leq m_2\)</span>, ensures that component one is always on the left.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\theta_M &amp;= \{H, \alpha, m_1, m_2, s_1, s_2\} \\
+H &amp;= \mbox{Maximum value of mean function} ~(H &gt; 0, ~~\mbox{or}~~ 0 &lt; H &lt; 1, ~~\mbox{or}~~ 0 &lt; H &lt; n)  \\
+\alpha &amp;= \mbox{Mixture probability for first component} ~(0 &lt; \alpha &lt; 1) \\
+  m_i &amp;= \mbox{Mean/mode of $i^{th}$ component}
+  ~(-\infty &lt; m_i&lt; \infty) \\
+  s_i &amp;= \mbox{Standard deviation of $i^{th}$ component} 
+   ~(s_i &gt; 0) \\
+  ~ &amp; ~ \\
+\mu_{\theta_M}(x) &amp;= \frac{H}{H_m}\left\{ \alpha\exp\left(-\frac{1}{2}\left(\frac{x-m_1}{s_1}\right)^2\right) + 
+              (1-\alpha)\exp\left(-\frac{1}{2}\left(\frac{x-m_2}{s_2}\right)^2\right)
+              \right\}
+\end{aligned}
+\]</span></p>
+<p>where <span class="math inline">\(H_m\)</span> is the maximum value of the unscaled (<span class="math inline">\(H=1\)</span>) gaussian mixture curve. This is determined numerically.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">get_mean_fun_parnames</span>(<span class="st">&quot;mixgaussian&quot;</span>)</a>
+<a class="sourceLine" id="cb10-2" title="2">[<span class="dv">1</span>] <span class="st">&quot;H&quot;</span>  <span class="st">&quot;a&quot;</span>  <span class="st">&quot;m1&quot;</span> <span class="st">&quot;m2&quot;</span> <span class="st">&quot;s1&quot;</span> <span class="st">&quot;s2&quot;</span></a></code></pre></div>
+</div>
+<div id="mixgaussian_equal-sub" class="section level3">
+<h3><tt>mixgaussian_equal</tt> (sub)</h3>
+<p>This mean function is a the same as the <tt>mixgaussian</tt> mean function, but with the constraint that <span class="math inline">\(s_1 = s_2 ~(=s)\)</span>.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">get_mean_fun_parnames</span>(<span class="st">&quot;mixgaussian_equal&quot;</span>)</a>
+<a class="sourceLine" id="cb11-2" title="2">[<span class="dv">1</span>] <span class="st">&quot;H&quot;</span>  <span class="st">&quot;a&quot;</span>  <span class="st">&quot;m1&quot;</span> <span class="st">&quot;m2&quot;</span> <span class="st">&quot;s&quot;</span> </a></code></pre></div>
+</div>
+<div id="hofv-main" class="section level3">
+<h3><tt>hofV</tt> (main)</h3>
+<p>This mean function is a scaled product of two sigmoid (logistic) growth curves (one increasing and one decreasing). The growth rates of each curve are <span class="math inline">\(\omega_1\)</span> and <span class="math inline">\(\omega_2\)</span> , and the points of inflection (half height locations) of each curve occur at <span class="math inline">\(m − k\)</span> and <span class="math inline">\(m + k\)</span> respectively.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\theta_M &amp;= \{H, m, \omega_1, \omega_2, k\} \\
+H &amp;= \mbox{Maximum value of mean function} ~(H &gt; 0, ~~\mbox{or}~~ 0 &lt; H &lt; 1, ~~\mbox{or}~~ 0 &lt; H &lt; n)  \\
+  m &amp;= \mbox{Mid-point between points of inflection} ~(-\infty &lt; m &lt; \infty) \\
+  \omega_1 &amp;= \mbox{Growth rate parameter of increasing growth curve}
+  ~(\omega_1 &gt; 0) \\
+  \omega_2 &amp;= \mbox{Growth rate parameter of decreasing growth curve} 
+  ~(\omega_2 &gt; 0) \\
+  k &amp;= \mbox{Half the distance between points of inflections} ~(k &gt; 0) \\
+  ~ &amp; ~ \\
+\mu_{\theta_M}(x) &amp;= \frac{H}{H_m}
+\left(\frac{1}{1 + \exp{(-\omega_1(x-(m-k))}}\right)
+\left(\frac{1}{1 + \exp{(\omega_2(x-(m+k))}}\right)
+\end{aligned}
+\]</span></p>
+<p>The variable <span class="math inline">\(H_m\)</span> is the maximum value of the unscaled product of the sigmoidal functions. The value of <span class="math inline">\(H_m\)</span> is determined numerically.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">get_mean_fun_parnames</span>(<span class="st">&quot;hofV&quot;</span>)</a>
+<a class="sourceLine" id="cb12-2" title="2">[<span class="dv">1</span>] <span class="st">&quot;H&quot;</span>  <span class="st">&quot;m&quot;</span>  <span class="st">&quot;w1&quot;</span> <span class="st">&quot;w2&quot;</span> <span class="st">&quot;k&quot;</span> </a></code></pre></div>
+</div>
+<div id="hofii-sub" class="section level3">
+<h3><tt>hofII</tt> (sub)</h3>
+<p>This mean function is a sigmoid (logistic) growth curve with a maximum height of <span class="math inline">\(H\)</span>, a point of inflection <span class="math inline">\(m\)</span>, and a growth rate parameter of <span class="math inline">\(\omega_0\)</span>.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\theta_M &amp;= \{H, m, \omega_0\} \\
+H &amp;= \mbox{Maximum value of mean function} ~(H &gt; 0, ~~\mbox{or}~~ 0 &lt; H &lt; 1, ~~\mbox{or}~~ 0 &lt; H &lt; n)  \\
+  m &amp;= \mbox{Point of inflection} ~(-\infty &lt; m &lt; \infty) \\
+  \omega_0 &amp;= \mbox{Growth rate parameter} ~(-\infty &lt; \omega_0 &lt; \infty) 
+  ~ &amp; ~ \\
+\mu_{\theta_M}(x) &amp;= H\left(\frac{1}{1 + \exp{(-\omega_0(x-m))}}\right)
+\end{aligned}
+\]</span></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="kw">get_mean_fun_parnames</span>(<span class="st">&quot;hofII&quot;</span>)</a>
+<a class="sourceLine" id="cb13-2" title="2">[<span class="dv">1</span>] <span class="st">&quot;H&quot;</span>  <span class="st">&quot;m&quot;</span>  <span class="st">&quot;w0&quot;</span></a></code></pre></div>
+</div>
+<div id="hofiv-sub" class="section level3">
+<h3><tt>hofIV</tt> (sub)</h3>
+<p>This mean function is a scaled product of two sigmoid (logistic) growth curves (one increasing and one decreasing). The growth rates of each curve is <span class="math inline">\(\omega\)</span>, and points of inflection (half height locations) of each curve occur at <span class="math inline">\(m − k\)</span> and <span class="math inline">\(m + k\)</span> respectively.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\theta_M &amp;= \{H, m, \omega, k\} \\
+H &amp;= \mbox{Maximum value of mean function} ~(H &gt; 0, ~~\mbox{or}~~ 0 &lt; H &lt; 1, ~~\mbox{or}~~ 0 &lt; H &lt; n)  \\
+  m &amp;= \mbox{Mid-point between points of inflection} ~(-\infty &lt; m &lt; \infty) \\
+  \omega &amp;= \mbox{Growth rate parameter} ~(\omega &gt; 0) \\
+  k &amp;= \mbox{Half the distance between points of inflections} ~(k &gt; 0) \\
+  ~ &amp; ~ \\
+\mu_{\theta_M}(x) &amp;= \frac{H}{H_m}
+\left(\frac{1}{1 + \exp{(-\omega(x-(m-k))}}\right)
+\left(\frac{1}{1 + \exp{(\omega(x-(m+k))}}\right)
+\end{aligned}
+\]</span></p>
+<p>The variable <span class="math inline">\(H_m\)</span> is the maximum value of the unscaled product of the sigmoidal functions. <span class="math inline">\(H_m = (1 + \exp(−\omega k))^{−2}\)</span>.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="kw">get_mean_fun_parnames</span>(<span class="st">&quot;hofIV&quot;</span>)</a>
+<a class="sourceLine" id="cb14-2" title="2">[<span class="dv">1</span>] <span class="st">&quot;H&quot;</span> <span class="st">&quot;m&quot;</span> <span class="st">&quot;w&quot;</span> <span class="st">&quot;k&quot;</span></a></code></pre></div>
+</div>
+<div id="hofivb-sub" class="section level3">
+<h3><tt>hofIVb</tt> (sub)</h3>
+<p>This is the same mean function as the <tt>hofIV</tt>, except that <span class="math inline">\(k = 0\)</span>.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\theta_M &amp;= \{H, m, \omega\} \\
+H &amp;= \mbox{Maximum value of mean function} ~(H &gt; 0, ~~\mbox{or}~~ 0 &lt; H &lt; 1, ~~\mbox{or}~~ 0 &lt; H &lt; n)  \\
+  m &amp;= \mbox{Location of points of inflection} ~(-\infty &lt; m &lt; \infty) \\
+  \omega &amp;= \mbox{Growth rate parameter} ~(\omega &gt; 0) \\
+  ~ &amp; ~ \\
+\mu_{\theta_M}(x) &amp;= \frac{H}{0.25}
+\left(\frac{1}{1 + \exp{(-\omega(x-m)}}\right)
+\left(\frac{1}{1 + \exp{(\omega(x-m)}}\right)
+\end{aligned}
+\]</span></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="kw">get_mean_fun_parnames</span>(<span class="st">&quot;hofIVb&quot;</span>)</a>
+<a class="sourceLine" id="cb15-2" title="2">[<span class="dv">1</span>] <span class="st">&quot;H&quot;</span> <span class="st">&quot;m&quot;</span> <span class="st">&quot;w&quot;</span></a></code></pre></div>
+</div>
+<div id="hofvb-sub" class="section level3">
+<h3><tt>hofVb</tt> (sub)</h3>
+<p>This is the same mean function as the <tt>hofV</tt>, except that <span class="math inline">\(k = 0\)</span>.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\theta_M &amp;= \{H, m, \omega_1, \omega_2\} \\
+H &amp;= \mbox{Maximum value of mean function} ~(H &gt; 0, ~~\mbox{or}~~ 0 &lt; H &lt; 1, ~~\mbox{or}~~ 0 &lt; H &lt; n)  \\
+  m &amp;= \mbox{Mid-point between points of inflection} ~(-\infty &lt; m &lt; \infty) \\
+  \omega_1 &amp;= \mbox{Growth rate parameter of increasing growth curve}
+  ~(\omega_1 &gt; 0) \\
+  \omega_2 &amp;= \mbox{Growth rate parameter of decreasing growth curve} 
+  ~(\omega_2 &gt; 0) \\
+  ~ &amp; ~ \\
+\mu_{\theta_M}(x) &amp;= \frac{H}{H_m}
+\left(\frac{1}{1 + \exp{(-\omega_1(x-m)}}\right)
+\left(\frac{1}{1 + \exp{(\omega_2(x-m)}}\right)
+\end{aligned}
+\]</span></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="kw">get_mean_fun_parnames</span>(<span class="st">&quot;hofVb&quot;</span>)</a>
+<a class="sourceLine" id="cb16-2" title="2">[<span class="dv">1</span>] <span class="st">&quot;H&quot;</span>  <span class="st">&quot;m&quot;</span>  <span class="st">&quot;w1&quot;</span> <span class="st">&quot;w2&quot;</span></a></code></pre></div>
+</div>
+</div>
+<div id="error-disributions" class="section level2">
+<h2>Error disributions</h2>
+<p>The error distributions are described in this section. Each error distribution is classified as to the type of data it is suited for. This information is shown in the table below.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">err_dist</th>
+<th align="left">err_class</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">bernoulli</td>
+<td align="left">binary</td>
+</tr>
+<tr class="even">
+<td align="left">binomial_count</td>
+<td align="left">binomial</td>
+</tr>
+<tr class="odd">
+<td align="left">binomial_prop</td>
+<td align="left">binomial</td>
+</tr>
+<tr class="even">
+<td align="left">poisson</td>
+<td align="left">count</td>
+</tr>
+<tr class="odd">
+<td align="left">negbin</td>
+<td align="left">count</td>
+</tr>
+<tr class="even">
+<td align="left">zip</td>
+<td align="left">count</td>
+</tr>
+<tr class="odd">
+<td align="left">zinb</td>
+<td align="left">count</td>
+</tr>
+<tr class="even">
+<td align="left">zipl</td>
+<td align="left">count</td>
+</tr>
+<tr class="odd">
+<td align="left">zinbl</td>
+<td align="left">count</td>
+</tr>
+<tr class="even">
+<td align="left">zipl.mu</td>
+<td align="left">count</td>
+</tr>
+<tr class="odd">
+<td align="left">zinbl.mu</td>
+<td align="left">count</td>
+</tr>
+<tr class="even">
+<td align="left">gaussian</td>
+<td align="left">abundance</td>
+</tr>
+<tr class="odd">
+<td align="left">tweedie</td>
+<td align="left">abundance</td>
+</tr>
+<tr class="even">
+<td align="left">zig</td>
+<td align="left">abundance</td>
+</tr>
+<tr class="odd">
+<td align="left">zigl</td>
+<td align="left">abundance</td>
+</tr>
+<tr class="even">
+<td align="left">zigl.mu</td>
+<td align="left">abundance</td>
+</tr>
+<tr class="odd">
+<td align="left">tab</td>
+<td align="left">percentage</td>
+</tr>
+<tr class="even">
+<td align="left">zitab</td>
+<td align="left">percentage</td>
+</tr>
+</tbody>
+</table>
+<p>In the sections that follow, the value of mean function at the <span class="math inline">\(i^{th}\)</span> observation <span class="math inline">\(x_i\)</span>, is denoted by <span class="math inline">\(\mu_i\)</span>. In other words:</p>
+<p><span class="math display">\[ \mu_i = \mu_{\theta_M} (x_i). \]</span></p>
+<div id="bernoulli-binary" class="section level3">
+<h3><tt>bernoulli</tt> (binary)</h3>
+<p>The Bernouli distribution is used for modelling binary data (<span class="math inline">\(0/1\)</span>). The mean function is bounded between 0 and 1. There are no extra parameters for this distribution.</p>
+<p><span class="math display">\[
+\begin{aligned}
+y_i &amp;\in \{0, 1\} \\
+\theta_E &amp;= \{\} \\
+P (Y_i = y_i \mid \theta_M, ~\theta_E , ~x_i) 
+&amp;\sim \mbox{Bernoulli}(\mu_i) \\
+\end{aligned}
+\]</span></p>
+</div>
+<div id="binomial_count-binomial" class="section level3">
+<h3><tt>binomial_count</tt> (binomial)</h3>
+<p>The binomial distribution is used for modelling count data that is bounded between 0 and <span class="math inline">\(n\)</span>. The mean function is bounded between 0 and <span class="math inline">\(n\)</span>. There are no extra parameters for this distribution.</p>
+<p><span class="math display">\[
+\begin{aligned}
+y_i &amp;\in \{0, 1, \ldots, n\} \\
+\theta_E &amp;= \{\} \\
+\theta_C &amp;= \{n\} \\
+P (Y_i = y_i \mid ~\theta_M , ~\theta_C , ~x_i) 
+&amp;\sim \mbox{Binomial}(n, ~\mu_i) \\
+\end{aligned}
+\]</span></p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="kw">get_constant_parnames</span>(<span class="st">&quot;binomial_count&quot;</span>)</a>
+<a class="sourceLine" id="cb17-2" title="2">[<span class="dv">1</span>] <span class="st">&quot;binomial_n&quot;</span></a></code></pre></div>
+</div>
+<div id="binomial_prop-binomial" class="section level3">
+<h3><tt>binomial_prop</tt> (binomial)</h3>
+<p>This is that same model as the <tt>binomial_count</tt> distribution, except the data recorded as proportions (counts divided by <span class="math inline">\(n\)</span>).</p>
+<p><span class="math display">\[
+\begin{aligned}
+y_i &amp;\in \{\frac{0}{n}, \frac{1}{n}, \ldots, \frac{n}{n}\} \\
+\theta_E &amp;= \{\} \\
+\theta_C &amp;= \{n\} \\
+P (Y_i = ny_i \mid ~\theta_M , ~\theta_C , ~x_i) 
+&amp;\sim \mbox{Binomial}(n, ~\mu_i) \\
+\end{aligned}
+\]</span></p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="kw">get_constant_parnames</span>(<span class="st">&quot;binomial_prop&quot;</span>)</a>
+<a class="sourceLine" id="cb18-2" title="2">[<span class="dv">1</span>] <span class="st">&quot;binomial_n&quot;</span></a></code></pre></div>
+</div>
+<div id="poisson-count" class="section level3">
+<h3><tt>poisson</tt> (count)</h3>
+<p>The Poisson distribution has mean parameter <span class="math inline">\(\lambda=\mu_{\theta_M} (x))\)</span>. There are no extra parameters for this distribution.</p>
+<p><span class="math display">\[
+\begin{aligned}
+y_i &amp;\in \{0, 1, 2, \ldots \} \\
+\theta_E &amp;= \{\} \\
+P (Y_i = y_i \mid \theta_M , ~\theta_E , ~x_i) 
+&amp;\sim \mbox{Poisson}(\lambda_i=\mu_i) \\
+\end{aligned}
+\]</span></p>
+</div>
+<div id="negbin-count" class="section level3">
+<h3><tt>negbin</tt> (count)</h3>
+<p>The negative-binomial distribution we use is actually a Gamma-Poisson distribution with the following form:</p>
+<p><span class="math display">\[
+\begin{aligned}
+y_i &amp;\in \{0, 1, 2, \ldots \} \\
+\lambda_i &amp;\sim \mbox{Gamma}(\mbox{shape}=\alpha, ~\mbox{rate}=\beta_i),\\
+  P(Y_i=y_i \mid \lambda_i) &amp;\sim \mbox{Poisson}(\lambda_i) \\
+  ~ &amp; ~ \\
+\mbox{E}(\lambda_i) &amp;= \frac{\alpha}{\beta_i} \\
+\mbox{var}(\lambda_i) &amp;= \frac{\alpha}{\beta_i^2}, \\
+\mbox{E}(Y_i) &amp;= \frac{\alpha}{\beta_i} + \frac{\alpha}{\beta_i^2} = \mu_i \\
+\mbox{var}(Y_i) &amp;= \frac{\alpha}{\beta_i^2} = \mu_i + \frac{\mu_i^2}{\alpha} = \mu_i + \phi \mu_i^2 \\
+\end{aligned}
+\]</span> where <span class="math inline">\(\phi = \dfrac{1}{\alpha}\)</span> is the dispersion parameter (<span class="math inline">\(\phi=0\)</span> corresponds to a Poisson distribution), and <span class="math inline">\(\mu_i\)</span> is the mean parameter.</p>
+<p><span class="math display">\[
+\begin{aligned}
+y_i &amp;\in \{0, 1, 2, \ldots \} \\
+  \theta_E  &amp;= \{\phi\} \\
+  \phi &amp;= \mbox{Dispersion parameter}, ~(\phi &gt; 0) \\
+  P(Y_i=y_i \mid \theta_M, ~\theta_E, ~x_i) 
+            &amp;\sim \mbox{Gamma-Poisson}(\mu_i, ~\phi)
+\end{aligned}
+\]</span></p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1"><span class="kw">get_err_dist_parnames</span>(<span class="st">&quot;negbin&quot;</span>)</a>
+<a class="sourceLine" id="cb19-2" title="2">[<span class="dv">1</span>] <span class="st">&quot;phi&quot;</span></a></code></pre></div>
+</div>
+<div id="zip-count" class="section level3">
+<h3><tt>zip</tt> (count)</h3>
+<p>The zero-inflated Poisson (ZIP) distribution has zero-spike parameter <span class="math inline">\(\pi\)</span>, and mean parameter <span class="math inline">\(\mu_i\)</span>.</p>
+<p><span class="math display">\[
+\begin{aligned}
+y_i &amp;\in \{0, 1, 2, \ldots \} \\
+\theta_E  &amp;= \{\pi\} \\
+\pi &amp;= \mbox{Zero-spike parameter}, (0 \leq \pi \leq 1) \\
+P(Y_i=y_i \mid \theta_M, ~\theta_E, ~x_i) 
+  &amp;\sim \mbox{ZIP}(\mu_i, ~\pi) \\
+  &amp;\sim \left\{\begin{array}{ll}
+                 \mbox{Poisson}(\mu_i),
+                 &amp; \mbox{w.p.} ~~1-\pi, \\
+                 0, &amp; \mbox{w.p.} ~~\pi.
+               \end{array}\right.
+\end{aligned}
+\]</span></p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="kw">get_err_dist_parnames</span>(<span class="st">&quot;zip&quot;</span>)</a>
+<a class="sourceLine" id="cb20-2" title="2">[<span class="dv">1</span>] <span class="st">&quot;pi&quot;</span></a></code></pre></div>
+</div>
+<div id="zinb-count" class="section level3">
+<h3><tt>zinb</tt> (count)</h3>
+<p>The zero-inflated negative-binomial (ZINB) distribution has zero-spike parameter <span class="math inline">\(\pi\)</span>, dispersion parameter <span class="math inline">\(\phi\)</span>, and mean parameter <span class="math inline">\(\mu_i\)</span>.</p>
+<p><span class="math display">\[
+\begin{aligned}
+y_i &amp;\in \{0, 1, 2, \ldots \} \\
+\theta_E &amp;= \{\pi, \phi\} \\
+\pi &amp;= \mbox{Zero-spike parameter} ~(0 \leq \pi \leq 1) \\
+\phi &amp;= \mbox{Dispersion parameter} ~(\phi &gt; 0) \\
+P(Y_i=y_i \mid \theta_M, ~\theta_E, ~x_i) 
+            &amp;\sim \mbox{ZINB}(\mu_i, ~\pi, ~\phi) \\
+            &amp;\sim \left\{\begin{array}{ll}
+            \mbox{Gamma-Poisson}(\mu_i, ~\phi),
+            &amp; \mbox{w.p.} ~~1-\pi, \\
+            0, &amp; \mbox{w.p.} ~~\pi.
+           \end{array}\right.
+\end{aligned}
+\]</span></p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1"><span class="kw">get_err_dist_parnames</span>(<span class="st">&quot;zinb&quot;</span>)</a>
+<a class="sourceLine" id="cb21-2" title="2">[<span class="dv">1</span>] <span class="st">&quot;pi&quot;</span>  <span class="st">&quot;phi&quot;</span></a></code></pre></div>
+</div>
+<div id="zipl-count" class="section level3">
+<h3><tt>zipl</tt> (count)</h3>
+<p>The zero-inflated Poisson linked (ZIPL) distribution is a Poisson distribution with mean parameter <span class="math inline">\(\mu_i\)</span>, with a zero spike that has parameters <span class="math inline">\(\gamma_0\)</span> and <span class="math inline">\(\gamma_1\)</span>. The zero-spike parameters are linked to the mean function on the logit/log scale as follows:</p>
+<p><span class="math display">\[ \mbox{logit}(\pi_i) = \gamma_0 + \gamma_1\log(\mu_i), \]</span></p>
+<p>where <span class="math inline">\(\pi_i\)</span> is the value of the zero-spike parameter at <span class="math inline">\(x_i\)</span>.</p>
+<p><span class="math display">\[
+\begin{aligned}
+y_i &amp;\in \{0, 1, 2, \ldots \} \\
+\theta_E &amp;= \{\gamma_0, \gamma_1\} \\
+\gamma_0 &amp;= \mbox{Zero-spike parameter intercept} 
+~(-\infty \leq \gamma_0 \leq \infty) \\
+\gamma_1 &amp;= \mbox{Zero-spike parameter slope} 
+~(-\infty \leq \gamma_1 \leq \infty) \\
+P(Y_i=y_i \mid \theta_M, ~\theta_E, ~x_i) 
+            &amp;\sim \mbox{ZIPL}(\mu_i, ~\gamma_0, ~\gamma_1) \\
+            &amp;\sim \left\{\begin{array}{ll}
+            \mbox{Poisson}(\mu_i),
+            &amp; \mbox{w.p.} ~~1-\pi_i, \\
+            0, &amp; \mbox{w.p.} ~~\pi_i.
+           \end{array}\right.
+\end{aligned}
+\]</span></p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="kw">get_err_dist_parnames</span>(<span class="st">&quot;zipl&quot;</span>)</a>
+<a class="sourceLine" id="cb22-2" title="2">[<span class="dv">1</span>] <span class="st">&quot;g0&quot;</span> <span class="st">&quot;g1&quot;</span></a></code></pre></div>
+</div>
+<div id="zinbl-count" class="section level3">
+<h3><tt>zinbl</tt> (count)</h3>
+<p>The zero-inflated negative-binomial linked (ZINBL) distribution is a negative-binomial distribution with mean parameter <span class="math inline">\(\mu_i\)</span>, dispersion parameter <span class="math inline">\(\phi\)</span>, and has zero-spike parameters <span class="math inline">\(\gamma_0\)</span> and <span class="math inline">\(\gamma_1\)</span>. The zero-spike parameters are linked to the mean function on the logit/log scale as follows:</p>
+<p><span class="math display">\[ \mbox{logit}(\pi_i) = \gamma_0 + \gamma_1\log(\mu_i), \]</span></p>
+<p>where <span class="math inline">\(\pi_i\)</span> is the value of the zero-spike parameter at <span class="math inline">\(x_i\)</span>.</p>
+<p><span class="math display">\[
+\begin{aligned}
+y_i &amp;\in \{0, 1, 2, \ldots \} \\
+\theta_E &amp;= \{\gamma_0, \gamma_1, \phi\} \\
+\gamma_0 &amp;= \mbox{Zero-spike parameter intercept} 
+~(-\infty \leq \gamma_0 \leq \infty) \\
+\gamma_1 &amp;= \mbox{Zero-spike parameter slope} 
+~(-\infty \leq \gamma_1 \leq \infty) \\
+\phi &amp;= \mbox{Dispersion parameter} ~(\phi &gt; 0) \\
+P(Y_i=y_i \mid \theta_M, ~\theta_E, ~x_i) 
+            &amp;\sim \mbox{ZINBL}(\mu_i, ~\gamma_0, ~\gamma_1, ~\phi) \\
+            &amp;\sim \left\{\begin{array}{ll}
+            \mbox{Gamma-Poisson}(\mu_i, ~\phi),
+            &amp; \mbox{w.p.} ~~1-\pi_i, \\
+            0, &amp; \mbox{w.p.} ~~\pi_i.
+           \end{array}\right.
+\end{aligned}
+\]</span></p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1"><span class="kw">get_err_dist_parnames</span>(<span class="st">&quot;zinbl&quot;</span>)</a>
+<a class="sourceLine" id="cb23-2" title="2">[<span class="dv">1</span>] <span class="st">&quot;g0&quot;</span>  <span class="st">&quot;g1&quot;</span>  <span class="st">&quot;phi&quot;</span></a></code></pre></div>
+</div>
+<div id="zipl.mu-count" class="section level3">
+<h3><tt>zipl.mu</tt> (count)</h3>
+<p>The zero-inflated Poisson linked-<span class="math inline">\(\mu\)</span> (ZIPL<span class="math inline">\(-\mu\)</span>) distribution is a Poisson distribution with mean parameter <span class="math inline">\(\mu_i\)</span>, with a zero spike that has parameters <span class="math inline">\(\gamma_0\)</span> and <span class="math inline">\(\gamma_1\)</span>. The zero-spike parameters are linked to the mean function on the logit/linear scale as follows:</p>
+<p><span class="math display">\[ \mbox{logit}(\pi_i) = \gamma_0 + \gamma_1\mu_i, \]</span></p>
+<p>where <span class="math inline">\(\pi_i\)</span> is the value of the zero-spike parameter at <span class="math inline">\(x_i\)</span>.</p>
+<p><span class="math display">\[
+\begin{aligned}
+y_i &amp;\in \{0, 1, 2, \ldots \} \\
+\theta_E &amp;= \{\gamma_0, \gamma_1\} \\
+\gamma_0 &amp;= \mbox{Zero-spike parameter intercept} 
+~(-\infty \leq \gamma_0 \leq \infty) \\
+\gamma_1 &amp;= \mbox{Zero-spike parameter slope} 
+~(-\infty \leq \gamma_1 \leq \infty) \\
+P(Y_i=y_i \mid \theta_M, ~\theta_E, ~x_i) 
+            &amp;\sim \mbox{ZIPL-}\mu(\mu_i, ~\gamma_0, ~\gamma_1) \\
+            &amp;\sim \left\{\begin{array}{ll}
+            \mbox{Poisson}(\mu_i),
+            &amp; \mbox{w.p.} ~~1-\pi_i, \\
+            0, &amp; \mbox{w.p.} ~~\pi_i.
+           \end{array}\right.
+\end{aligned}
+\]</span></p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1"><span class="kw">get_err_dist_parnames</span>(<span class="st">&quot;zipl.mu&quot;</span>)</a>
+<a class="sourceLine" id="cb24-2" title="2">[<span class="dv">1</span>] <span class="st">&quot;g0&quot;</span> <span class="st">&quot;g1&quot;</span></a></code></pre></div>
+</div>
+<div id="zinbl.mu-count" class="section level3">
+<h3><tt>zinbl.mu</tt> (count)</h3>
+<p>The zero-inflated negative-binomial linked-<span class="math inline">\(\mu\)</span> (ZINBL-<span class="math inline">\(\mu\)</span>) distribution is a negative-binomial distribution with mean parameter <span class="math inline">\(\mu_i\)</span>, dispersion parameter <span class="math inline">\(\phi\)</span>, and has zero-spike parameters <span class="math inline">\(\gamma_0\)</span> and <span class="math inline">\(\gamma_1\)</span>. The zero-spike parameters are linked to the mean function on the logit/linear scale as follows:</p>
+<p><span class="math display">\[ \mbox{logit}(\pi_i) = \gamma_0 + \gamma_1\mu_i, \]</span></p>
+<p>where <span class="math inline">\(\pi_i\)</span> is the value of the zero-spike parameter at <span class="math inline">\(x_i\)</span>.</p>
+<p><span class="math display">\[
+\begin{aligned}
+y_i &amp;\in \{0, 1, 2, \ldots \} \\
+\theta_E &amp;= \{\gamma_0, \gamma_1, \phi\} \\
+\gamma_0 &amp;= \mbox{Zero-spike parameter intercept} 
+~(-\infty \leq \gamma_0 \leq \infty) \\
+\gamma_1 &amp;= \mbox{Zero-spike parameter slope} 
+~(-\infty \leq \gamma_1 \leq \infty) \\
+\phi &amp;= \mbox{Dispersion parameter} ~(\phi &gt; 0) \\
+P(Y_i=y_i \mid \theta_M, ~\theta_E, ~x_i) 
+            &amp;\sim \mbox{ZINB-}\mu(\mu_i, ~\gamma_0, ~\gamma_1, ~\phi) \\
+            &amp;\sim \left\{\begin{array}{ll}
+            \mbox{Gamma-Poisson}(\mu_i, ~\phi),
+            &amp; \mbox{w.p.} ~~1-\pi_i, \\
+            0, &amp; \mbox{w.p.} ~~\pi_i.
+           \end{array}\right.
+\end{aligned}
+\]</span></p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1"><span class="kw">get_err_dist_parnames</span>(<span class="st">&quot;zinbl.mu&quot;</span>)</a>
+<a class="sourceLine" id="cb25-2" title="2">[<span class="dv">1</span>] <span class="st">&quot;g0&quot;</span>  <span class="st">&quot;g1&quot;</span>  <span class="st">&quot;phi&quot;</span></a></code></pre></div>
+</div>
+<div id="gaussian-abundance" class="section level3">
+<h3><tt>gaussian</tt> (abundance)</h3>
+<p>The Gaussian distribution has mean parameter <span class="math inline">\(\mu_i\)</span> and standard deviation <span class="math inline">\(\sigma\)</span>.</p>
+<p><span class="math display">\[
+\begin{aligned}
+y_i &amp;\geq 0 \\
+\theta_E  &amp;= \{\sigma\} \\
+\sigma &amp;= \mbox{Standard deviation} ~(\sigma &gt; 0) \\
+P(Y_i=y_i \mid ~\theta_M, ~\theta_E, ~x_i) 
+        &amp;\sim \mbox{Normal}(\mu_i, ~\sigma^2)
+\end{aligned}
+\]</span> Since our data is non-negative, any data simulated via this model will have negative values set to zero.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1"><span class="kw">get_err_dist_parnames</span>(<span class="st">&quot;gaussian&quot;</span>)</a>
+<a class="sourceLine" id="cb26-2" title="2">[<span class="dv">1</span>] <span class="st">&quot;sigma&quot;</span></a></code></pre></div>
+</div>
+<div id="tweedie-abundance" class="section level3">
+<h3><tt>tweedie</tt> (abundance)</h3>
+<p>Tweedie distributions are a class of exponential dispersion models where the variance is a function of the mean of the form:</p>
+<p><span class="math display">\[ \mbox{var}(Y_i) = \phi\mu_i^\rho,\]</span></p>
+<p>where <span class="math inline">\(\rho \in (-\infty, 0] \cup [1, \infty)\)</span>. Special cases include the normal (<span class="math inline">\(\rho = 0\)</span>), Poisson (<span class="math inline">\(\rho = 1\)</span>), Gamma (<span class="math inline">\(\rho = 2\)</span>) and inverse Gaussian (<span class="math inline">\(\rho = 3\)</span>) distributions. For <span class="math inline">\(1 &lt; \rho &lt; 2\)</span>, the distributions are continuous for <span class="math inline">\(Y &gt; 0\)</span> and have a discrete mass at <span class="math inline">\(Y = 0\)</span>. We will restrict our attention to <span class="math inline">\(1 &lt; \rho &lt; 2\)</span>.</p>
+<p><span class="math display">\[
+\begin{aligned}
+y_i &amp;\geq 0 \\
+\theta_E  &amp;= \{\phi, ~\rho\} \\
+\phi &amp;= \mbox{Dispersion parameter} ~(\phi &gt; 0) \\
+\rho &amp;= \mbox{Power parameter} ~(1 &lt; \rho &lt; 2) \\
+P(Y_i=y_i \mid ~\theta_M, ~\theta_E, ~x_i) 
+        &amp;\sim \mbox{Tweedie}(\mu_i, ~\phi, ~\rho) \\
+\mbox{E}(Y_i) &amp;= \mu_i \\
+\mbox{var}(Y_i) &amp;= \phi(\mu_i)^\rho 
+\end{aligned}
+\]</span></p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1"><span class="kw">get_err_dist_parnames</span>(<span class="st">&quot;tweedie&quot;</span>)</a>
+<a class="sourceLine" id="cb27-2" title="2">[<span class="dv">1</span>] <span class="st">&quot;phi&quot;</span> <span class="st">&quot;rho&quot;</span></a></code></pre></div>
+</div>
+<div id="zig-abundance" class="section level3">
+<h3><tt>zig</tt> (abundance)</h3>
+<p>The zero-inflated Gamma (ZIG) distribution has zero-spike parameter <span class="math inline">\(\pi\)</span>, dispersion parameter <span class="math inline">\(\phi\)</span>, and mean parameter <span class="math inline">\(\mu_i\)</span>.</p>
+<p><span class="math display">\[
+\begin{aligned}
+y_i &amp;\geq 0 \\
+\theta_E  &amp;= \{\pi, ~\phi\} \\
+\pi &amp;= \mbox{Zero-spike parameter}, ~(0 \leq \pi \leq 1) \\
+\phi &amp;= \mbox{Dispersion parameter}, ~(\phi &gt; 0) \\
+P(Y_i=y_i \mid \theta_M, ~\theta_E, ~x_i) 
+&amp;\sim \mbox{ZIG}(\mu_i, ~\pi, ~\phi) \\
+&amp;\sim \left\{\begin{array}{ll}
+  \mbox{Gamma}(\mbox{shape}=1/\phi, 
+  ~\mbox{scale} = \phi\mu_i)
+  &amp; \mbox{w.p.} ~~1-\pi, \\
+  0, &amp; \mbox{w.p.} ~~\pi.
+  \end{array}\right.\\
+\mbox{E}(Y_i) &amp;= (1 - \pi)\mu_i \\
+\mbox{var}(Y_i) &amp;= (1-\pi)^2\phi\mu_i^2
+\end{aligned}
+\]</span></p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1"><span class="kw">get_err_dist_parnames</span>(<span class="st">&quot;zig&quot;</span>)</a>
+<a class="sourceLine" id="cb28-2" title="2">[<span class="dv">1</span>] <span class="st">&quot;pi&quot;</span>  <span class="st">&quot;phi&quot;</span></a></code></pre></div>
+</div>
+<div id="zigl-abundance" class="section level3">
+<h3><tt>zigl</tt> (abundance)</h3>
+<p>The zero-inflated gamma linked (ZIGL) distribution is a Gamma distribution with mean parameter <span class="math inline">\(\mu_i\)</span>, a dispersion parameter <span class="math inline">\(\phi\)</span>, and a zero spike that has parameters <span class="math inline">\(\gamma_0\)</span> and <span class="math inline">\(\gamma_1\)</span>. The zero-spike parameters are linked to the mean function on the logit/log scale as follows:</p>
+<p><span class="math display">\[ \mbox{logit}(\pi_i) = \gamma_0 + \gamma_1\log(\mu_i), \]</span></p>
+<p>where <span class="math inline">\(\pi_i\)</span> is the value of the zero-spike parameter at <span class="math inline">\(x_i\)</span>.</p>
+<p><span class="math display">\[
+\begin{aligned}
+y_i &amp;\geq 0 \\
+\theta_E  &amp;= \{\gamma_0, ~\gamma_1, ~\phi\} \\
+\gamma_0 &amp;= \mbox{Zero-spike parameter intercept} 
+~(-\infty \leq \gamma_0 \leq \infty) \\
+\gamma_1 &amp;= \mbox{Zero-spike parameter slope} 
+~(-\infty \leq \gamma_1 \leq \infty) \\
+\phi &amp;= \mbox{Dispersion parameter}, ~(\phi &gt; 0) \\
+P(Y_i=y_i \mid \theta_M, ~\theta_E, ~x_i) 
+&amp;\sim \mbox{ZIGL}(\mu_i, ~\gamma_0, ~\gamma_1, ~\phi) \\
+&amp;\sim \left\{\begin{array}{ll}
+  \mbox{Gamma}(\mbox{shape}=1/\phi, 
+  ~\mbox{scale} = \phi\mu_i)
+  &amp; \mbox{w.p.} ~~1-\pi_i, \\
+  0, &amp; \mbox{w.p.} ~~\pi_i.
+  \end{array}\right.\\
+\mbox{E}(Y_i) &amp;= (1 - \pi)\mu_i \\
+\mbox{var}(Y_i) &amp;= (1-\pi)^2\phi\mu_i^2
+\end{aligned}
+\]</span></p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1"><span class="kw">get_err_dist_parnames</span>(<span class="st">&quot;zigl&quot;</span>)</a>
+<a class="sourceLine" id="cb29-2" title="2">[<span class="dv">1</span>] <span class="st">&quot;g0&quot;</span>  <span class="st">&quot;g1&quot;</span>  <span class="st">&quot;phi&quot;</span></a></code></pre></div>
+</div>
+<div id="zigl.mu-abundance" class="section level3">
+<h3><tt>zigl.mu</tt> (abundance)</h3>
+<p>The zero-inflated gamma linked-<span class="math inline">\(\mu\)</span> (ZIGL-<span class="math inline">\(\mu\)</span>) distribution is a Gamma distribution with mean parameter <span class="math inline">\(\mu_i\)</span>, a dispersion parameter <span class="math inline">\(\phi\)</span>, and a zero spike that has parameters <span class="math inline">\(\gamma_0\)</span> and <span class="math inline">\(\gamma_1\)</span>. The zero-spike parameters are linked to the mean function on the logit/linear scale as follows:</p>
+<p><span class="math display">\[ \mbox{logit}(\pi_i) = \gamma_0 + \gamma_1\mu_i, \]</span></p>
+<p>where <span class="math inline">\(\pi_i\)</span> is the value of the zero-spike parameter at <span class="math inline">\(x_i\)</span>.</p>
+<p><span class="math display">\[
+\begin{aligned}
+y_i &amp;\geq 0 \\
+\theta_E  &amp;= \{\gamma_0, ~\gamma_1, ~\phi\} \\
+\gamma_0 &amp;= \mbox{Zero-spike parameter intercept} 
+~(-\infty \leq \gamma_0 \leq \infty) \\
+\gamma_1 &amp;= \mbox{Zero-spike parameter slope} 
+~(-\infty \leq \gamma_1 \leq \infty) \\
+\phi &amp;= \mbox{Dispersion parameter}, ~(\phi &gt; 0) \\
+P(Y_i=y_i \mid \theta_M, ~\theta_E, ~x_i) 
+&amp;\sim \mbox{ZIGL-}\mu(\mu_i, ~\gamma_0, ~\gamma_1, ~\phi) \\
+&amp;\sim \left\{\begin{array}{ll}
+  \mbox{Gamma}(\mbox{shape}=1/\phi, 
+  ~\mbox{scale} = \phi\mu_i)
+  &amp; \mbox{w.p.} ~~1-\pi_i, \\
+  0, &amp; \mbox{w.p.} ~~\pi_i.
+  \end{array}\right.\\
+\mbox{E}(Y_i) &amp;= (1 - \pi)\mu_i \\
+\mbox{var}(Y_i) &amp;= (1-\pi)^2\phi\mu_i^2
+\end{aligned}
+\]</span></p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1"><span class="kw">get_err_dist_parnames</span>(<span class="st">&quot;zigl.mu&quot;</span>)</a>
+<a class="sourceLine" id="cb30-2" title="2">[<span class="dv">1</span>] <span class="st">&quot;g0&quot;</span>  <span class="st">&quot;g1&quot;</span>  <span class="st">&quot;phi&quot;</span></a></code></pre></div>
+</div>
+<div id="tab-percentage" class="section level3">
+<h3><tt>tab</tt> (percentage)</h3>
+<p>The tail-adjusted beta (TAB) distribution is a beta distribution where values less than <span class="math inline">\(\delta\)</span> are rounded down to zero, and values greater than <span class="math inline">\(1-\delta\)</span> are rounded up to one. This is used to model data that is between 0 and 1 (inclusive).</p>
+<p><span class="math display">\[
+\begin{aligned}
+y_i &amp;\in [0,1] \\
+\theta_E &amp;= \{\sigma\} \\
+\theta_C &amp;= \{\delta\} \\
+\sigma &amp;= \mbox{Shape parameter}, (\sigma &gt; 0) \\
+\delta &amp;= \mbox{Rounding parameter}, (0 &lt; \delta &lt; \frac{1}{2}) \\
+P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i) 
+&amp;\sim \mbox{TAB}(\mu_i, ~\sigma, ~\delta) \\
+&amp;\sim \left\{\begin{array}{ll}
+p^{(0)}_i &amp; y_i &lt; \delta \\
+\dfrac{y_i^{\alpha_i-1}(1-y_i)^{\beta-1}}{B(\alpha,\beta)}
+&amp; \delta &lt; y_i &lt; 1 - \delta \\
+p^{(1)}_i &amp; y_i &gt; 1 - \delta \\
+\end{array}\right.\\
+\end{aligned}
+\]</span></p>
+<p>where <span class="math inline">\(p^{(0)}_i\)</span> is the probability the Beta(<span class="math inline">\(\alpha_i, ~\beta)\)</span> distribution is less than <span class="math inline">\(\delta\)</span>, and <span class="math inline">\(p^{(1)}_i\)</span> is the probability the Beta(<span class="math inline">\(\alpha_i, ~\beta)\)</span> distribution is greater than <span class="math inline">\(1 - \delta\)</span>. The parameters of the TAB (<span class="math inline">\(\mu_i\)</span>, <span class="math inline">\(\sigma\)</span>) are converted to beta distribution parameters (<span class="math inline">\(\alpha_i\)</span>, <span class="math inline">\(\beta\)</span>) and back again as follows: <span class="math display">\[
+\begin{aligned}
+\mu_i &amp;= \dfrac{\alpha_i}{\alpha_i + \beta}, &amp;~
+\sigma &amp;= \dfrac{1}{\alpha_i + \beta} \\
+\alpha &amp; = \dfrac{\mu_i}{\sigma}, &amp;~ \beta &amp;= \dfrac{1 - \mu_i}{\sigma}
+\end{aligned}
+\]</span></p>
+<p>We restrict ourselves to <span class="math inline">\(\alpha_i \geq 1\)</span> and <span class="math inline">\(\beta \geq 1\)</span> (uniform, triangular, and unimodal shapes).</p>
+<p>The <span class="math inline">\(\delta\)</span> parameter is not estimated via maximum likelihood like other parameters, it is estimated as the minimum of: the smallest non-zero <span class="math inline">\(y_i\)</span>, and one minus the largest non-one <span class="math inline">\(y_i\)</span>. In other words:</p>
+<p><span class="math display">\[ \hat{\delta} = \min( \min_i(y_i : y_i&gt;0), ~\min_i(1-y_i : y_i &lt; 1) ). \]</span></p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1"><span class="kw">get_err_dist_parnames</span>(<span class="st">&quot;tab&quot;</span>)</a>
+<a class="sourceLine" id="cb31-2" title="2">[<span class="dv">1</span>] <span class="st">&quot;sigma&quot;</span></a>
+<a class="sourceLine" id="cb31-3" title="3"><span class="kw">get_constant_parnames</span>(<span class="st">&quot;tab&quot;</span>)</a>
+<a class="sourceLine" id="cb31-4" title="4">[<span class="dv">1</span>] <span class="st">&quot;delta&quot;</span></a></code></pre></div>
+</div>
+<div id="zitab-percentage" class="section level3">
+<h3><tt>zitab</tt> (percentage)</h3>
+<p>The zero-inflated tail-adjusted Beta (ZITAB) distribution is the tail-adjusted beta distribution with a zero-inflated spike added.</p>
+<p><span class="math display">\[
+\begin{aligned}
+y_i &amp;\in [0,1] \\
+\theta_E &amp;= \{\pi, ~\sigma\} \\
+\theta_C &amp;= \{\delta\} \\
+\pi &amp;= \mbox{Zero-spike parameter}, ~(0 \leq \pi \leq 1) \\
+\sigma &amp;= \mbox{Shape parameter}, (\sigma &gt; 0) \\
+\delta &amp;= \mbox{Rounding parameter}, (0 &lt; \delta &lt; \frac{1}{2}) \\
+P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i) 
+            &amp;\sim \mbox{ZITAB}(\mu_i, ~\pi, ~\sigma, ~\delta) \\
+            &amp;\sim \left\{\begin{array}{ll}
+            \pi + (1-\pi)p^{(0)}_i &amp; y_i &lt; \delta \\
+            (1-\pi)\dfrac{y_i^{\alpha_i-1}(1-y_i)^{\beta-1}}{B(\alpha,\beta)}
+            &amp; \delta &lt; y_i &lt; 1 - \delta \\
+            (1-\pi)p^{(1)}_i &amp; y_i &gt; 1 - \delta \\
+            \end{array}\right.\\
+\end{aligned}
+\]</span></p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1"><span class="kw">get_err_dist_parnames</span>(<span class="st">&quot;zitab&quot;</span>)</a>
+<a class="sourceLine" id="cb32-2" title="2">[<span class="dv">1</span>] <span class="st">&quot;pi&quot;</span>    <span class="st">&quot;sigma&quot;</span></a>
+<a class="sourceLine" id="cb32-3" title="3"><span class="kw">get_constant_parnames</span>(<span class="st">&quot;zitab&quot;</span>)</a>
+<a class="sourceLine" id="cb32-4" title="4">[<span class="dv">1</span>] <span class="st">&quot;delta&quot;</span></a></code></pre></div>
+</div>
+</div>
+</div>
+<div id="fitting-models" class="section level1">
+<h1>Fitting models</h1>
+<div id="setting-models-to-fit" class="section level2">
+<h2>Setting models to fit</h2>
+<p>The <tt>set_models()</tt> function is used to create a data frame that contains the mean functions, error distributions, and if appropriate the binomial <span class="math inline">\(n\)</span> parameter, of all models that one would wish to fit or simulate data from.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1"><span class="co">## All possible combinations of mean functions and error distrbiutions</span></a>
+<a class="sourceLine" id="cb33-2" title="2"><span class="kw">set_models</span> (<span class="dt">mean_fun=</span><span class="kw">c</span>(<span class="st">&quot;gaussian&quot;</span>, <span class="st">&quot;beta&quot;</span>), <span class="dt">err_dist=</span><span class="kw">c</span>(<span class="st">&quot;zinb&quot;</span>, <span class="st">&quot;zinbl&quot;</span>),</a>
+<a class="sourceLine" id="cb33-3" title="3">            <span class="dt">method=</span><span class="st">&quot;crossed&quot;</span>)</a>
+<a class="sourceLine" id="cb33-4" title="4">  mean_fun err_dist binomial_n</a>
+<a class="sourceLine" id="cb33-5" title="5"><span class="dv">1</span>     beta     zinb         <span class="ot">NA</span></a>
+<a class="sourceLine" id="cb33-6" title="6"><span class="dv">2</span>     beta    zinbl         <span class="ot">NA</span></a>
+<a class="sourceLine" id="cb33-7" title="7"><span class="dv">3</span> gaussian     zinb         <span class="ot">NA</span></a>
+<a class="sourceLine" id="cb33-8" title="8"><span class="dv">4</span> gaussian    zinbl         <span class="ot">NA</span></a>
+<a class="sourceLine" id="cb33-9" title="9"><span class="co">## Fit specific models</span></a>
+<a class="sourceLine" id="cb33-10" title="10"><span class="kw">set_models</span> (<span class="dt">mean_fun=</span><span class="kw">c</span>(<span class="st">&quot;gaussian&quot;</span>, <span class="st">&quot;beta&quot;</span>), <span class="dt">err_dist=</span><span class="kw">c</span>(<span class="st">&quot;zinb&quot;</span>, <span class="st">&quot;zinbl&quot;</span>),</a>
+<a class="sourceLine" id="cb33-11" title="11">            <span class="dt">method=</span><span class="st">&quot;paired&quot;</span>)</a>
+<a class="sourceLine" id="cb33-12" title="12">  mean_fun err_dist binomial_n</a>
+<a class="sourceLine" id="cb33-13" title="13"><span class="dv">1</span>     beta    zinbl         <span class="ot">NA</span></a>
+<a class="sourceLine" id="cb33-14" title="14"><span class="dv">2</span> gaussian     zinb         <span class="ot">NA</span></a>
+<a class="sourceLine" id="cb33-15" title="15"><span class="co">## Fit binomial model - with n=40</span></a>
+<a class="sourceLine" id="cb33-16" title="16"><span class="kw">set_models</span> (<span class="dt">mean_fun=</span><span class="kw">c</span>(<span class="st">&quot;gaussian&quot;</span>), </a>
+<a class="sourceLine" id="cb33-17" title="17">            <span class="dt">err_dist=</span><span class="kw">c</span>(<span class="st">&quot;poisson&quot;</span>, <span class="st">&quot;binomial_prop&quot;</span>, <span class="st">&quot;binomial_count&quot;</span>),</a>
+<a class="sourceLine" id="cb33-18" title="18">            <span class="dt">binomial_n=</span><span class="dv">40</span>, <span class="dt">method=</span><span class="st">&quot;paired&quot;</span>)</a>
+<a class="sourceLine" id="cb33-19" title="19">  mean_fun       err_dist binomial_n</a>
+<a class="sourceLine" id="cb33-20" title="20"><span class="dv">1</span> gaussian        poisson         <span class="ot">NA</span></a>
+<a class="sourceLine" id="cb33-21" title="21"><span class="dv">2</span> gaussian  binomial_prop         <span class="dv">40</span></a>
+<a class="sourceLine" id="cb33-22" title="22"><span class="dv">3</span> gaussian binomial_count         <span class="dv">40</span></a>
+<a class="sourceLine" id="cb33-23" title="23"><span class="co">## Can also specify via mean and error class</span></a>
+<a class="sourceLine" id="cb33-24" title="24"><span class="kw">set_models</span> (<span class="dt">mean_class=</span><span class="st">&quot;main&quot;</span>, <span class="dt">err_class=</span><span class="st">&quot;percentage&quot;</span>)</a>
+<a class="sourceLine" id="cb33-25" title="25">      mean_fun err_dist binomial_n</a>
+<a class="sourceLine" id="cb33-26" title="26"><span class="dv">1</span>         beta      tab         <span class="ot">NA</span></a>
+<a class="sourceLine" id="cb33-27" title="27"><span class="dv">2</span>         beta    zitab         <span class="ot">NA</span></a>
+<a class="sourceLine" id="cb33-28" title="28"><span class="dv">3</span>     gaussian      tab         <span class="ot">NA</span></a>
+<a class="sourceLine" id="cb33-29" title="29"><span class="dv">4</span>     gaussian    zitab         <span class="ot">NA</span></a>
+<a class="sourceLine" id="cb33-30" title="30"><span class="dv">5</span>         hofV      tab         <span class="ot">NA</span></a>
+<a class="sourceLine" id="cb33-31" title="31"><span class="dv">6</span>         hofV    zitab         <span class="ot">NA</span></a>
+<a class="sourceLine" id="cb33-32" title="32"><span class="dv">7</span>  mixgaussian      tab         <span class="ot">NA</span></a>
+<a class="sourceLine" id="cb33-33" title="33"><span class="dv">8</span>  mixgaussian    zitab         <span class="ot">NA</span></a>
+<a class="sourceLine" id="cb33-34" title="34"><span class="dv">9</span>         sech      tab         <span class="ot">NA</span></a>
+<a class="sourceLine" id="cb33-35" title="35"><span class="dv">10</span>        sech    zitab         <span class="ot">NA</span></a></code></pre></div>
+</div>
+<div id="simulated-data" class="section level2">
+<h2>Simulated data</h2>
+<p>This section describes how to simulate data sets for any possible model. The <tt>create_default_par_list()</tt> function set default parameter values for each selected model.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1"><span class="co">## --- Set models</span></a>
+<a class="sourceLine" id="cb34-2" title="2">Models &lt;-<span class="st"> </span><span class="kw">set_models</span> (<span class="dt">mean_fun=</span><span class="kw">c</span>(<span class="st">&quot;gaussian&quot;</span>), <span class="dt">err_dist=</span><span class="kw">c</span>(<span class="st">&quot;zip&quot;</span>, <span class="st">&quot;zinb&quot;</span>))</a>
+<a class="sourceLine" id="cb34-3" title="3"></a>
+<a class="sourceLine" id="cb34-4" title="4"><span class="co">## --- Set default parameters list</span></a>
+<a class="sourceLine" id="cb34-5" title="5">Pars &lt;-<span class="st"> </span><span class="kw">create_default_par_list</span> (Models)</a>
+<a class="sourceLine" id="cb34-6" title="6"></a>
+<a class="sourceLine" id="cb34-7" title="7"><span class="co">## --- Simulate data</span></a>
+<a class="sourceLine" id="cb34-8" title="8">Data &lt;-<span class="st"> </span><span class="kw">create_simulated_datasets</span> (Pars, <span class="dt">N=</span><span class="dv">200</span>, <span class="dt">xmin=</span><span class="dv">0</span>, <span class="dt">xmax=</span><span class="dv">100</span>, <span class="dt">seed=</span><span class="dv">12345</span>)</a></code></pre></div>
+<p>This code creates simulates data for the <tt>gaussian-zip</tt>, and <tt>gaussian-zinb</tt> models. The objects <tt>Pars</tt> is a list containing parameters for each model. The object <tt>Data</tt> is a list containing the data for each model; <tt>Data[[1]]</tt> is the data for the first model, etc.</p>
+</div>
+<div id="real-data" class="section level2">
+<h2>Real data</h2>
+<p>The <tt>senlm</tt> packages contains the following data sets:</p>
+<ul>
+<li><tt>haul</tt></li>
+</ul>
+<p>The first few rows of data are shown below.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" title="1"><span class="kw">data</span>(haul, <span class="dt">package=</span><span class="st">&quot;senlm&quot;</span>)</a>
+<a class="sourceLine" id="cb35-2" title="2"><span class="kw">head</span> (haul)</a>
+<a class="sourceLine" id="cb35-3" title="3">     year  x_depth x_lattitude y_Albatrossia.pectoralis y_Sebastolobus.altivelis</a>
+<a class="sourceLine" id="cb35-4" title="4"><span class="dv">1717</span> <span class="dv">2003</span> <span class="fl">527.5357</span>    <span class="fl">46.30425</span>                        <span class="dv">0</span>                       <span class="dv">37</span></a>
+<a class="sourceLine" id="cb35-5" title="5"><span class="dv">1718</span> <span class="dv">2003</span> <span class="fl">673.7497</span>    <span class="fl">46.73217</span>                        <span class="dv">0</span>                      <span class="dv">397</span></a>
+<a class="sourceLine" id="cb35-6" title="6"><span class="dv">1719</span> <span class="dv">2003</span> <span class="fl">276.1650</span>    <span class="fl">46.71926</span>                        <span class="dv">0</span>                        <span class="dv">0</span></a>
+<a class="sourceLine" id="cb35-7" title="7"><span class="dv">1720</span> <span class="dv">2003</span> <span class="fl">823.6656</span>    <span class="fl">46.92419</span>                        <span class="dv">3</span>                      <span class="dv">711</span></a>
+<a class="sourceLine" id="cb35-8" title="8"><span class="dv">1721</span> <span class="dv">2003</span> <span class="fl">172.6837</span>    <span class="fl">47.01439</span>                        <span class="dv">0</span>                        <span class="dv">0</span></a>
+<a class="sourceLine" id="cb35-9" title="9"><span class="dv">1722</span> <span class="dv">2003</span> <span class="fl">985.7053</span>    <span class="fl">47.56385</span>                       <span class="dv">18</span>                      <span class="dv">534</span></a></code></pre></div>
+</div>
+<div id="fitting-models-to-data" class="section level2">
+<h2>Fitting models to data</h2>
+<p>To fit one model to a data set we use the <tt>senlm()</tt> function. We illustrate this with the <tt>haul</tt> dataset.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1">Fit &lt;-<span class="st"> </span><span class="kw">senlm</span> (<span class="dt">data=</span>haul, <span class="dt">xvar=</span><span class="st">&quot;x_depth&quot;</span>, <span class="dt">yvar=</span><span class="st">&quot;y_Sebastolobus.altivelis&quot;</span>, </a>
+<a class="sourceLine" id="cb36-2" title="2">              <span class="dt">mean_fun=</span><span class="st">&quot;gaussian&quot;</span>, <span class="dt">err_dist=</span><span class="st">&quot;zip&quot;</span>)</a>
+<a class="sourceLine" id="cb36-3" title="3"><span class="kw">summary</span> (Fit)</a>
+<a class="sourceLine" id="cb36-4" title="4"><span class="op">$</span>model</a>
+<a class="sourceLine" id="cb36-5" title="5">[<span class="dv">1</span>] <span class="st">&quot;gaussian-zip&quot;</span></a>
+<a class="sourceLine" id="cb36-6" title="6"></a>
+<a class="sourceLine" id="cb36-7" title="7"><span class="op">$</span>theta</a>
+<a class="sourceLine" id="cb36-8" title="8">          H           m           s          pi </a>
+<a class="sourceLine" id="cb36-9" title="9"><span class="fl">817.5306196</span> <span class="fl">917.8021627</span> <span class="fl">225.5627562</span>   <span class="fl">0.5954244</span> </a>
+<a class="sourceLine" id="cb36-10" title="10"></a>
+<a class="sourceLine" id="cb36-11" title="11"><span class="op">$</span>IC</a>
+<a class="sourceLine" id="cb36-12" title="12">    npar      nll      AIC     AICc      BIC </a>
+<a class="sourceLine" id="cb36-13" title="13">    <span class="fl">4.00</span> <span class="fl">36950.05</span> <span class="fl">73908.10</span> <span class="fl">73908.14</span> <span class="fl">73928.01</span> </a></code></pre></div>
+<p>To fit multiple models to multiple data sets, one can use the <tt>senlm.multi()</tt> function. The models to fit are specified with the <tt>set_models()</tt> function. The data should be stored in a list. It could be simulated data create using the <tt>create_simulated_datasets()</tt> function.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" title="1">Models &lt;-<span class="st"> </span><span class="kw">set_models</span> (<span class="dt">mean_class=</span><span class="st">&quot;test&quot;</span>, <span class="dt">err_class=</span><span class="st">&quot;binary&quot;</span>)</a>
+<a class="sourceLine" id="cb37-2" title="2">Pars   &lt;-<span class="st"> </span><span class="kw">create_default_par_list</span> (<span class="dt">models=</span>Models)</a>
+<a class="sourceLine" id="cb37-3" title="3">Data   &lt;-<span class="st"> </span><span class="kw">create_simulated_datasets</span> (Pars, <span class="dt">seed=</span><span class="dv">12345</span>)</a>
+<a class="sourceLine" id="cb37-4" title="4">Fits   &lt;-<span class="st"> </span><span class="kw">senlm.multi</span> (<span class="dt">models=</span>Models, <span class="dt">data=</span>Data, <span class="dt">xvar=</span><span class="st">&quot;x_depth&quot;</span>, <span class="dt">yvar=</span><span class="st">&quot;y_Sebastolobus.altivelis&quot;</span>)</a>
+<a class="sourceLine" id="cb37-5" title="5"><span class="kw">print</span> (Models)</a>
+<a class="sourceLine" id="cb37-6" title="6"><span class="kw">print</span> (Fits)</a></code></pre></div>
+<p>Alternatively, one can fit multiple models to real data.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1">Models &lt;-<span class="st"> </span><span class="kw">set_models</span> (<span class="dt">mean_fun=</span><span class="st">&quot;gaussian&quot;</span>, <span class="dt">err_dist=</span><span class="kw">c</span>(<span class="st">&quot;zip&quot;</span>, <span class="st">&quot;zinb&quot;</span>))</a>
+<a class="sourceLine" id="cb38-2" title="2">Data &lt;-<span class="st"> </span><span class="kw">vector</span> (<span class="dt">length=</span><span class="dv">2</span>, <span class="dt">mode=</span><span class="st">&quot;list&quot;</span>)</a>
+<a class="sourceLine" id="cb38-3" title="3">Data[[<span class="dv">1</span>]]<span class="op">$</span>x &lt;-<span class="st"> </span>haul<span class="op">$</span>x_depth</a>
+<a class="sourceLine" id="cb38-4" title="4">Data[[<span class="dv">1</span>]]<span class="op">$</span>y &lt;-<span class="st"> </span>haul<span class="op">$</span>y_Albatrossia.pectoralis</a>
+<a class="sourceLine" id="cb38-5" title="5">Data[[<span class="dv">2</span>]]<span class="op">$</span>x &lt;-<span class="st"> </span>haul<span class="op">$</span>x_depth</a>
+<a class="sourceLine" id="cb38-6" title="6">Data[[<span class="dv">2</span>]]<span class="op">$</span>y &lt;-<span class="st"> </span>haul<span class="op">$</span>y_Sebastolobus.altivelis</a>
+<a class="sourceLine" id="cb38-7" title="7">Fits   &lt;-<span class="st"> </span><span class="kw">senlm.multi</span> (Models, Data)</a></code></pre></div>
+</div>
+</div>
+<div id="code-organisation" class="section level1">
+<h1>Code organisation</h1>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
