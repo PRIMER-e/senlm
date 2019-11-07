@@ -9,3 +9,6 @@ reference:
     desc: "All functions exported by the package."
     contents:
       - matches("*")
+template:
+  params:
+    bootswatch: cosmos
