@@ -1,5 +1,9 @@
 # SENLM
 
+<!-- badges: start -->
+[![Travis build status](https://travis-ci.org/PRIMER-e/senlm.svg?branch=master)](https://travis-ci.org/PRIMER-e/senlm)
+<!-- badges: end -->
+
 An R package for modelling ecological data that is sampled across environmental gradients.
 
 For installation and usage details, please visit the package website:
