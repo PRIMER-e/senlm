@@ -41,7 +41,9 @@ Suggests:
     testthat (>= 2.1.0),
     knitr,
     rmarkdown,
-    R.utils
+    R.utils,
+    Rgraphviz,
+    proftools
 VignetteBuilder: knitr
 URL: https://primer-e.github.io/senlm/, https://github.com/PRIMER-e/senlm
 
