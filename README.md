@@ -19,12 +19,13 @@ For installation and usage details, please visit the package website:
 
 ## Contributing
 
-After making changes to the packages run `devtools::build_site()`
-in order to update the package's website (`docs/`) and 
-`devtools::build_vignette()` in order to rebuild the vignettes (`doc/`).
+Before commiting changes run `devtools::check()` to build the package and check for many common problems.
 
-You should read the following excellent books about developing R packages
-(both of which happen to be written by Hadley Wickham):
+Travis-CI will automatically run `devtools::check()`, rebuild the package website and analyse test coverage each time a commit is pushed to Github. 
+However, it won't rebuild the package itself, so it's important that you run `devtools::check()` manually in order to update the help pages and NAMESPACE.
+
+
+You should read the following excellent books about developing R packages (both of which happen to be written by Hadley Wickham):
 
   - [R packages](http://r-pkgs.had.co.nz/)
   - [Advanced R](https://adv-r.hadley.nz/)
