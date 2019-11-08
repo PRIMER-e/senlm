@@ -40,6 +40,9 @@ vignettes/*.pdf
 inst/doc
 Meta
 
+# Directory contained built Vignettes
+doc/
+
 ############################################################
 # MacOSX
 ############################################################
