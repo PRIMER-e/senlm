@@ -1,0 +1,10 @@
+pandoc: '2.2'
+pkgdown: 1.4.1
+pkgdown_sha: ~
+articles:
+  performance_analysis: performance_analysis.html
+  senlm: senlm.html
+urls:
+  reference: https://primer-e.github.io/senlm/reference
+  article: https://primer-e.github.io/senlm/articles
+
