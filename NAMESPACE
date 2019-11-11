@@ -2,6 +2,7 @@
 
 S3method(plot,senlm)
 S3method(predict,senlm)
+S3method(simulate,senlm)
 S3method(summary,senlm)
 export(create_default_par_list)
 export(create_simulated_datasets)
@@ -21,4 +22,4 @@ export(senlm.multi)
 export(set_model_info)
 export(set_models)
 export(set_sim_par)
-export(sim)
+importFrom(stats,simulate)
