@@ -31,11 +31,11 @@ Depends:
 Imports:
 	stats,
 	bbmle,
-	tweedie,
+	tweedie
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.1.9000
+RoxygenNote: 6.1.1
 Suggests: 
     testthat (>= 2.1.0),
     knitr,
