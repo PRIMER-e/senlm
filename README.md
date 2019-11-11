@@ -22,7 +22,7 @@ For installation and usage details, please visit the package website:
 Before commiting changes run `devtools::check()` to build the package and check for many common problems.
 
 Travis-CI will automatically run `devtools::check()`, rebuild the package website and analyse test coverage each time a commit is pushed to Github. 
-However, it won't rebuild the package itself, so it's important that you run `devtools::check()` manually in order to update the help pages and NAMESPACE.
+However, it will only push changes to the `gh-pages` branch, so it's important that you run `devtools::check()` manually in order to update the package help pages and NAMESPACE.
 
 
 You should read the following excellent books about developing R packages (both of which happen to be written by Hadley Wickham):
