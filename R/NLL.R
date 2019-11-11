@@ -3,7 +3,6 @@
 
 ## --- --- ---
 
-
 set_nll <- function (ModelInfo) {
   ## --- Set negative log-likelihood
   

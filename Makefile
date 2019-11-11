@@ -5,7 +5,7 @@
 PACKAGE=senlm
 
 ## --- Define github location
-GIT=dciwalsh/senlm
+GIT=PRIMER-e/senlm
 
 ## --- Phony targets
 .PHONY: doc
