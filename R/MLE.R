@@ -112,7 +112,6 @@ senlm <- function (model=NULL, data=NULL, xvar=NULL, yvar=NULL,
   ## --- Store model fit and fail flag
   if (class(Fit.theta) == "try-error") { Fail <- TRUE } else { Fail <- FALSE }
 
-
   ## --- Store fit
   Fit <- list()
 
@@ -134,7 +133,7 @@ senlm <- function (model=NULL, data=NULL, xvar=NULL, yvar=NULL,
   if (Fail == FALSE) {
 
     ## --- Fit successful
-    Fit$Fail <- FALSE
+    Fit$fail <- FALSE
 
     ## --- Fitted parameters
     Fit$theta <- Fit.theta
@@ -150,7 +149,7 @@ senlm <- function (model=NULL, data=NULL, xvar=NULL, yvar=NULL,
   } else {
 
     ## --- Fit unsuccessful
-    Fit$Fail <- TRUE
+    Fit$fail <- TRUE
   }
 
   ## --- Set class
@@ -523,7 +522,7 @@ mle_uniform_bernoulli <- function (ModelInfo, Dat) {
 
 #' Fit multiple species-environment non-linear models via maximum likelihood
 #'
-#' 'senlm.multi' fits species-environment non-linear models via maximum likelihood.
+#' 'msenlm' fits multiple species-environment non-linear models via maximum likelihood.
 #'
 #' @param models Object listing models to fit (from set_models function).
 #' @param data A data frame containing 'x' (explanatory) and 'y' (response) variables.
@@ -539,27 +538,26 @@ mle_uniform_bernoulli <- function (ModelInfo, Dat) {
 #' \dontrun{
 #'
 #' models <- set_models (mean_class="test", err_dist=c("zip","zinb"))
-#' Fits <- senlm.multi (models=models, data=haul, xvar="x_depth",
-#'                      yvar=c("y_Albatrossia.pectoralis", "y_Sebastolobus.altivelis"))
+#' Fits <- msenlm (models=models, data=haul, xvar="x_depth",
+#'                 yvar=c("y_Albatrossia.pectoralis", "y_Sebastolobus.altivelis"))
 #' }
 #' @export
 #'
-senlm.multi <- function (models=NULL, data=NULL, xvar=NULL, yvar=NULL) {
-  ## --- Fit models using maximum likelihood
+msenlm <- function (models=NULL, data=NULL, xvar=NULL, yvar=NULL) {
+  ## --- Fit multiple senlm models using maximum likelihood to multiple response variables
 
   ## --- Check inputs
 
-
   ## Check x and y specified
   if (is.null(xvar) | is.null(yvar)) { stop ("Must specify xvar and yvar!") }
-
+  
   if (!is.character(xvar)) { stop ("xvar must be character!") }
   if (length(xvar)>1) { stop ("Too many x variable names specified!") }
   if (any(is.na(match (xvar, names(data))))) { stop ("xvar not valid!") }
 
   if (!is.character(yvar)) { stop ("yvar must be character!") }
   if (any(is.na(match (yvar, names(data))))) { stop ("Some yvar not valid!") }
-
+  
   ## Explanatory variable
   x <- data[,xvar]
   xname <- xvar
@@ -603,28 +601,167 @@ senlm.multi <- function (models=NULL, data=NULL, xvar=NULL, yvar=NULL) {
   }
 
   ## --- Set class
-  class (Fits) <- "senlm.multi"
+  class (Fits) <- "msenlm"
 
   ## --- Return fits
   return (Fits)
 }
 
 
-summary.senlm.multi <- function (Fits) {
+
+
+#' Print summary of senlm multiple model fit
+#'
+#' Print summary information for mulitple senlm model fits. Select the
+#' best model fit for each response variable using the given criteria.
+#'
+#' @param object Model fit.
+#' @param best Select best model for each response variable according to
+#' the following criteria: "nll", "AIC", "AICc", "BIC".
+#'
+#' @return Data frame summarising senlm model fits.
+#'
+#' @keywords summary multiple senlm model fit
+#'
+#' @examples
+#'
+#' \dontrun{
+#'
+#' ## Summarise data
+#' models <- set_models (mean_fun=c("gaussian", "beta"),
+#'                       err_dist=c("zinb", "zip"), method="crossed")
+#' fits <- msenlm (models=models, data=haul, xvar="x_depth",
+#'                 yvar=c("y_Albatrossia.pectoralis", "y_Sebastolobus.altivelis"))
+#' summary(fits)
+#' summary(fits, best="AICc")
+#' }
+#'
+#' @export
+#'
+summary.msenlm <- function (object, best=NULL) { 
   ## --- Print summary of model fits
 
+  ## --- Check best value
+  if (!is.null(best)) {
+    ## Possible values of best
+    GOF <- c("nll", "AIC", "AICc", "BIC")
+    ## Stop if best value is illegal
+    if (all(best!=GOF)) { stop ('best option must be equal to "nll", "AIC", "AICc", "BIC"!') }
+  }
+  
+  ## --- Grab parameter names of all models
+
+  ## Initialise parameter names
+  parnames <- c()
+  ## Initalise model counts
+  NModels <- 0
   ## Loop through response variables
-  for (i in 1:length(Fits)) {
+  for (i in 1:length(object)) {
     ## Loop through models
-    for (j in 1:length(Fits[[i]])) {
-      ## Print summary
-      summary(Fits[[i]][[j]])
+    for (j in 1:length(object[[i]])) {
+      ## Grab parameter names
+      parnames <- c(parnames, names(object[[i]][[j]]$theta))
+      ## Increment model counts
+      NModels <- NModels +  1
     }
   }
+  ## Extract unique parameter names
+  parnames <- unique(parnames)
+
+
+  ## --- Set variable names for summary object
+  varnames <- c("fitfail", "x", "y", "mean_fun", "err_dist", parnames, "nll", "AIC", "AICc", "BIC")
+  
+  ## --- Initialise summary object
+  SDat <- as.data.frame (matrix(NA, ncol=length(varnames), nrow=NModels))
+  names(SDat) <- varnames
+  
+  ## --- Loop through response variables
+
+  ## Increment row counter
+  Row <- 1
+
+  ## Loop through response variables
+  for (i in 1:length(object)) {
+    ## Loop through models
+    for (j in 1:length(object[[i]])) {
+
+      ## Did model fit fail
+      Fail <- object[[i]][[j]]$fail
+      SDat[Row,]$fitfail <- Fail
+      
+      ## Grab mean function and error distribution
+      MeanErr  <- unlist(strsplit(object[[i]][[j]]$model, "-"))
+      mean_fun <- MeanErr[1]
+      err_dist <- MeanErr[2]
+
+      ## Grab x and y variable names
+      SDat[Row,]$x <- object[[i]][[j]]$xname
+      SDat[Row,]$y <- object[[i]][[j]]$yname
+
+      ## Set mean function and error distribution
+      SDat[Row,]$mean_fun <- mean_fun
+      SDat[Row,]$err_dist <- err_dist
+
+      ## --- Was fit successful?
+      if (Fail == FALSE) {
+
+        ## Grab fitted parameter values
+        SDat[Row,names(object[[i]][[j]]$theta)] <- object[[i]][[j]]$theta
+        
+        ## Grab goodness-of-fit variables
+        SDat[Row,c("nll", "AIC", "AICc", "BIC")] <-
+          object[[i]][[j]]$IC[c("nll", "AIC", "AICc", "BIC")]
+      }
+
+      ## Increment row number
+      Row <- Row + 1
+    }
+  }
+
+  ## --- Find best models
+  if (!is.null(best)) {
+  
+    ## Initialise row counter
+    Row <- 0
+    ## Initialise best method index for each response variable 
+    BestMethod <- rep(NA,length(object))
+    
+    ## Loop through response variables
+    for (i in 1:length(object)) {
+      
+      ## --- Put goodness-of-fit values in matrix
+      NModels <- length (object[[i]])
+      ICMat   <- as.data.frame(matrix(NA, ncol=4, nrow=NModels))
+      names(ICMat) <- c("nll", "AIC", "AICc", "BIC")
+      ## Loop through models
+      for (j in 1:length(object[[i]])) {
+        ## Grab goodness-of-fit values if available
+        if (!object[[i]][[j]]$fail) {
+          ICMat[j,] <- object[[i]][[j]]$IC[grep("npar", names(object[[i]][[j]]$IC), invert=T)]
+        }
+      }
+      
+      ## --- Grab select goodness-of-fit metric
+      GOF <- ICMat[,best]
+      
+      ## --- Find row of summary object of best methods
+      BestMethod[i] <- Row + which(GOF==min(GOF, na.rm=T))
+      
+      ## Increment row counter
+      Row <- Row + length(object[[i]])
+    }
+    
+    ## --- Select best models
+    SDat <- SDat[BestMethod,]
+  }
+    
+  ## Display summary object
+  print (SDat)
 }
 
 
-plot.senlm.multi <- function (Fits) {
+plot.msenlm <- function (Fits) {
   ## --- Print summary of model fits
 
   ## Loop through response variables
