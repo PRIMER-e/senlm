@@ -550,14 +550,14 @@ msenlm <- function (models=NULL, data=NULL, xvar=NULL, yvar=NULL) {
 
   ## Check x and y specified
   if (is.null(xvar) | is.null(yvar)) { stop ("Must specify xvar and yvar!") }
-  
+
   if (!is.character(xvar)) { stop ("xvar must be character!") }
   if (length(xvar)>1) { stop ("Too many x variable names specified!") }
   if (any(is.na(match (xvar, names(data))))) { stop ("xvar not valid!") }
 
   if (!is.character(yvar)) { stop ("yvar must be character!") }
   if (any(is.na(match (yvar, names(data))))) { stop ("Some yvar not valid!") }
-  
+
   ## Explanatory variable
   x <- data[,xvar]
   xname <- xvar
@@ -618,6 +618,7 @@ msenlm <- function (models=NULL, data=NULL, xvar=NULL, yvar=NULL) {
 #' @param object Model fit.
 #' @param best Select best model for each response variable according to
 #' the following criteria: "nll", "AIC", "AICc", "BIC".
+#' @param ... Other arguments that will be ignored.
 #'
 #' @return Data frame summarising senlm model fits.
 #'
@@ -638,7 +639,7 @@ msenlm <- function (models=NULL, data=NULL, xvar=NULL, yvar=NULL) {
 #'
 #' @export
 #'
-summary.msenlm <- function (object, best=NULL) { 
+summary.msenlm <- function (object, best=NULL, ...) {
   ## --- Print summary of model fits
 
   ## --- Check best value
@@ -648,7 +649,7 @@ summary.msenlm <- function (object, best=NULL) {
     ## Stop if best value is illegal
     if (all(best!=GOF)) { stop ('best option must be equal to "nll", "AIC", "AICc", "BIC"!') }
   }
-  
+
   ## --- Grab parameter names of all models
 
   ## Initialise parameter names
@@ -671,11 +672,11 @@ summary.msenlm <- function (object, best=NULL) {
 
   ## --- Set variable names for summary object
   varnames <- c("fitfail", "x", "y", "mean_fun", "err_dist", parnames, "nll", "AIC", "AICc", "BIC")
-  
+
   ## --- Initialise summary object
   SDat <- as.data.frame (matrix(NA, ncol=length(varnames), nrow=NModels))
   names(SDat) <- varnames
-  
+
   ## --- Loop through response variables
 
   ## Increment row counter
@@ -689,7 +690,7 @@ summary.msenlm <- function (object, best=NULL) {
       ## Did model fit fail
       Fail <- object[[i]][[j]]$fail
       SDat[Row,]$fitfail <- Fail
-      
+
       ## Grab mean function and error distribution
       MeanErr  <- unlist(strsplit(object[[i]][[j]]$model, "-"))
       mean_fun <- MeanErr[1]
@@ -708,7 +709,7 @@ summary.msenlm <- function (object, best=NULL) {
 
         ## Grab fitted parameter values
         SDat[Row,names(object[[i]][[j]]$theta)] <- object[[i]][[j]]$theta
-        
+
         ## Grab goodness-of-fit variables
         SDat[Row,c("nll", "AIC", "AICc", "BIC")] <-
           object[[i]][[j]]$IC[c("nll", "AIC", "AICc", "BIC")]
@@ -721,15 +722,15 @@ summary.msenlm <- function (object, best=NULL) {
 
   ## --- Find best models
   if (!is.null(best)) {
-  
+
     ## Initialise row counter
     Row <- 0
-    ## Initialise best method index for each response variable 
+    ## Initialise best method index for each response variable
     BestMethod <- rep(NA,length(object))
-    
+
     ## Loop through response variables
     for (i in 1:length(object)) {
-      
+
       ## --- Put goodness-of-fit values in matrix
       NModels <- length (object[[i]])
       ICMat   <- as.data.frame(matrix(NA, ncol=4, nrow=NModels))
@@ -741,21 +742,21 @@ summary.msenlm <- function (object, best=NULL) {
           ICMat[j,] <- object[[i]][[j]]$IC[grep("npar", names(object[[i]][[j]]$IC), invert=T)]
         }
       }
-      
+
       ## --- Grab select goodness-of-fit metric
       GOF <- ICMat[,best]
-      
+
       ## --- Find row of summary object of best methods
       BestMethod[i] <- Row + which(GOF==min(GOF, na.rm=T))
-      
+
       ## Increment row counter
       Row <- Row + length(object[[i]])
     }
-    
+
     ## --- Select best models
     SDat <- SDat[BestMethod,]
   }
-    
+
   ## Display summary object
   print (SDat)
 }

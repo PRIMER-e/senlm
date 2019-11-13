@@ -4,13 +4,15 @@
 \alias{summary.msenlm}
 \title{Print summary of senlm multiple model fit}
 \usage{
-\method{summary}{msenlm}(object, best = NULL)
+\method{summary}{msenlm}(object, best = NULL, ...)
 }
 \arguments{
 \item{object}{Model fit.}
 
 \item{best}{Select best model for each response variable according to
 the following criteria: "nll", "AIC", "AICc", "BIC".}
+
+\item{...}{Other arguments which will be ignored.}
 }
 \value{
 Data frame summarising senlm model fits.
