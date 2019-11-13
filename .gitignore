@@ -43,6 +43,11 @@ Meta
 # Directory contained built Vignettes
 doc/
 
+# Directory containing the package website.
+# This website will now be automatically created by the
+# Continuous Integration (CI) system
+docs/
+
 ############################################################
 # MacOSX
 ############################################################
