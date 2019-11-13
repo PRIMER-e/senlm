@@ -1073,8 +1073,8 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i)
 <a class="sourceLine" id="cb36-5" data-line-number="5">[<span class="dv">1</span>] <span class="st">"gaussian-zip"</span></a>
 <a class="sourceLine" id="cb36-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb36-7" data-line-number="7"><span class="op">$</span>theta</a>
-<a class="sourceLine" id="cb36-8" data-line-number="8">         H          m          s         pi </a>
-<a class="sourceLine" id="cb36-9" data-line-number="9"><span class="fl">817.530951</span> <span class="fl">917.802096</span> <span class="fl">225.562741</span>   <span class="fl">0.595423</span> </a>
+<a class="sourceLine" id="cb36-8" data-line-number="8">          H           m           s          pi </a>
+<a class="sourceLine" id="cb36-9" data-line-number="9"><span class="fl">817.5306277</span> <span class="fl">917.8020323</span> <span class="fl">225.5627540</span>   <span class="fl">0.5954252</span> </a>
 <a class="sourceLine" id="cb36-10" data-line-number="10"></a>
 <a class="sourceLine" id="cb36-11" data-line-number="11"><span class="op">$</span>IC</a>
 <a class="sourceLine" id="cb36-12" data-line-number="12">    npar      nll      AIC     AICc      BIC </a>
@@ -1083,7 +1083,7 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i)
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1">Models &lt;-<span class="st"> </span><span class="kw"><a href="../reference/set_models.html">set_models</a></span> (<span class="dt">mean_class=</span><span class="st">"test"</span>, <span class="dt">err_class=</span><span class="st">"binary"</span>)</a>
 <a class="sourceLine" id="cb37-2" data-line-number="2">Pars   &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_default_par_list.html">create_default_par_list</a></span> (<span class="dt">models=</span>Models)</a>
 <a class="sourceLine" id="cb37-3" data-line-number="3">Data   &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_simulated_datasets.html">create_simulated_datasets</a></span> (Pars, <span class="dt">seed=</span><span class="dv">12345</span>)</a>
-<a class="sourceLine" id="cb37-4" data-line-number="4">Fits   &lt;-<span class="st"> </span><span class="kw"><a href="../reference/senlm.multi.html">senlm.multi</a></span> (<span class="dt">models=</span>Models, <span class="dt">data=</span>Data, <span class="dt">xvar=</span><span class="st">"x_depth"</span>, <span class="dt">yvar=</span><span class="st">"y_Sebastolobus.altivelis"</span>)</a>
+<a class="sourceLine" id="cb37-4" data-line-number="4">Fits   &lt;-<span class="st"> </span><span class="kw">senlm.multi</span> (<span class="dt">models=</span>Models, <span class="dt">data=</span>Data, <span class="dt">xvar=</span><span class="st">"x_depth"</span>, <span class="dt">yvar=</span><span class="st">"y_Sebastolobus.altivelis"</span>)</a>
 <a class="sourceLine" id="cb37-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span> (Models)</a>
 <a class="sourceLine" id="cb37-6" data-line-number="6"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span> (Fits)</a></code></pre></div>
 <p>Alternatively, one can fit multiple models to real data.</p>
@@ -1093,7 +1093,7 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i)
 <a class="sourceLine" id="cb38-4" data-line-number="4">Data[[<span class="dv">1</span>]]<span class="op">$</span>y &lt;-<span class="st"> </span>haul<span class="op">$</span>y_Albatrossia.pectoralis</a>
 <a class="sourceLine" id="cb38-5" data-line-number="5">Data[[<span class="dv">2</span>]]<span class="op">$</span>x &lt;-<span class="st"> </span>haul<span class="op">$</span>x_depth</a>
 <a class="sourceLine" id="cb38-6" data-line-number="6">Data[[<span class="dv">2</span>]]<span class="op">$</span>y &lt;-<span class="st"> </span>haul<span class="op">$</span>y_Sebastolobus.altivelis</a>
-<a class="sourceLine" id="cb38-7" data-line-number="7">Fits   &lt;-<span class="st"> </span><span class="kw"><a href="../reference/senlm.multi.html">senlm.multi</a></span> (Models, Data)</a></code></pre></div>
+<a class="sourceLine" id="cb38-7" data-line-number="7">Fits   &lt;-<span class="st"> </span><span class="kw">senlm.multi</span> (Models, Data)</a></code></pre></div>
 </div>
 </div>
 <div id="code-organisation" class="section level1">

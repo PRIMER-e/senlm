@@ -37,6 +37,9 @@
     <loc>https://primer-e.github.io/senlm/reference/mean_functions.html</loc>
   </url>
   <url>
+    <loc>https://primer-e.github.io/senlm/reference/msenlm.html</loc>
+  </url>
+  <url>
     <loc>https://primer-e.github.io/senlm/reference/mu_constant.html</loc>
   </url>
   <url>
@@ -55,9 +58,6 @@
     <loc>https://primer-e.github.io/senlm/reference/senlm.html</loc>
   </url>
   <url>
-    <loc>https://primer-e.github.io/senlm/reference/senlm.multi.html</loc>
-  </url>
-  <url>
     <loc>https://primer-e.github.io/senlm/reference/set_model_info.html</loc>
   </url>
   <url>
@@ -68,6 +68,9 @@
   </url>
   <url>
     <loc>https://primer-e.github.io/senlm/reference/simulate.senlm.html</loc>
+  </url>
+  <url>
+    <loc>https://primer-e.github.io/senlm/reference/summary.msenlm.html</loc>
   </url>
   <url>
     <loc>https://primer-e.github.io/senlm/reference/summary.senlm.html</loc>
