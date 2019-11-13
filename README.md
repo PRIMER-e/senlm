@@ -19,7 +19,7 @@ For installation and usage details, please visit the package website:
 
 ## Contributing
 
-Before commiting changes run `devtools::check()` to build the package and check for many common problems.
+Before commiting changes run `devtools::check()` to build the package and check for many common problems. Also run `pkgdown::build_site()` in order to check that the package website can be built without errors.
 
 Travis-CI will automatically run `devtools::check()`, rebuild the package website and analyse test coverage each time a commit is pushed to Github. 
 However, it will only push changes to the `gh-pages` branch, so it's important that you run `devtools::check()` manually in order to update the package help pages and NAMESPACE.
