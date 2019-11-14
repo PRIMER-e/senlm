@@ -1,6 +1,9 @@
 ---
 title: "Using the `senlm` package"
 package: senlm
+# output:
+#    pdf_document:
+#      latex_engine: xelatex
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{senlm}
