@@ -21,7 +21,7 @@ library(Rgraphviz)
 
 ## --- Fit a model whilst recording profiling information --- #
 Rprof(tmp <- tempfile(), line.profiling = TRUE)
-fitted_model <- senlm (data=haul, xvar="x_depth", yvar="y_Sebastolobus.altivelis", 
+fitted_model <- senlm (data=haul, xvar="depth", yvar="Sebastolobus.altivelis", 
               mean_fun="gaussian", err_dist="zip")
 Rprof(NULL)
 
