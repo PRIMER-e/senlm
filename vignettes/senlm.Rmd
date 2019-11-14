@@ -12,7 +12,7 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   ##comment = "#>"  
-  comment = ""  
+  comment = ""
 )
 ```
 
@@ -1041,7 +1041,7 @@ To fit one model to a data set we use the <tt>senlm()</tt> function. We illustra
 <tt>haul</tt> dataset.
 
 ```{r}
-Fit <- senlm (data=haul, xvar="x_depth", yvar="y_Sebastolobus.altivelis", 
+Fit <- senlm (data=haul, xvar="depth", yvar="Sebastolobus.altivelis", 
               mean_fun="gaussian", err_dist="zip")
 summary (Fit)
 ```
@@ -1055,7 +1055,7 @@ a list. It could be simulated data create using the <tt>create_simulated_dataset
 Models <- set_models (mean_class="test", err_class="binary")
 Pars   <- create_default_par_list (models=Models)
 Data   <- create_simulated_datasets (Pars, seed=12345)
-Fits   <- senlm.multi (models=Models, data=Data, xvar="x_depth", yvar="y_Sebastolobus.altivelis")
+Fits   <- senlm.multi (models=Models, data=Data, xvar="depth", yvar="Sebastolobus.altivelis")
 print (Models)
 print (Fits)
 ```
@@ -1065,10 +1065,10 @@ Alternatively, one can fit multiple models to real data.
 ```{r eval=FALSE}
 Models <- set_models (mean_fun="gaussian", err_dist=c("zip", "zinb"))
 Data <- vector (length=2, mode="list")
-Data[[1]]$x <- haul$x_depth
-Data[[1]]$y <- haul$y_Albatrossia.pectoralis
-Data[[2]]$x <- haul$x_depth
-Data[[2]]$y <- haul$y_Sebastolobus.altivelis
+Data[[1]]$x <- haul$depth
+Data[[1]]$y <- haul$Albatrossia.pectoralis
+Data[[2]]$x <- haul$depth
+Data[[2]]$y <- haul$Sebastolobus.altivelis
 Fits   <- senlm.multi (Models, Data)
 ```
 
