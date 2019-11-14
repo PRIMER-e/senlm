@@ -1050,7 +1050,7 @@ summary (Fit)
 ```
 
 
-To fit multiple models to multiple data sets, one can use the <tt>senlm.multi()</tt> function.
+To fit multiple models to multiple data sets, one can use the <tt>msenlm()</tt> function.
 The models to fit are specified with the <tt>set_models()</tt> function. The data should be stored in 
 a list. It could be simulated data create using the <tt>create_simulated_datasets()</tt> function.
 
@@ -1058,7 +1058,7 @@ a list. It could be simulated data create using the <tt>create_simulated_dataset
 Models <- set_models (mean_class="test", err_class="binary")
 Pars   <- create_default_par_list (models=Models)
 Data   <- create_simulated_datasets (Pars, seed=12345)
-Fits   <- senlm.multi (models=Models, data=Data, xvar="depth", yvar="Sebastolobus.altivelis")
+Fits   <- msenlm (models=Models, data=Data, xvar="depth", yvar="Sebastolobus.altivelis")
 print (Models)
 print (Fits)
 ```

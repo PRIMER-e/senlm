@@ -5,8 +5,8 @@
 \title{Fit species-environment non-linear model via maximum likelihood}
 \usage{
 senlm(model = NULL, data = NULL, xvar = NULL, yvar = NULL,
-  mean_fun = NULL, err_dist = NULL, binomial_n = NULL, x = NULL,
-  y = NULL)
+  mean_fun = NULL, err_dist = NULL, binomial_n = NULL, y = NULL,
+  x = NULL)
 }
 \arguments{
 \item{model}{Model to fit.}
@@ -24,9 +24,9 @@ senlm(model = NULL, data = NULL, xvar = NULL, yvar = NULL,
 \item{binomial_n}{The binomial n parameter, if error distribution
 is "binomial_count" or "binomial_percent" (if model not supplied).}
 
-\item{x}{Vector of x (domain) values (if data not supplied).}
-
 \item{y}{Repsonse variable vector (if data not supplied).}
+
+\item{x}{Vector of x (domain) values (if data not supplied).}
 }
 \value{
 Object containg model fit to data y and x.

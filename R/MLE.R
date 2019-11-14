@@ -15,8 +15,8 @@
 #' @param err_dist Error distribution (if model not supplied).
 #' @param binomial_n The binomial n parameter, if error distribution
 #' is "binomial_count" or "binomial_percent" (if model not supplied).
-#' @param x Vector of x (domain) values (if data not supplied).
 #' @param y Repsonse variable vector (if data not supplied).
+#' @param x Vector of x (domain) values (if data not supplied).
 #'
 #' @return Object containg model fit to data y and x.
 #'
@@ -39,7 +39,7 @@
 #' @export
 #'
 senlm <- function (model=NULL, data=NULL, xvar=NULL, yvar=NULL,
-                   mean_fun=NULL, err_dist=NULL, binomial_n=NULL, x=NULL, y=NULL) {
+                   mean_fun=NULL, err_dist=NULL, binomial_n=NULL, y=NULL, x=NULL) {
   ## --- Fit model using maximum likelihood
 
   ## --- Model not specified
@@ -126,14 +126,14 @@ senlm <- function (model=NULL, data=NULL, xvar=NULL, yvar=NULL,
   Fit$x <- x
 
   ## --- Names
-  Fit$xname <- xname
   Fit$yname <- yname
+  Fit$xname <- xname
 
   ## --- Was fit successful?
   if (Fail == FALSE) {
-
+    
     ## --- Fit successful
-    Fit$fail <- FALSE
+    Fit$convergence <- 0
 
     ## --- Fitted parameters
     Fit$theta <- Fit.theta
@@ -149,7 +149,7 @@ senlm <- function (model=NULL, data=NULL, xvar=NULL, yvar=NULL,
   } else {
 
     ## --- Fit unsuccessful
-    Fit$fail <- TRUE
+    Fit$convergence <- 1
   }
 
   ## --- Set class
@@ -649,9 +649,9 @@ summary.msenlm <- function (object, best=NULL, ...) {
     ## Stop if best value is illegal
     if (all(best!=GOF)) { stop ('best option must be equal to "nll", "AIC", "AICc", "BIC"!') }
   }
-
+  
   ## --- Grab parameter names of all models
-
+  
   ## Initialise parameter names
   parnames <- c()
   ## Initalise model counts
@@ -665,14 +665,14 @@ summary.msenlm <- function (object, best=NULL, ...) {
       ## Increment model counts
       NModels <- NModels +  1
     }
-  }
+  } 
   ## Extract unique parameter names
   parnames <- unique(parnames)
-
-
+  
   ## --- Set variable names for summary object
-  varnames <- c("fitfail", "x", "y", "mean_fun", "err_dist", parnames, "nll", "AIC", "AICc", "BIC")
-
+  varnames <- c("convergence", "y", "x", "model", "mean_fun", "err_dist",
+                parnames, "npar", "nll", "AIC", "AICc", "BIC")
+  
   ## --- Initialise summary object
   SDat <- as.data.frame (matrix(NA, ncol=length(varnames), nrow=NModels))
   names(SDat) <- varnames
@@ -688,31 +688,28 @@ summary.msenlm <- function (object, best=NULL, ...) {
     for (j in 1:length(object[[i]])) {
 
       ## Did model fit fail
-      Fail <- object[[i]][[j]]$fail
-      SDat[Row,]$fitfail <- Fail
+      Convergence <- object[[i]][[j]]$convergence
+      SDat[Row,]$convergence <- Convergence
+      
+      ## Grab x and y variable names
+      SDat[Row,]$y <- object[[i]][[j]]$yname
+      SDat[Row,]$x <- object[[i]][[j]]$xname
 
       ## Grab mean function and error distribution
       MeanErr  <- unlist(strsplit(object[[i]][[j]]$model, "-"))
-      mean_fun <- MeanErr[1]
-      err_dist <- MeanErr[2]
-
-      ## Grab x and y variable names
-      SDat[Row,]$x <- object[[i]][[j]]$xname
-      SDat[Row,]$y <- object[[i]][[j]]$yname
-
-      ## Set mean function and error distribution
-      SDat[Row,]$mean_fun <- mean_fun
-      SDat[Row,]$err_dist <- err_dist
+      SDat[Row,]$model    <- object[[i]][[j]]$model
+      SDat[Row,]$mean_fun <- MeanErr[1]
+      SDat[Row,]$err_dist <- MeanErr[2]
 
       ## --- Was fit successful?
-      if (Fail == FALSE) {
+      if (Convergence == 0) {
 
         ## Grab fitted parameter values
         SDat[Row,names(object[[i]][[j]]$theta)] <- object[[i]][[j]]$theta
 
         ## Grab goodness-of-fit variables
-        SDat[Row,c("nll", "AIC", "AICc", "BIC")] <-
-          object[[i]][[j]]$IC[c("nll", "AIC", "AICc", "BIC")]
+        SDat[Row,c("npar", "nll", "AIC", "AICc", "BIC")] <-
+          object[[i]][[j]]$IC[c("npar", "nll", "AIC", "AICc", "BIC")]
       }
 
       ## Increment row number
@@ -722,11 +719,11 @@ summary.msenlm <- function (object, best=NULL, ...) {
 
   ## --- Find best models
   if (!is.null(best)) {
-
+    
     ## Initialise row counter
     Row <- 0
-    ## Initialise best method index for each response variable
-    BestMethod <- rep(NA,length(object))
+    ## Initialise best model index for each response variable
+    BestModel <- rep(NA,length(object))
 
     ## Loop through response variables
     for (i in 1:length(object)) {
@@ -738,25 +735,25 @@ summary.msenlm <- function (object, best=NULL, ...) {
       ## Loop through models
       for (j in 1:length(object[[i]])) {
         ## Grab goodness-of-fit values if available
-        if (!object[[i]][[j]]$fail) {
-          ICMat[j,] <- object[[i]][[j]]$IC[grep("npar", names(object[[i]][[j]]$IC), invert=T)]
+        if (object[[i]][[j]]$convergence == 0) {
+          ICMat[j,] <- object[[i]][[j]]$IC[grep("npar", names(object[[i]][[j]]$IC), invert=TRUE)]
         }
       }
-
+      
       ## --- Grab select goodness-of-fit metric
       GOF <- ICMat[,best]
-
+      
       ## --- Find row of summary object of best methods
-      BestMethod[i] <- Row + which(GOF==min(GOF, na.rm=T))
-
+      BestModel[i] <- Row + which(GOF==min(GOF, na.rm=T))
+      
       ## Increment row counter
       Row <- Row + length(object[[i]])
     }
-
+    
     ## --- Select best models
-    SDat <- SDat[BestMethod,]
+    SDat <- SDat[BestModel,]
   }
-
+  
   ## Display summary object
   print (SDat)
 }
