@@ -26,8 +26,8 @@ Object containg model fits to data y and x.
 \dontrun{
 
 models <- set_models (mean_class="test", err_dist=c("zip","zinb"))
-Fits <- msenlm (models=models, data=haul, xvar="x_depth",
-                yvar=c("y_Albatrossia.pectoralis", "y_Sebastolobus.altivelis"))
+Fits <- msenlm (models=models, data=haul, xvar="depth",
+                yvar=c("Albatrossia.pectoralis", "Sebastolobus.altivelis"))
 }
 }
 \keyword{fit}

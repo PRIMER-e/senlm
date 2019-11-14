@@ -33,7 +33,7 @@
 #'
 #' ## Real data
 #' Model <- set_models (mean_fun="gaussian", err_dist=c("zip"))
-#' Fit <- senlm (model=Model, data=haul, xvar="x_depth", yvar="y_Sebastolobus.altivelis")
+#' Fit <- senlm (model=Model, data=haul, xvar="depth", yvar="Sebastolobus.altivelis")
 #' }
 #'
 #' @export
@@ -178,7 +178,7 @@ senlm <- function (model=NULL, data=NULL, xvar=NULL, yvar=NULL,
 #'
 #' ## Real data
 #' Model <- set_models (mean_fun="gaussian", err_dist=c("zip"))
-#' Fit <- senlm (model=Model, data=haul, xvar="x_depth", yvar="y_Sebastolobus.altivelis")
+#' Fit <- senlm (model=Model, data=haul, xvar="depth", yvar="Sebastolobus.altivelis")
 #' predict (Fit)
 #' }
 #'
@@ -228,7 +228,7 @@ predict.senlm <- function (object, newdata, ...) {
 #'
 #' ## Simulate data
 #' Model <- set_models (mean_fun="gaussian", err_dist=c("zip"))
-#' Fit <- senlm (model=Model, data=haul, xvar="x_depth", yvar="y_Sebastolobus.altivelis")
+#' Fit <- senlm (model=Model, data=haul, xvar="depth", yvar="Sebastolobus.altivelis")
 #' sim(Fit, nsim=2, newdata=c(400,600,800))
 #' }
 #'
@@ -300,7 +300,7 @@ simulate.senlm <- function (object, nsim=1, seed=NULL, newdata=NULL, ...) {
 #'
 #' ## Summarise data
 #' Model <- set_models (mean_fun="gaussian", err_dist=c("zip"))
-#' Fit <- senlm (model=Model, data=haul, xvar="x_depth", yvar="y_Sebastolobus.altivelis")
+#' Fit <- senlm (model=Model, data=haul, xvar="depth", yvar="Sebastolobus.altivelis")
 #' summary(Fit)
 #' }
 #'
@@ -336,7 +336,7 @@ summary.senlm <- function (object, ...) {
 #'
 #' ## Plot fitted model
 #' Model <- set_models (mean_fun="gaussian", err_dist=c("zip"))
-#' Fit <- senlm (model=Model, data=haul, xvar="x_depth", yvar="y_Sebastolobus.altivelis")
+#' Fit <- senlm (model=Model, data=haul, xvar="depth", yvar="Sebastolobus.altivelis")
 #' plot(Fit)
 #' }
 #'
@@ -538,8 +538,8 @@ mle_uniform_bernoulli <- function (ModelInfo, Dat) {
 #' \dontrun{
 #'
 #' models <- set_models (mean_class="test", err_dist=c("zip","zinb"))
-#' Fits <- msenlm (models=models, data=haul, xvar="x_depth",
-#'                 yvar=c("y_Albatrossia.pectoralis", "y_Sebastolobus.altivelis"))
+#' Fits <- msenlm (models=models, data=haul, xvar="depth",
+#'                 yvar=c("Albatrossia.pectoralis", "Sebastolobus.altivelis"))
 #' }
 #' @export
 #'
@@ -631,8 +631,8 @@ msenlm <- function (models=NULL, data=NULL, xvar=NULL, yvar=NULL) {
 #' ## Summarise data
 #' models <- set_models (mean_fun=c("gaussian", "beta"),
 #'                       err_dist=c("zinb", "zip"), method="crossed")
-#' fits <- msenlm (models=models, data=haul, xvar="x_depth",
-#'                 yvar=c("y_Albatrossia.pectoralis", "y_Sebastolobus.altivelis"))
+#' fits <- msenlm (models=models, data=haul, xvar="depth",
+#'                 yvar=c("Albatrossia.pectoralis", "Sebastolobus.altivelis"))
 #' summary(fits)
 #' summary(fits, best="AICc")
 #' }

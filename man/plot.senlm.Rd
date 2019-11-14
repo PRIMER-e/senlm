@@ -23,7 +23,7 @@ Produces a scatterplot of y vs x with fitted mean curve overlaid.
 
 ## Plot fitted model
 Model <- set_models (mean_fun="gaussian", err_dist=c("zip"))
-Fit <- senlm (model=Model, data=haul, xvar="x_depth", yvar="y_Sebastolobus.altivelis")
+Fit <- senlm (model=Model, data=haul, xvar="depth", yvar="Sebastolobus.altivelis")
 plot(Fit)
 }
 

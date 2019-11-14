@@ -45,7 +45,7 @@ Fit <- senlm (mean_fun="gaussian", err_dist="poisson", x=Data[[1]]$x, y=Data[[1]
 
 ## Real data
 Model <- set_models (mean_fun="gaussian", err_dist=c("zip"))
-Fit <- senlm (model=Model, data=haul, xvar="x_depth", yvar="y_Sebastolobus.altivelis")
+Fit <- senlm (model=Model, data=haul, xvar="depth", yvar="Sebastolobus.altivelis")
 }
 
 }
