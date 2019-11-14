@@ -31,3 +31,13 @@ You should read the following excellent books about developing R packages (both 
   - [Advanced R](https://adv-r.hadley.nz/)
   
 If you want to update the package's website, then read the [pkgdown documentation](https://pkgdown.r-lib.org/).
+
+To build a PDF version of any vignette replace the line `output: rmarkdown::html_vignette` with the following:
+
+```
+output:
+   pdf_document:
+     latex_engine: xelatex
+```
+
+Use `devtools::build_manual()` to compile the package help pages into a PDF document.
