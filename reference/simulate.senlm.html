@@ -171,7 +171,7 @@
 
 <span class='co'>## Simulate data</span>
 <span class='no'>Model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='set_models.html'>set_models</a></span> (<span class='kw'>mean_fun</span><span class='kw'>=</span><span class='st'>"gaussian"</span>, <span class='kw'>err_dist</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"zip"</span>))
-<span class='no'>Fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='senlm.html'>senlm</a></span> (<span class='kw'>model</span><span class='kw'>=</span><span class='no'>Model</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>haul</span>, <span class='kw'>xvar</span><span class='kw'>=</span><span class='st'>"x_depth"</span>, <span class='kw'>yvar</span><span class='kw'>=</span><span class='st'>"y_Sebastolobus.altivelis"</span>)
+<span class='no'>Fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='senlm.html'>senlm</a></span> (<span class='kw'>model</span><span class='kw'>=</span><span class='no'>Model</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>haul</span>, <span class='kw'>xvar</span><span class='kw'>=</span><span class='st'>"depth"</span>, <span class='kw'>yvar</span><span class='kw'>=</span><span class='st'>"Sebastolobus.altivelis"</span>)
 <span class='fu'>sim</span>(<span class='no'>Fit</span>, <span class='kw'>nsim</span><span class='kw'>=</span><span class='fl'>2</span>, <span class='kw'>newdata</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>400</span>,<span class='fl'>600</span>,<span class='fl'>800</span>))
 }</div></pre>
   </div>
