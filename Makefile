@@ -17,7 +17,7 @@ GIT=PRIMER-e/senlm
 ## git init
 ## git add DESCRIPTION
 ## git commit -m "First commit."
-## git remote add origin git@github.com:USERNAME/PACKAGE.git
+## git remote add origin git@github.com/PRIMER-e/senlm.git
 ## git push -u origin master
 
 ## --- Remove file
