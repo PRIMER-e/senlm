@@ -30,7 +30,7 @@ Simulate from senlm model fit, nsim times, using x values in newdata, or actual 
 
 ## Simulate data
 Model <- set_models (mean_fun="gaussian", err_dist=c("zip"))
-Fit <- senlm (model=Model, data=haul, xvar="x_depth", yvar="y_Sebastolobus.altivelis")
+Fit <- senlm (model=Model, data=haul, xvar="depth", yvar="Sebastolobus.altivelis")
 sim(Fit, nsim=2, newdata=c(400,600,800))
 }
 
