@@ -12,7 +12,7 @@
 \item{best}{Select best model for each response variable according to
 the following criteria: "nll", "AIC", "AICc", "BIC".}
 
-\item{...}{Other arguments which will be ignored.}
+\item{...}{Other arguments that will be ignored.}
 }
 \value{
 Data frame summarising senlm model fits.
