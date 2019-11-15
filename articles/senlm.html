@@ -1074,16 +1074,16 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i)
 <a class="sourceLine" id="cb36-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb36-7" data-line-number="7"><span class="op">$</span>theta</a>
 <a class="sourceLine" id="cb36-8" data-line-number="8">          H           m           s          pi </a>
-<a class="sourceLine" id="cb36-9" data-line-number="9"><span class="fl">817.5307442</span> <span class="fl">917.8020537</span> <span class="fl">225.5627496</span>   <span class="fl">0.5954252</span> </a>
+<a class="sourceLine" id="cb36-9" data-line-number="9"><span class="fl">817.5307438</span> <span class="fl">917.8020619</span> <span class="fl">225.5627534</span>   <span class="fl">0.5954255</span> </a>
 <a class="sourceLine" id="cb36-10" data-line-number="10"></a>
 <a class="sourceLine" id="cb36-11" data-line-number="11"><span class="op">$</span>IC</a>
 <a class="sourceLine" id="cb36-12" data-line-number="12">    npar      nll      AIC     AICc      BIC </a>
 <a class="sourceLine" id="cb36-13" data-line-number="13">    <span class="fl">4.00</span> <span class="fl">36950.05</span> <span class="fl">73908.10</span> <span class="fl">73908.14</span> <span class="fl">73928.01</span> </a></code></pre></div>
-<p>To fit multiple models to multiple data sets, one can use the <tt>senlm.multi()</tt> function. The models to fit are specified with the <tt>set_models()</tt> function. The data should be stored in a list. It could be simulated data create using the <tt>create_simulated_datasets()</tt> function.</p>
+<p>To fit multiple models to multiple data sets, one can use the <tt>msenlm()</tt> function. The models to fit are specified with the <tt>set_models()</tt> function. The data should be stored in a list. It could be simulated data create using the <tt>create_simulated_datasets()</tt> function.</p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1">Models &lt;-<span class="st"> </span><span class="kw"><a href="../reference/set_models.html">set_models</a></span> (<span class="dt">mean_class=</span><span class="st">"test"</span>, <span class="dt">err_class=</span><span class="st">"binary"</span>)</a>
 <a class="sourceLine" id="cb37-2" data-line-number="2">Pars   &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_default_par_list.html">create_default_par_list</a></span> (<span class="dt">models=</span>Models)</a>
 <a class="sourceLine" id="cb37-3" data-line-number="3">Data   &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_simulated_datasets.html">create_simulated_datasets</a></span> (Pars, <span class="dt">seed=</span><span class="dv">12345</span>)</a>
-<a class="sourceLine" id="cb37-4" data-line-number="4">Fits   &lt;-<span class="st"> </span><span class="kw">senlm.multi</span> (<span class="dt">models=</span>Models, <span class="dt">data=</span>Data, <span class="dt">xvar=</span><span class="st">"depth"</span>, <span class="dt">yvar=</span><span class="st">"Sebastolobus.altivelis"</span>)</a>
+<a class="sourceLine" id="cb37-4" data-line-number="4">Fits   &lt;-<span class="st"> </span><span class="kw"><a href="../reference/msenlm.html">msenlm</a></span> (<span class="dt">models=</span>Models, <span class="dt">data=</span>Data, <span class="dt">xvar=</span><span class="st">"depth"</span>, <span class="dt">yvar=</span><span class="st">"Sebastolobus.altivelis"</span>)</a>
 <a class="sourceLine" id="cb37-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span> (Models)</a>
 <a class="sourceLine" id="cb37-6" data-line-number="6"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span> (Fits)</a></code></pre></div>
 <p>Alternatively, one can fit multiple models to real data.</p>
