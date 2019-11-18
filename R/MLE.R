@@ -771,3 +771,80 @@ plot.msenlm <- function (Fits) {
     }
   }
 }
+
+
+#' Find the best model for each response variable from an msenlm object
+#'
+#' Find the best model for each response variable from an msenlm object
+#' using the given criteria.
+#'
+#' @param object msenlm multiple model fit.
+#' @param best Select best model for each response variable according to
+#' the following criteria: "nll", "AIC", "AICc", "BIC".
+#'
+#' @return msenlm object only containing best fitted models.
+#' 
+#' @keywords best multiple senlm model fit
+#'
+#' @examples
+#'
+#' \dontrun{
+#'
+#' ## Summarise data
+#' models <- set_models (mean_fun=c("gaussian", "beta"),
+#'                       err_dist=c("zinb", "zip"), method="crossed")
+#' fits <- msenlm (models=models, data=haul, xvar="depth",
+#'                 yvar=c("Albatrossia.pectoralis", "Sebastolobus.altivelis"))
+#' best <- msenlm.best (fits, best="AICc")
+#' summary(best)
+#' }
+#'
+#' @export
+#'
+msenlm.best <- function (object, best="AICc" ) {
+  ## --- Extract best model for each response variable
+   
+  ## --- Check best value
+  if (!is.null(best)) {
+    ## Possible values of best
+    GOF <- c("nll", "AIC", "AICc", "BIC")
+    ## Stop if best value is illegal
+    if (all(best!=GOF)) { stop ('best option must be equal to "nll", "AIC", "AICc", "BIC"!') }
+  }
+
+  ## --- Create best fits object
+  BFits <- vector (mode="list", length=length(object))
+  names(BFits) <- names(object)
+  for (i in 1:length(BFits)) {
+    BFits[[i]] <- vector (mode="list", length=1)
+  }
+  
+  ## Loop through response variables
+  for (i in 1:length(object)) {
+
+    ## --- Put goodness-of-fit values in matrix
+    NModels <- length (object[[i]])
+    ICMat   <- as.data.frame(matrix(NA, ncol=4, nrow=NModels))
+    names(ICMat) <- c("nll", "AIC", "AICc", "BIC")
+    ## Loop through models
+    for (j in 1:length(object[[i]])) {
+      ## Grab goodness-of-fit values if available
+      if (object[[i]][[j]]$convergence == 0) {
+        ICMat[j,] <- object[[i]][[j]]$IC[grep("npar", names(object[[i]][[j]]$IC), invert=TRUE)]
+      }
+    }
+    
+    ## --- Grab select goodness-of-fit metric
+    GOF <- ICMat[,best]
+    
+    ## --- Find row of summary object of best methods
+    BFits[[i]][[1]] <- object[[i]][[which(GOF==min(GOF, na.rm=T))]]
+    names(BFits[[i]]) <- BFits[[i]][[1]]$model
+  }
+  
+  ## --- Set class
+  class (BFits) <- "msenlm"
+
+  ## --- Return best fits object
+  return (BFits)
+}
