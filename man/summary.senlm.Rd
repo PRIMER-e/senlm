@@ -22,9 +22,9 @@ Print summary information for senlm model fit.
 \dontrun{
 
 ## Summarise data
-Model <- set_models (mean_fun="gaussian", err_dist=c("zip"))
-Fit <- senlm (model=Model, data=haul, xvar="depth", yvar="Sebastolobus.altivelis")
-summary(Fit)
+model <- set_models(mean_fun="gaussian", err_dist="zip")
+fit <- senlm(model=model, data=haul, xvar="depth", yvar="Sebastolobus.altivelis")
+summary(fit)
 }
 
 }

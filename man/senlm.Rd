@@ -38,14 +38,15 @@ Object containg model fit to data y and x.
 
 \dontrun{
 ## Simulate data
-Pars <- create_default_par_list (mean_fun="gaussian", err_dist="poisson")
-Data <- create_simulated_datasets (Pars, N=100, xmin=0, xmax=100, seed=12345)
+pars <- create_default_par_list(mean_fun="gaussian", err_dist="poisson")
+dat  <- create_simulated_datasets(pars, N=100, xmin=0, xmax=100, seed=12345)
 ## Fit model
-Fit <- senlm (mean_fun="gaussian", err_dist="poisson", x=Data[[1]]$x, y=Data[[1]]$y)
+fit <- senlm(mean_fun="gaussian", err_dist="poisson", data=dat,
+             xvar="x", yvar="gaussian_poisson")
 
 ## Real data
-Model <- set_models (mean_fun="gaussian", err_dist=c("zip"))
-Fit <- senlm (model=Model, data=haul, xvar="depth", yvar="Sebastolobus.altivelis")
+model <- set_models(mean_fun="gaussian", err_dist="zip")
+fit <- senlm(model=model, data=haul, xvar="depth", yvar="Sebastolobus.altivelis")
 }
 
 }

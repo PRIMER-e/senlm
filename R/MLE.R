@@ -26,14 +26,15 @@
 #'
 #' \dontrun{
 #' ## Simulate data
-#' Pars <- create_default_par_list (mean_fun="gaussian", err_dist="poisson")
-#' Data <- create_simulated_datasets (Pars, N=100, xmin=0, xmax=100, seed=12345)
+#' pars <- create_default_par_list(mean_fun="gaussian", err_dist="poisson")
+#' dat  <- create_simulated_datasets(pars, N=100, xmin=0, xmax=100, seed=12345)
 #' ## Fit model
-#' Fit <- senlm (mean_fun="gaussian", err_dist="poisson", x=Data[[1]]$x, y=Data[[1]]$y)
+#' fit <- senlm(mean_fun="gaussian", err_dist="poisson", data=dat,
+#'              xvar="x", yvar="gaussian_poisson")
 #'
 #' ## Real data
-#' Model <- set_models (mean_fun="gaussian", err_dist=c("zip"))
-#' Fit <- senlm (model=Model, data=haul, xvar="depth", yvar="Sebastolobus.altivelis")
+#' model <- set_models(mean_fun="gaussian", err_dist="zip")
+#' fit <- senlm(model=model, data=haul, xvar="depth", yvar="Sebastolobus.altivelis")
 #' }
 #'
 #' @export
@@ -177,9 +178,8 @@ senlm <- function (model=NULL, data=NULL, xvar=NULL, yvar=NULL,
 #' \dontrun{
 #'
 #' ## Real data
-#' Model <- set_models (mean_fun="gaussian", err_dist=c("zip"))
-#' Fit <- senlm (model=Model, data=haul, xvar="depth", yvar="Sebastolobus.altivelis")
-#' predict (Fit)
+#' model <- set_models(mean_fun="gaussian", err_dist=c("zip"))
+#' fit <- senlm(model=model, data=haul, xvar="depth", yvar="Sebastolobus.altivelis")
 #' }
 #'
 #' @export
@@ -227,11 +227,13 @@ predict.senlm <- function (object, newdata, ...) {
 #' \dontrun{
 #'
 #' ## Simulate data
-#' Model <- set_models (mean_fun="gaussian", err_dist=c("zip"))
-#' Fit <- senlm (model=Model, data=haul, xvar="depth", yvar="Sebastolobus.altivelis")
-#' sim(Fit, nsim=2, newdata=c(400,600,800))
-#' }
+#' model <- set_models(mean_fun="gaussian", err_dist="zip")
+#' fit <- senlm(model=model, data=haul, xvar="depth", yvar="Sebastolobus.altivelis")
+#' simulate(fit)
 #'
+#' ## Simulate two data sets with x=400,600,and 800
+#' simulate(fit, nsim=2, newdata=c(400,600,800))
+#' }
 #'
 simulate.senlm <- function (object, nsim=1, seed=NULL, newdata=NULL, ...) {
   ## --- Simulate data nsim times from senlm model
@@ -299,9 +301,9 @@ simulate.senlm <- function (object, nsim=1, seed=NULL, newdata=NULL, ...) {
 #' \dontrun{
 #'
 #' ## Summarise data
-#' Model <- set_models (mean_fun="gaussian", err_dist=c("zip"))
-#' Fit <- senlm (model=Model, data=haul, xvar="depth", yvar="Sebastolobus.altivelis")
-#' summary(Fit)
+#' model <- set_models(mean_fun="gaussian", err_dist="zip")
+#' fit <- senlm(model=model, data=haul, xvar="depth", yvar="Sebastolobus.altivelis")
+#' summary(fit)
 #' }
 #'
 #' @export
@@ -335,9 +337,9 @@ summary.senlm <- function (object, ...) {
 #' \dontrun{
 #'
 #' ## Plot fitted model
-#' Model <- set_models (mean_fun="gaussian", err_dist=c("zip"))
-#' Fit <- senlm (model=Model, data=haul, xvar="depth", yvar="Sebastolobus.altivelis")
-#' plot(Fit)
+#' model <- set_models(mean_fun="gaussian", err_dist="zip")
+#' fit <- senlm(model=model, data=haul, xvar="depth", yvar="Sebastolobus.altivelis")
+#' plot(fit)
 #' }
 #'
 #' @export
@@ -537,13 +539,13 @@ mle_uniform_bernoulli <- function (ModelInfo, Dat) {
 #'
 #' \dontrun{
 #'
-#' models <- set_models (mean_class="test", err_dist=c("zip","zinb"))
-#' Fits <- msenlm (models=models, data=haul, xvar="depth",
-#'                 yvar=c("Albatrossia.pectoralis", "Sebastolobus.altivelis"))
+#' models <- set_models(mean_fun=c("gaussian","beta"), err_dist=c("zip","zinb"))
+#' fits <- msenlm(models=models, data=haul, xvar="depth",
+#'                yvar=c("Albatrossia.pectoralis", "Sebastolobus.altivelis"))
 #' }
 #' @export
 #'
-msenlm <- function (models=NULL, data=NULL, xvar=NULL, yvar=NULL) {
+msenlm <- function (models=NULL, data=NULL, xvar=NULL, yvar=NULL, echo=FALSE) {
   ## --- Fit multiple senlm models using maximum likelihood to multiple response variables
 
   ## --- Check inputs
@@ -576,7 +578,7 @@ msenlm <- function (models=NULL, data=NULL, xvar=NULL, yvar=NULL) {
   for (i in 1:length(Fits)) {
 
     ## Display iteration
-    print (i)
+    if (echo) { print (i) }
 
     ## Create object to store model fits to data with ith response variable
     ModelFits <-  vector (mode="list", length=nrow(models))
@@ -629,10 +631,10 @@ msenlm <- function (models=NULL, data=NULL, xvar=NULL, yvar=NULL) {
 #' \dontrun{
 #'
 #' ## Summarise data
-#' models <- set_models (mean_fun=c("gaussian", "beta"),
-#'                       err_dist=c("zinb", "zip"), method="crossed")
-#' fits <- msenlm (models=models, data=haul, xvar="depth",
-#'                 yvar=c("Albatrossia.pectoralis", "Sebastolobus.altivelis"))
+#' models <- set_models(mean_fun=c("gaussian", "beta"),
+#'                      err_dist=c("zinb", "zip"), method="crossed")
+#' fits <- msenlm(models=models, data=haul, xvar="depth",
+#'                yvar=c("Albatrossia.pectoralis", "Sebastolobus.altivelis"))
 #' summary(fits)
 #' summary(fits, best="AICc")
 #' }
@@ -791,11 +793,11 @@ plot.msenlm <- function (Fits) {
 #' \dontrun{
 #'
 #' ## Summarise data
-#' models <- set_models (mean_fun=c("gaussian", "beta"),
-#'                       err_dist=c("zinb", "zip"), method="crossed")
-#' fits <- msenlm (models=models, data=haul, xvar="depth",
-#'                 yvar=c("Albatrossia.pectoralis", "Sebastolobus.altivelis"))
-#' best <- msenlm.best (fits, best="AICc")
+#' models <- set_models(mean_fun=c("gaussian", "beta"),
+#'                      err_dist=c("zinb", "zip"), method="crossed")
+#' fits <- msenlm(models=models, data=haul, xvar="depth",
+#'                yvar=c("Albatrossia.pectoralis", "Sebastolobus.altivelis"))
+#' best <- msenlm.best(fits, best="AICc")
 #' summary(best)
 #' }
 #'

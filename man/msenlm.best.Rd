@@ -24,11 +24,11 @@ using the given criteria.
 \dontrun{
 
 ## Summarise data
-models <- set_models (mean_fun=c("gaussian", "beta"),
-                      err_dist=c("zinb", "zip"), method="crossed")
-fits <- msenlm (models=models, data=haul, xvar="depth",
-                yvar=c("Albatrossia.pectoralis", "Sebastolobus.altivelis"))
-best <- msenlm.best (fits, best="AICc")
+models <- set_models(mean_fun=c("gaussian", "beta"),
+                     err_dist=c("zinb", "zip"), method="crossed")
+fits <- msenlm(models=models, data=haul, xvar="depth",
+               yvar=c("Albatrossia.pectoralis", "Sebastolobus.altivelis"))
+best <- msenlm.best(fits, best="AICc")
 summary(best)
 }
 

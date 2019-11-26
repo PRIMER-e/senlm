@@ -1054,25 +1054,25 @@ To fit multiple models to multiple data sets, one can use the <tt>msenlm()</tt> 
 The models to fit are specified with the <tt>set_models()</tt> function. The data should be stored in 
 a list. It could be simulated data create using the <tt>create_simulated_datasets()</tt> function.
 
-```{r eval=FALSE}
+```{r}
 Models <- set_models (mean_class="test", err_class="binary")
 Pars   <- create_default_par_list (models=Models)
 Data   <- create_simulated_datasets (Pars, seed=12345)
-Fits   <- msenlm (models=Models, data=Data, xvar="depth", yvar="Sebastolobus.altivelis")
+Fits   <- msenlm (models=Models, data=Data, xvar="x", yvar=names(Data)[-1])
 print (Models)
-print (Fits)
+summary (Fits)
 ```
 
-Alternatively, one can fit multiple models to real data.
+Alternatively, one can fit multiple models to real data. The <tt>msenlm.best</tt>
+function picks the best model for each response variable using the given criteria.
+The <tt>summary</tt> function summarises the fitted models.
 
-```{r eval=FALSE}
+```{r}
 Models <- set_models (mean_fun="gaussian", err_dist=c("zip", "zinb"))
-Data <- vector (length=2, mode="list")
-Data[[1]]$x <- haul$depth
-Data[[1]]$y <- haul$Albatrossia.pectoralis
-Data[[2]]$x <- haul$depth
-Data[[2]]$y <- haul$Sebastolobus.altivelis
-Fits   <- senlm.multi (Models, Data)
+Fits   <- msenlm (models=Models, data=haul, xvar="depth", 
+                  yvar=c("Albatrossia.pectoralis", "Sebastolobus.altivelis"))
+summary(Fits)
+summary(msenlm.best(Fits, best="AICc"))
 ```
 
 

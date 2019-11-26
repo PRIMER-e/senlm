@@ -19,7 +19,7 @@
 #' ModelInfo <- set_model_info (Models[1,])
 #' Pars   <- create_default_par_list (models=Models)
 #' Data   <- create_simulated_datasets (Pars, seed=12345)
-#' theta  <- init_mle (ModelInfo, Dat=Data[[1]])
+#' theta  <- init_mle (ModelInfo, Dat=data.frame(x=Data$x, y=Data$gaussian_zip))
 #' print (rbind (Pars[[1]]$theta, theta))
 #' 
 #' @export

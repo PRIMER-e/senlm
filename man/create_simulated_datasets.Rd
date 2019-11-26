@@ -23,10 +23,10 @@ create_simulated_datasets(Pars, x = NULL, N = 500, xmin = 0,
 \item{echo}{If TRUE display list describing data sets simulated}
 }
 \value{
-List containing simulated data sets.
+Data frame containing one x variable and simulated data sets from Pars object.
 }
 \description{
-Simulate data sets defined by the given parameter list.Set
+Simulate data sets defined by the given parameter list.
 }
 \examples{
 

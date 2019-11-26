@@ -26,10 +26,10 @@ best model fit for each response variable using the given criteria.
 \dontrun{
 
 ## Summarise data
-models <- set_models (mean_fun=c("gaussian", "beta"),
-                      err_dist=c("zinb", "zip"), method="crossed")
-fits <- msenlm (models=models, data=haul, xvar="depth",
-                yvar=c("Albatrossia.pectoralis", "Sebastolobus.altivelis"))
+models <- set_models(mean_fun=c("gaussian", "beta"),
+                     err_dist=c("zinb", "zip"), method="crossed")
+fits <- msenlm(models=models, data=haul, xvar="depth",
+               yvar=c("Albatrossia.pectoralis", "Sebastolobus.altivelis"))
 summary(fits)
 summary(fits, best="AICc")
 }

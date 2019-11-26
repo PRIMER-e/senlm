@@ -24,9 +24,8 @@ Predict from senlm model fit using x values in newdata, or actual x values.
 \dontrun{
 
 ## Real data
-Model <- set_models (mean_fun="gaussian", err_dist=c("zip"))
-Fit <- senlm (model=Model, data=haul, xvar="depth", yvar="Sebastolobus.altivelis")
-predict (Fit)
+model <- set_models(mean_fun="gaussian", err_dist=c("zip"))
+fit <- senlm(model=model, data=haul, xvar="depth", yvar="Sebastolobus.altivelis")
 }
 
 }

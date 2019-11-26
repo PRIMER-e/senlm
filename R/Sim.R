@@ -646,7 +646,7 @@ simulate_data <- function (x, Par, seed=NULL) {
 
 #' Create list of simulated data sets
 #' 
-#' Simulate data sets defined by the given parameter list.Set
+#' Simulate data sets defined by the given parameter list.
 #'
 #' @param Pars List containg parameters for the simulated data sets.
 #' @param x Vector of x values to simulated data. If not given, N, xmin, and xmax must be).
@@ -656,10 +656,10 @@ simulate_data <- function (x, Par, seed=NULL) {
 #' @param seed Random number seed.
 #' @param echo If TRUE display list describing data sets simulated
 #' 
-#' @return List containing simulated data sets.
+#' @return Data frame containing one x variable and simulated data sets from Pars object.
 #' 
 #' @keywords simulated data sets
-#'
+#' 
 #' @examples
 #'
 #'
@@ -730,9 +730,31 @@ create_simulated_datasets <- function (Pars, x=NULL, N=500, xmin=0, xmax=100,
     colnames(Mat)  <- "Data sets"
     print (Mat)
   }
+
+  ## --- Convert data to data frame
+
+  ## Initialise data frame
+  df <- as.data.frame (matrix(NA, nrow=length(x), ncol=length(Pars)+1))
+
+  ## Store x
+  df[,1] <- x
+
+  ## Create variable names
+  Names <- rep ("", ncol(df))
+  Names[1] <- "x"
+
+  ## Store data and grab y variable names
+  for (i in 1:length(Pars)) {
+    ## Response variable
+    df[,i+1] <- Data[[i]]$y
+    ## Variabe name - convert "-" to "_"
+    Names[i+1] <- gsub ("-", "_", Data[[i]]$model_name)
+  }
+  ## Add names to data frame
+  names(df) <- Names
   
   ## Return data object
-  return (Data)
+  return (df)
 }
 
 

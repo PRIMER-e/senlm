@@ -29,11 +29,13 @@ Simulate from senlm model fit, nsim times, using x values in newdata, or actual 
 \dontrun{
 
 ## Simulate data
-Model <- set_models (mean_fun="gaussian", err_dist=c("zip"))
-Fit <- senlm (model=Model, data=haul, xvar="depth", yvar="Sebastolobus.altivelis")
-sim(Fit, nsim=2, newdata=c(400,600,800))
-}
+model <- set_models(mean_fun="gaussian", err_dist="zip")
+fit <- senlm(model=model, data=haul, xvar="depth", yvar="Sebastolobus.altivelis")
+simulate(fit)
 
+## Simulate two data sets with x=400,600,and 800
+simulate(fit, nsim=2, newdata=c(400,600,800))
+}
 
 }
 \keyword{fit}
