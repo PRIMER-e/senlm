@@ -281,8 +281,7 @@ qres <- function (Fit) {
     qres <- (pi + (1-pi)*pnbinom (q=y,  mu=mu, size=1/phi)) - qhat
   } else {
     ## Error distribution not coded yet
-    ##print ("qres error distribution not coded yet!")
-    qres <- rep (0, length(Fit$residuals))
+    qres <- rep (NA, length(Fit$residuals))
   }
   
   ## --- Return qerror
