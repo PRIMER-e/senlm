@@ -263,28 +263,26 @@ qres <- function (Fit) {
   ## --- Calculate quantile residuals
 
   ## Null values (Not needed when all models included)
-  qres <- Fit$residuals
-  
-  ## Poisson
   if (err_dist == "poisson") {
+    ## Poisson
     qhat <- ppois (q=mu, lambda=mu)
     qres <- ppois (q=y, lambda=mu) - qhat
-  }
-  
-  ## Negative binomial
-  if (err_dist == "negbin") {
+  } else if (err_dist == "negbin") {
+    ## Negative binomial
     phi <- thetaE["phi"]
     qhat <- pnbinom (q=mu, mu=mu, size=1/phi)
     qres <- pnbinom (q=y,  mu=mu, size=1/phi) - qhat
-  }
-
-  ## Zero-inflated negative binomial
-  if (err_dist == "zinb") {
+  } else if (err_dist == "zinb") {
+    ## Zero-inflated negative binomial
     pi  <- thetaE["pi"]
     phi <- thetaE["phi"]
-
+    
     qhat <-  pi + (1-pi)*pnbinom (q=mu, mu=mu, size=1/phi)
     qres <- (pi + (1-pi)*pnbinom (q=y,  mu=mu, size=1/phi)) - qhat
+  } else {
+    ## Error distribution not coded yet
+    ##print ("qres error distribution not coded yet!")
+    qres <- rep (0, length(Fit$residuals))
   }
   
   ## --- Return qerror
@@ -379,10 +377,6 @@ set_models_paired <- function (mean_fun=NULL, err_dist=NULL, binomial_n=NA) {
   ## --- Add binomial size parameter if given
   if (any(BIndex)) { DF[BIndex,]$binomial_n <- binomial_n }
 
-  ## --- Sort data frame by mean vector
-  DF <- DF[order(DF$mean_fun),]
-  rownames(DF) <- 1:nrow(DF)
-  
   ## Return models names
   return (DF)
 }
