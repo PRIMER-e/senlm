@@ -227,6 +227,72 @@ error_distributions <- function (err_dist=NULL, err_class=NULL) {
 }
 
 
+#' Quantile residuals
+#'
+#' Calculate quantiles of residuals
+#'
+#' @param Fit senlm model fit.
+#' 
+#' @return Quantile adjusted residuals.
+#' 
+#' @keywords quantile residuals
+#'
+#' @examples
+#'
+#' \dontrun{
+#' qres()
+#' }
+#'
+#' @export
+#'
+qres <- function (Fit) {
+  ## --- Quantile residuals
+  
+  ## Grab fitted values
+  y <- Fit$y
+  mu <- Fit$fitted
+  model_info <- Fit$model_info
+  theta <- Fit$theta
+  
+  ## Error distribution parameters
+  thetaE <- theta[model_info$thetaE]
+  
+  ## Error distribution
+  err_dist <- model_info$err_dist
+
+  ## --- Calculate quantile residuals
+
+  ## Null values (Not needed when all models included)
+  qres <- Fit$residuals
+  
+  ## Poisson
+  if (err_dist == "poisson") {
+    qhat <- ppois (q=mu, lambda=mu)
+    qres <- ppois (q=y, lambda=mu) - qhat
+  }
+  
+  ## Negative binomial
+  if (err_dist == "negbin") {
+    phi <- thetaE["phi"]
+    qhat <- pnbinom (q=mu, mu=mu, size=1/phi)
+    qres <- pnbinom (q=y,  mu=mu, size=1/phi) - qhat
+  }
+
+  ## Zero-inflated negative binomial
+  if (err_dist == "zinb") {
+    pi  <- thetaE["pi"]
+    phi <- thetaE["phi"]
+
+    qhat <-  pi + (1-pi)*pnbinom (q=mu, mu=mu, size=1/phi)
+    qres <- (pi + (1-pi)*pnbinom (q=y,  mu=mu, size=1/phi)) - qhat
+  }
+  
+  ## --- Return qerror
+  return (qres)
+}
+
+                    
+
 ## --- --- --- ---
 
 

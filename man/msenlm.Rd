@@ -5,7 +5,7 @@
 \title{Fit multiple species-environment non-linear models via maximum likelihood}
 \usage{
 msenlm(models = NULL, data = NULL, xvar = NULL, yvar = NULL,
-  echo = FALSE)
+  echo = FALSE, method = "crossed")
 }
 \arguments{
 \item{models}{Object listing models to fit (from set_models function).}
@@ -15,6 +15,9 @@ msenlm(models = NULL, data = NULL, xvar = NULL, yvar = NULL,
 \item{xvar}{Name of explanatory variable (must be univariate).}
 
 \item{yvar}{Names of response variables.}
+
+\item{method}{If "crossed", fit all models to all response variables. If "paired",
+fit first model to first response variables, etc.}
 }
 \value{
 Object containg model fits to data y and x.

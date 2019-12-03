@@ -9,8 +9,8 @@
   \item{year}{year data was collected}
   \item{depth}{depth that fish count was recorded, in meters}
   \item{lattitude}{lattitude was fish count was recorded, in degrees}
-  \item{Albatrossia.pectoralis}{count of Albatrossia.pectoralis species}
-  \item{Sebastolobus.altivelis}{count of Sebastolobus.altivelis}
+  \item{Albatrossia.pectoralis}{count of Albatrossia pectoralis species}
+  \item{Sebastolobus.altivelis}{count of Sebastolobus altivelis}
 }}
 \source{
 URL of data source should go here.

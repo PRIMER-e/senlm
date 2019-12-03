@@ -106,7 +106,7 @@ senlm <- function (model=NULL, data=NULL, xvar=NULL, yvar=NULL,
     ## Default method : SANN/Nelder-Mead
     estimate_mle <- mle_default
   }
-
+  
   ## --- Fit mle
   Fit.theta <- try( estimate_mle (ModelInfo, Dat) )
 
@@ -143,9 +143,11 @@ senlm <- function (model=NULL, data=NULL, xvar=NULL, yvar=NULL,
     Fit$IC <- fit_information_criteria (ModelInfo, Dat, Fit.theta)
 
     ## --- Fitted values
-    Fit$fitted <- senlm::mu_meanfunction (ModelInfo=Fit$model_info, theta=Fit$theta, x=Fit$x)
+    Fit$fitted <- mu_meanfunction (ModelInfo=Fit$model_info, theta=Fit$theta, x=Fit$x)
     ## --- Residuals
     Fit$residuals <- Fit$y - Fit$fitted
+    ## --- Quantile residuals
+    Fit$qresiduals <- qres (Fit)
 
   } else {
 
@@ -530,7 +532,9 @@ mle_uniform_bernoulli <- function (ModelInfo, Dat) {
 #' @param data A data frame containing 'x' (explanatory) and 'y' (response) variables.
 #' @param xvar Name of explanatory variable (must be univariate).
 #' @param yvar Names of response variables.
-#'
+#' @param method If "crossed", fit all models to all response variables. If "paired",
+#' fit first model to first response variables, etc.
+#' 
 #' @return Object containg model fits to data y and x.
 #'
 #' @keywords fit senlm model, mle
@@ -545,7 +549,8 @@ mle_uniform_bernoulli <- function (ModelInfo, Dat) {
 #' }
 #' @export
 #'
-msenlm <- function (models=NULL, data=NULL, xvar=NULL, yvar=NULL, echo=FALSE) {
+msenlm <- function (models=NULL, data=NULL, xvar=NULL, yvar=NULL, echo=FALSE,
+                    method="crossed") {
   ## --- Fit multiple senlm models using maximum likelihood to multiple response variables
 
   ## --- Check inputs
@@ -560,10 +565,14 @@ msenlm <- function (models=NULL, data=NULL, xvar=NULL, yvar=NULL, echo=FALSE) {
   if (!is.character(yvar)) { stop ("yvar must be character!") }
   if (any(is.na(match (yvar, names(data))))) { stop ("Some yvar not valid!") }
 
+  if ( (method=="paired") & (nrow(models)!=length(yvar)) ) {
+    stop ("Length of yvar and number of models must match if method='paired'!")
+  }
+  
   ## Explanatory variable
   x <- data[,xvar]
   xname <- xvar
-
+  
   ## Response variables
   y <- data[,yvar]
   yname <- yvar
@@ -574,30 +583,48 @@ msenlm <- function (models=NULL, data=NULL, xvar=NULL, yvar=NULL, echo=FALSE) {
   Fits <- vector (mode="list", length=length(yvar))
   names(Fits) <- yvar
 
+
+  ## --- Initialise model names if method is paired
+  if (method == "paired") { ModelNames <- rep (NA, length=nrow(models)) }
+
   ## --- Loop through response variables
   for (i in 1:length(Fits)) {
-
-    ## Display iteration
-    if (echo) { print (i) }
-
-    ## Create object to store model fits to data with ith response variable
-    ModelFits <-  vector (mode="list", length=nrow(models))
-    ModelNames <- rep (NA, length=nrow(models))
-
-    ## --- Loop throough models
-    for (j in 1:length(ModelFits)) {
-
+    
+    ## --- Models and y variables paired
+    if (method == "paired") {
+   
+      ## Create object to store model fits to data with ith response variable
+      ModelFits <-  vector (mode="list", length=1)
+ 
       ## --- Fit model
-      Fit <- senlm (model=models[j,], data=data, xvar=xvar, yvar=yvar[i])
-
-      ## --- Store model
-      ModelFits[[j]] <- Fit
-      ModelNames[j] <- Fit$model
+      ModelFits[[1]]   <- senlm (model=models[i,], data=data, xvar=xvar, yvar=yvar[i])
+      names(ModelFits) <- ModelFits[[1]]$model
     }
+    
+    ## --- Model and y variables crossed
+    if (method == "crossed") {
 
-    ## --- Add model names
-    names(ModelFits) <- ModelNames
-
+      ## --- Models and y variables crossed
+      
+      ## Create object to store model fits to data with ith response variable
+      ModelFits <-  vector (mode="list", length=nrow(models))
+      ModelNames <- rep (NA, length=nrow(models))
+      
+      ## --- Loop throough models
+      for (j in 1:length(ModelFits)) {
+        
+        ## --- Fit model
+        Fit <- senlm (model=models[j,], data=data, xvar=xvar, yvar=yvar[i])
+        
+        ## --- Store model
+        ModelFits[[j]] <- Fit
+        ModelNames[j]  <- Fit$model
+      }
+    
+      ## --- Add model names
+      names(ModelFits) <- ModelNames
+    }
+    
     ## --- Store model fits
     Fits[[i]] <- ModelFits
   }
