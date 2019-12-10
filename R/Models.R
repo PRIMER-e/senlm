@@ -259,29 +259,245 @@ qres <- function (Fit) {
   
   ## Error distribution
   err_dist <- model_info$err_dist
-
+  
   ## --- Calculate quantile residuals
 
   ## Null values (Not needed when all models included)
-  if (err_dist == "poisson") {
-    ## Poisson
-    qhat <- ppois (q=mu, lambda=mu)
-    qres <- ppois (q=y, lambda=mu) - qhat
-  } else if (err_dist == "negbin") {
-    ## Negative binomial
-    phi <- thetaE["phi"]
-    qhat <- pnbinom (q=mu, mu=mu, size=1/phi)
-    qres <- pnbinom (q=y,  mu=mu, size=1/phi) - qhat
-  } else if (err_dist == "zinb") {
-    ## Zero-inflated negative binomial
-    pi  <- thetaE["pi"]
-    phi <- thetaE["phi"]
+  if (err_dist == "bernoulli") {
     
-    qhat <-  pi + (1-pi)*pnbinom (q=mu, mu=mu, size=1/phi)
-    qres <- (pi + (1-pi)*pnbinom (q=y,  mu=mu, size=1/phi)) - qhat
+    ## --- Bernoulli
+    ## Quantile residuals
+    qhat <- stats::pbinom (q=mu, size=1, prob=mu)
+    qres <- stats::pbinom (q=y,  size=1, prob=mu) - qhat
+    
+  } else if (err_dist == "binomial_count") {
+    
+    ## --- Binomial - count
+    ## Grab parameter
+    binomial_n <- model_info$binomial_n
+    prob <- mu/binomial_n
+    ## Quantile residuals
+    qhat <- stats::pbinom (q=mu, size=binomial_n, prob=prob)
+    qres <- stats::pbinom (q=y,  size=binomial_n, prob=prob) - qhat
+    
+  } else if (err_dist == "binomial_prop") {
+    
+    ## --- Binomial - proportion
+
+    ## Grab parameter
+    binomial_n <- model_info$binomial_n
+    Y <- round(Fit$y * binomial_n)
+    Mean <- mu * binomial_n
+    ## Quantile residuals
+    qhat <- stats::pbinom (q=Mean, size=binomial_n, prob=mu)
+    qres <- stats::pbinom (q=Y,  size=binomial_n, prob=mu) - qhat
+    
+  } else if (err_dist == "poisson") {
+    
+    ## --- Poisson
+    ## Quantile residuals
+    qhat <- stats::ppois (q=mu, lambda=mu)
+    qres <- stats::ppois (q=y,  lambda=mu) - qhat
+    
+  } else if (err_dist == "negbin") {
+
+    ## --- Negative binomial
+    ## Grab parameter
+    phi  <- thetaE["phi"]
+    ## Quantile residuals
+    qhat <- stats::pnbinom (q=mu, mu=mu, size=1/phi)
+    qres <- stats::pnbinom (q=y,  mu=mu, size=1/phi) - qhat
+    
+  } else if (err_dist == "zip") {
+    
+    ## --- Zero-inflated poisson
+    ## Grab parameter
+    pi   <- thetaE["pi"]
+    ## Quantile residuals
+    qhat <-  pi + (1-pi)*stats::ppois (q=mu, lambda=mu)
+    qres <- (pi + (1-pi)*stats::ppois (q=y,  lambda=mu)) - qhat
+
+  } else if (err_dist == "zinb") {
+    
+    ## --- Zero-inflated negative binomial
+    ## Grab parameters
+    pi   <- thetaE["pi"]
+    phi  <- thetaE["phi"]
+    ## Quantile residuals
+    qhat <-  pi + (1-pi)*stats::pnbinom (q=mu, mu=mu, size=1/phi)
+    qres <- (pi + (1-pi)*stats::pnbinom (q=y,  mu=mu, size=1/phi)) - qhat
+    
+  } else if (err_dist == "zipl") {
+
+    ## --- Zero-inflated poisson linked
+    ## Grab parameters
+    g0   <- thetaE["g0"]
+    g1   <- thetaE["g1"]
+    ## Convert g0, g1, to pi
+    logitpi <- g0 + g1*log(mu)
+    pi   <- exp(logitpi)/(1 + exp(logitpi))
+    pi[mu==0] <- 1
+    ## Quantile residuals
+    qhat <-  pi + (1-pi)*stats::ppois (q=mu, lambda=mu)
+    qres <- (pi + (1-pi)*stats::ppois (q=y,  lambda=mu)) - qhat
+    
+  } else if (err_dist == "zinbl") {
+
+    ## --- Zero-inflated negative-binomial linked
+    ## Grab parameters
+    g0   <- thetaE["g0"]
+    g1   <- thetaE["g1"]
+    phi  <- thetaE["phi"]
+    ## Convert g0, g1, to pi
+    logitpi <- g0 + g1*log(mu)
+    pi   <- exp(logitpi)/(1 + exp(logitpi))
+    pi[mu==0] <- 1
+    ## Quantile residuals
+    qhat <-  pi + (1-pi)*stats::pnbinom (q=mu, mu=mu, size=1/phi)
+    qres <- (pi + (1-pi)*stats::pnbinom (q=y,  mu=mu, size=1/phi)) - qhat
+
+ } else if (err_dist == "zipl.mu") {
+
+    ## --- Zero-inflated poisson linked - mu
+    ## Grab parameters
+    g0   <- thetaE["g0"]
+    g1   <- thetaE["g1"]
+    ## Convert g0, g1, to pi
+    logitpi <- g0 + g1*mu
+    pi   <- exp(logitpi)/(1 + exp(logitpi))
+    ## Quantile residuals
+    qhat <-  pi + (1-pi)*stats::ppois (q=mu, lambda=mu)
+    qres <- (pi + (1-pi)*stats::ppois (q=y,  lambda=mu)) - qhat
+    
+  } else if (err_dist == "zinbl.mu") {
+
+    ## --- Zero-inflated poisson linked - mu
+    ## Grab parameters
+    g0   <- thetaE["g0"]
+    g1   <- thetaE["g1"]
+    phi  <- thetaE["phi"]
+    ## Convert g0, g1, to pi
+    logitpi <- g0 + g1*mu
+    pi   <- exp(logitpi)/(1 + exp(logitpi))
+    ## Quantile residuals
+    qhat <-  pi + (1-pi)*stats::pnbinom (q=mu, mu=mu, size=1/phi)
+    qres <- (pi + (1-pi)*stats::pnbinom (q=y,  mu=mu, size=1/phi)) - qhat
+    
+  } else if (err_dist == "gaussian") {
+    
+    ## --- Gaussian
+    ## Grab parameters
+    sigma <- thetaE["sigma"]
+    ## Quantile residuals
+    qhat  <- stats::pnorm (q=mu, mean=mu, sd=sigma)
+    qres  <- stats::pnorm (q=y,  mean=mu, sd=sigma) - qhat
+    
+  } else if (err_dist == "tweedie") {
+    
+    ## --- Tweedie
+    ## Grab parameters
+    rho  <- thetaE["rho"]
+    phi  <- thetaE["phi"]
+    ## Quantile residuals
+    qhat <- tweedie::ptweedie(q=mu, xi=rho, mu=mu, phi=phi)
+    qres <- tweedie::ptweedie(q=y,  xi=rho, mu=mu, phi=phi) - qhat
+    
+  } else if (err_dist == "zig") {
+    
+    ## --- Zero-inflated gamma
+    ## Grab parameters
+    pi    <- thetaE["pi"]
+    phi   <- thetaE["phi"]
+    alpha <- 1/phi
+    scale <- phi * mu
+    ## Quantile residuals
+    qhat  <-  pi + (1-pi)*stats::pgamma (q=mu, shape=alpha, scale=scale)
+    qres  <- (pi + (1-pi)*stats::pgamma (q=y,  shape=alpha, scale=scale)) - qhat
+    
+  } else if (err_dist == "zigl") {
+    
+    ## --- Zero-inflated gamma linked
+    ## Grab parameters
+    g0    <- thetaE["g0"]
+    g1    <- thetaE["g1"]
+    phi   <- thetaE["phi"]
+    alpha <- 1/phi
+    scale <- phi * mu
+    ## Convert g0, g1, to pi
+    logitpi <- g0 + g1*log(mu)
+    pi   <- exp(logitpi)/(1 + exp(logitpi))
+    pi[mu==0] <- 1
+    ## Quantile residuals
+    qhat  <-  pi + (1-pi)*stats::pgamma (q=mu, shape=alpha, scale=scale)
+    qres  <- (pi + (1-pi)*stats::pgamma (q=y,  shape=alpha, scale=scale)) - qhat
+
+  } else if (err_dist == "zigl.mu") {
+    
+    ## --- Zero-inflated gamma linked - mu
+    ## Grab parameters
+    g0    <- thetaE["g0"]
+    g1    <- thetaE["g1"]
+    phi   <- thetaE["phi"]
+    alpha <- 1/phi
+    scale <- phi * mu
+    ## Convert g0, g1, to pi
+    logitpi <- g0 + g1*mu
+    pi   <- exp(logitpi)/(1 + exp(logitpi))
+    ## Quantile residuals
+    qhat  <-  pi + (1-pi)*stats::pgamma (q=mu, shape=alpha, scale=scale)
+    qres  <- (pi + (1-pi)*stats::pgamma (q=y,  shape=alpha, scale=scale)) - qhat
+    
+  } else if (err_dist == "tab") {
+    
+    ## --- Tail-adjusted beta
+    ## Grab parameters
+    sigma <- thetaE["sigma"]
+    delta <- estimate_delta (y)
+    ## Grab beta parameters
+    alpha <- mu / sigma
+    beta  <- (1 - mu) / sigma
+    ## Calculate probability less than delta, greater than 1 - delta
+    p0 <- stats::pbeta(q=delta, shape1=alpha, shape2=beta)
+    p1 <- 1 - stats::pbeta(q=(1-delta), shape1=alpha, shape2=beta)
+    ## Quantile residuals computations
+    qhat <- stats::pbeta(q=mu, shape1=alpha, shape2=beta)
+    qhat[mu < delta]       <- p0
+    qhat[mu > (1 - delta)] <- 1
+    qres <- stats::pbeta(q=y,  shape1=alpha, shape2=beta)
+    qres[y < delta]        <- p0
+    qres[y > (1 - delta)]  <- 1
+    ## Quantile residuals
+    qres  <- (pi + (1-pi)*qres) - qhat
+    
+  } else if (err_dist == "zitab") {
+    
+    ## --- Zero-inflated tail-adjusted beta
+    ## Grab parameters
+    sigma <- thetaE["sigma"]
+    delta <- estimate_delta (y)
+    pi    <- thetaE["pi"]
+    ## Grab beta parameters
+    alpha <- mu / sigma
+    beta  <- (1 - mu) / sigma
+    ## Calculate probability less than delta, greater than 1 - delta
+    p0 <- stats::pbeta(q=delta, shape1=alpha, shape2=beta)
+    p1 <- 1 - stats::pbeta(q=(1-delta), shape1=alpha, shape2=beta)
+    ## Quantile residuals
+    qhat <- stats::pbeta(q=mu, shape1=alpha, shape2=beta)
+    qhat[mu < delta]       <- p0
+    qhat[mu > (1 - delta)] <- 1
+    qres <- stats::pbeta(q=y,  shape1=alpha, shape2=beta)
+    qres[y < delta]       <- p0
+    qres[y > (1 - delta)] <- 1
+    ## Quantile residuals
+    qhat  <-  pi + (1-pi)*qhat
+    qres  <- (pi + (1-pi)*qres) - qhat
+    
   } else {
-    ## Error distribution not coded yet
+    
+    ## --- Error distribution not coded yet
     qres <- rep (NA, length(Fit$residuals))
+    
   }
   
   ## --- Return qerror

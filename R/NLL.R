@@ -876,7 +876,7 @@ NLL.continuous <- function (u.theta, ModelInfo, Dat) {
         logitpi1 <- g0 + g1*E1
         logitpi0 <- g0 + g1*E0
       }
-
+      
       ## Untransform spike parameters
       if ( (err_dist == "zigl") | (err_dist == "zigl.mu") ) { 
         pi1 <- exp(logitpi1) / ( 1 + exp(logitpi1) )
