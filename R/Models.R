@@ -227,24 +227,6 @@ error_distributions <- function (err_dist=NULL, err_class=NULL) {
 }
 
 
-#' Quantile residuals
-#'
-#' Calculate quantiles of residuals
-#'
-#' @param Fit senlm model fit.
-#' 
-#' @return Quantile adjusted residuals.
-#' 
-#' @keywords quantile residuals
-#'
-#' @examples
-#'
-#' \dontrun{
-#' qres()
-#' }
-#'
-#' @export
-#'
 qres <- function (Fit) {
   ## --- Quantile residuals
   
@@ -461,13 +443,13 @@ qres <- function (Fit) {
     p1 <- 1 - stats::pbeta(q=(1-delta), shape1=alpha, shape2=beta)
     ## Quantile residuals computations
     qhat <- stats::pbeta(q=mu, shape1=alpha, shape2=beta)
-    qhat[mu < delta]       <- p0
+    qhat[mu < delta]       <- p0[mu < delta]
     qhat[mu > (1 - delta)] <- 1
     qres <- stats::pbeta(q=y,  shape1=alpha, shape2=beta)
-    qres[y < delta]        <- p0
+    qres[y < delta]        <- p0[y < delta]
     qres[y > (1 - delta)]  <- 1
     ## Quantile residuals
-    qres  <- (pi + (1-pi)*qres) - qhat
+    qres  <- qres - qhat
     
   } else if (err_dist == "zitab") {
     
@@ -484,10 +466,10 @@ qres <- function (Fit) {
     p1 <- 1 - stats::pbeta(q=(1-delta), shape1=alpha, shape2=beta)
     ## Quantile residuals
     qhat <- stats::pbeta(q=mu, shape1=alpha, shape2=beta)
-    qhat[mu < delta]       <- p0
+    qhat[mu < delta]       <- p0[mu < delta]
     qhat[mu > (1 - delta)] <- 1
     qres <- stats::pbeta(q=y,  shape1=alpha, shape2=beta)
-    qres[y < delta]       <- p0
+    qres[y < delta]       <- p0[y < delta]
     qres[y > (1 - delta)] <- 1
     ## Quantile residuals
     qhat  <-  pi + (1-pi)*qhat
