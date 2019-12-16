@@ -98,21 +98,6 @@ senlm <- function (model=NULL, data=NULL, xvar=NULL, yvar=NULL,
   ## --- Set negative log-likelihood function
   NLL <- set_nll (ModelInfo=ModelInfo)
 
-  ## --- Set mle fit function
-  if (ModelInfo$model == "constant-poisson") {
-    ## Poisson with constant mean function
-    estimate_mle <- mle_constant_poisson
-  } else {
-    ## Default method : SANN/Nelder-Mead
-    estimate_mle <- mle_default
-  }
-  
-  ## --- Fit mle
-  Fit.theta <- try( estimate_mle (ModelInfo, Dat) )
-
-  ## --- Store model fit and fail flag
-  if (class(Fit.theta) == "try-error") { Fail <- TRUE } else { Fail <- FALSE }
-
   ## --- Store fit
   Fit <- list()
 
@@ -129,19 +114,23 @@ senlm <- function (model=NULL, data=NULL, xvar=NULL, yvar=NULL,
   ## --- Names
   Fit$yname <- yname
   Fit$xname <- xname
+   
+  ## --- Fit mle
+  FitMLE <- try( mle_default (ModelInfo, Dat) )
 
+  ## --- Store fitted values  
+  Fit$convergence <- FitMLE$convergence
+  Fit$theta <- FitMLE$theta
+  Fit$lb    <- FitMLE$lb
+  Fit$ub    <- FitMLE$ub
+  Fit$u.hessian <- FitMLE$u.hessian
+  
   ## --- Was fit successful?
-  if (Fail == FALSE) {
+  if (Fit$convergence  == 0) {
     
-    ## --- Fit successful
-    Fit$convergence <- 0
-
-    ## --- Fitted parameters
-    Fit$theta <- Fit.theta
-
     ## --- Goodness of fit
-    Fit$IC <- fit_information_criteria (ModelInfo, Dat, Fit.theta)
-
+    Fit$IC <- fit_information_criteria (ModelInfo, Dat, Fit$theta)
+     
     ## --- Fitted values
     Fit$fitted <- mu_meanfunction (ModelInfo=Fit$model_info, theta=Fit$theta, x=Fit$x)
     ## --- Residuals
@@ -149,11 +138,7 @@ senlm <- function (model=NULL, data=NULL, xvar=NULL, yvar=NULL,
     ## --- Quantile residuals
     Fit$qresiduals <- qres (Fit)
 
-  } else {
-
-    ## --- Fit unsuccessful
-    Fit$convergence <- 1
-  }
+  } 
 
   ## --- Set class
   class(Fit) <- "senlm"
@@ -418,57 +403,112 @@ mle_default <- function (ModelInfo, Dat, theta0=NULL) {
   ## --- Set negative log-likelihood (with parameter names)
   NLL <- nll_wrapper (ModelInfo=ModelInfo, Dat=Dat)
   bbmle::parnames (NLL) <- names(u.theta0)
-
+  
   ## --- SANN : Find mle using simulated annealing
-  Fit.sann <- try ( suppressWarnings (
-    bbmle::mle2 (minuslogl=NLL, optimizer="optim", method="SANN",
-                 vecpar=TRUE, start=u.theta0) ))
-
+  FitMLE <- try ( suppressWarnings (
+    bbmle::mle2 (minuslogl=NLL, optimizer="optim", method="SANN", vecpar=TRUE, start=u.theta0) ))
+  
   ## --- Test if sann model fit
-  if (class(Fit.sann) != "try-error") {
-
+  if (class(FitMLE) != "try-error") {
+    
     ## --- Fit using nlminb from sann estimate
-    Fit.nlsann <- try ( suppressWarnings (
-      bbmle::mle2 (minuslogl=NLL, optimizer="nlminb",
-                   vecpar=TRUE, start=bbmle::coef(Fit.sann)) ))
-
+    FitMLE <- try ( suppressWarnings (
+      bbmle::mle2 (minuslogl=NLL, optimizer="nlminb", vecpar=TRUE, start=bbmle::coef(FitMLE)) ))
+    
     ## --- Test if nlminb from sann fits
-    if (class(Fit.nlsann) != "try-error") {
+    if (class(FitMLE) != "try-error") {
       ## --- nlminb based on sann succeeded
       FitType   <- "nl-sann"
-      Fit.theta <- make_bounded (ModelInfo, bbmle::coef(Fit.nlsann))
     } else {
       ## --- nlminb failed - use sann
       FitType   <- "sann"
-      Fit.theta <- make_bounded (ModelInfo, bbmle::coef(Fit.sann))
     }
 
   } else {
 
     ## --- Fit using nlminb from init estimate
-    Fit.nl <- try ( suppressWarnings (
-      bbmle::mle2 (minuslogl=NLL, optimizer="nlminb",
-                   vecpar=TRUE, start=u.theta0) ))
-
+    FitMLE <- try ( suppressWarnings (
+      bbmle::mle2 (minuslogl=NLL, optimizer="nlminb", vecpar=TRUE, start=u.theta0) ))
+    
     ## --- Test if nlminb from init fits
-    if (class(Fit.nl) != "try-error") {
+    if (class(FitMLE) != "try-error") {
       ## --- nlminb  - use init
       FitType   <- "nl"
-      Fit.theta <- make_bounded (ModelInfo, bbmle::coef(Fit.nl))
     } else {
       ## --- Fail
       FitType <- "fail"
-      Fit.theta <- NA * theta0
     }
   }
 
-  ## Return fit
-  return (Fit.theta)
+  ## --- Initialise fit object
+  Fit <- list()
+
+  ## --- Set fitted parameters and confidence intervals on bounded parameter space
+  if ( FitType =="fail" ) {
+
+    ## --- Fit failed
+    Fit$convergence <- 1
+    Fit$theta <- NA * theta0
+    Fit$lb    <- NA * theta0
+    Fit$ub    <- NA * theta0
+    Fit$u.hessian <- NA
+
+  } else {
+    
+    ## --- Fit successful
+    Fit$convergence <- 0
+    
+    ## --- Calculate confidence interval on unbounded parameter space
+    u.theta   <- bbmle::coef(FitMLE)
+    u.hessian <- attributes(FitMLE)$details$hessian
+    colnames(u.hessian) <- names(u.theta)
+    rownames(u.hessian) <- names(u.theta)
+
+    ## --- Is standard error is ok?
+    StdErrOK <- TRUE
+    
+    ## --- Check if hessian is composed of finite numbers
+    if (any(is.nan(u.hessian)))     { StdErrOK <- FALSE }
+    if (any(is.na(u.hessian)))      { StdErrOK <- FALSE }
+    if (any(!is.finite(u.hessian))) { StdErrOK <- FALSE }
+    
+    ## --- Check invertibility of hessian
+    if (StdErrOK) {
+      if (det(u.hessian) <= 0 ) { StdErrOK <- FALSE }
+    }
+
+    ## --- Check if standard errors are non-negative
+    if (StdErrOK) { 
+      u.stderr  <- sqrt(diag(solve(u.hessian)))
+      if (any(u.stderr < 0)) { StdErrOK  <- FALSE }
+    }
+
+    ## --- Calculate approximate confidence intervals
+    if (StdErrOK) {
+      u.lb <- u.theta - 2*u.stderr
+      u.ub <- u.theta + 2*u.stderr
+    } else {
+      u.lb <- rep (NA, length(u.theta))
+      u.ub <- rep (NA, length(u.theta))
+    }
+
+    ## --- Calculate bounded fit / confidence interval
+    Fit$theta <- make_bounded (ModelInfo, u.theta)
+    Fit$lb    <- make_bounded (ModelInfo, u.lb)
+    Fit$ub    <- make_bounded (ModelInfo, u.ub)
+    ## --- Store unbounded hessian
+    Fit$u.hessian <- u.hessian
+
+  }
+
+  ## --- Return fit
+  return (Fit)
 }
 
 mle_constant_bernoulli <- function (ModelInfo, Dat) {
   ## --- MLE for constant-bernoulli mean function
-
+  ## *** THIS FUNCTION IS OUTDATED / NOT CALLED ***
+  
   ## MLE
   Fit.theta        <- mean (Dat$y)
   names(Fit.theta) <- c("H")
@@ -479,6 +519,7 @@ mle_constant_bernoulli <- function (ModelInfo, Dat) {
 
 mle_constant_poisson <- function (ModelInfo, Dat) {
   ## --- MLE for constant-poisson mean function
+  ## *** THIS FUNCTION IS OUTDATED / NOT CALLED ***
 
   ## Fit constant mean function
   Fit.theta <- mle_constant_bernoulli (ModelInfo, Dat)
@@ -489,6 +530,7 @@ mle_constant_poisson <- function (ModelInfo, Dat) {
 
 mle_uniform_bernoulli <- function (ModelInfo, Dat) {
   ## --- MLE for uniform-bernoulli mean function
+  ## *** THIS FUNCTION IS OUTDATED / NOT CALLED ***
 
   ## --- Grab count data
   y <- Dat$y
