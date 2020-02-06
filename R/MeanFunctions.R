@@ -1,5 +1,6 @@
 ## --- Mean functions
 
+
 #' Evaluate mean function
 #'
 #' Evalautes the mean function defined in ModelInfo, with the
