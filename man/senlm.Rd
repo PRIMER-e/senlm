@@ -4,9 +4,17 @@
 \alias{senlm}
 \title{Fit species-environment non-linear model via maximum likelihood}
 \usage{
-senlm(model = NULL, data = NULL, xvar = NULL, yvar = NULL,
-  mean_fun = NULL, err_dist = NULL, binomial_n = NULL, y = NULL,
-  x = NULL)
+senlm(
+  model = NULL,
+  data = NULL,
+  xvar = NULL,
+  yvar = NULL,
+  mean_fun = NULL,
+  err_dist = NULL,
+  binomial_n = NULL,
+  y = NULL,
+  x = NULL
+)
 }
 \arguments{
 \item{model}{Model to fit.}

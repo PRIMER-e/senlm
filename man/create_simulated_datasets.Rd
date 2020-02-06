@@ -4,8 +4,15 @@
 \alias{create_simulated_datasets}
 \title{Create list of simulated data sets}
 \usage{
-create_simulated_datasets(Pars, x = NULL, N = 500, xmin = 0,
-  xmax = 100, seed = NULL, echo = FALSE)
+create_simulated_datasets(
+  Pars,
+  x = NULL,
+  N = 500,
+  xmin = 0,
+  xmax = 100,
+  seed = NULL,
+  echo = FALSE
+)
 }
 \arguments{
 \item{Pars}{List containg parameters for the simulated data sets.}

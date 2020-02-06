@@ -4,8 +4,14 @@
 \alias{set_models}
 \title{Set models}
 \usage{
-set_models(mean_fun = NULL, err_dist = NULL, mean_class = NULL,
-  err_class = NULL, binomial_n = NA, method = "crossed")
+set_models(
+  mean_fun = NULL,
+  err_dist = NULL,
+  mean_class = NULL,
+  err_class = NULL,
+  binomial_n = NA,
+  method = "crossed"
+)
 }
 \arguments{
 \item{mean_fun}{List of mean functions to create data frame of models from.}

@@ -4,9 +4,15 @@
 \alias{create_default_par_list}
 \title{Create default parameter list}
 \usage{
-create_default_par_list(models = NULL, mean_fun = NULL,
-  mean_class = NULL, err_dist = NULL, err_class = NULL,
-  binomial_n = NA, method = "paired")
+create_default_par_list(
+  models = NULL,
+  mean_fun = NULL,
+  mean_class = NULL,
+  err_dist = NULL,
+  err_class = NULL,
+  binomial_n = NA,
+  method = "paired"
+)
 }
 \arguments{
 \item{models}{Models defined by set_models() object.}

@@ -4,8 +4,7 @@
 \alias{simulate.senlm}
 \title{Simulate data from senlm model fit}
 \usage{
-\method{simulate}{senlm}(object, nsim = 1, seed = NULL,
-  newdata = NULL, ...)
+\method{simulate}{senlm}(object, nsim = 1, seed = NULL, newdata = NULL, ...)
 }
 \arguments{
 \item{object}{Model fit.}

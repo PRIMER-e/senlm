@@ -4,8 +4,14 @@
 \alias{msenlm}
 \title{Fit multiple species-environment non-linear models via maximum likelihood}
 \usage{
-msenlm(models = NULL, data = NULL, xvar = NULL, yvar = NULL,
-  echo = FALSE, method = "crossed")
+msenlm(
+  models = NULL,
+  data = NULL,
+  xvar = NULL,
+  yvar = NULL,
+  echo = FALSE,
+  method = "crossed"
+)
 }
 \arguments{
 \item{models}{Object listing models to fit (from set_models function).}

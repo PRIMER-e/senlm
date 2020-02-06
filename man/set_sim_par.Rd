@@ -4,8 +4,14 @@
 \alias{set_sim_par}
 \title{Set simulated model parameters}
 \usage{
-set_sim_par(mean_fun = NULL, err_dist = NULL, Dat = NULL,
-  thetaM = NULL, thetaE = NULL, thetaC = NULL)
+set_sim_par(
+  mean_fun = NULL,
+  err_dist = NULL,
+  Dat = NULL,
+  thetaM = NULL,
+  thetaE = NULL,
+  thetaC = NULL
+)
 }
 \arguments{
 \item{mean_fun}{Mean function of model.}

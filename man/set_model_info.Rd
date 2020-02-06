@@ -4,8 +4,15 @@
 \alias{set_model_info}
 \title{Set model info}
 \usage{
-set_model_info(model = NULL, mean_fun = NULL, err_dist = NULL,
-  binomial_n = NA, delta = NA, thetaC = NULL, data = NULL)
+set_model_info(
+  model = NULL,
+  mean_fun = NULL,
+  err_dist = NULL,
+  binomial_n = NA,
+  delta = NA,
+  thetaC = NULL,
+  data = NULL
+)
 }
 \arguments{
 \item{model}{A row from a set_models() data frame.}
