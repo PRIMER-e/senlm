@@ -3,7 +3,6 @@
 
 ## --- --- ---
 
-
 set_nll <- function (ModelInfo) {
   ## --- Set negative log-likelihood
   
@@ -754,6 +753,18 @@ NLL.continuous <- function (u.theta, ModelInfo, Dat) {
       g1    <- theta['g1']
       phi   <- theta['phi']
     }
+    ## --- Zero-inflated inverse gaussian
+    if ( err_dist == "ziig" ) {
+      pi    <- theta['pi']
+      phi   <- theta['phi']
+    }
+    ## --- Zero-linked inverse gaussian
+    if ( (err_dist == "ziigl") | (err_dist == "ziigl.mu") ) {
+      g0    <- theta['g0']
+      g1    <- theta['g1']
+      phi   <- theta['phi']
+    }
+    
     
     ## --- MEAN FUNCTION
     
@@ -866,7 +877,7 @@ NLL.continuous <- function (u.theta, ModelInfo, Dat) {
       alpha <- 1/phi
       beta0 <- alpha/E0
       beta1 <- alpha/E1
-
+      
       ## Set spike parameters on logit scale
       if ( err_dist == "zigl" ) { 
         logitpi1 <- g0 + g1*log(E1)
@@ -887,7 +898,6 @@ NLL.continuous <- function (u.theta, ModelInfo, Dat) {
         pi1 <- rep(pi, length(Y1))
         pi0 <- rep(pi, length(Y0))
       }
-
       
       ## Caclculate negative log-likelihood - Positive data
       if (sum(!IsZero) > 0) {
@@ -910,7 +920,56 @@ NLL.continuous <- function (u.theta, ModelInfo, Dat) {
       ## Combine negative log-likelihood for zero and non-zero data
       NegLogLike <- NegLogLikePos + NegLogLikeZero
     }
+
+    
+    ## --- Zero-inflated inverse gaussian
+    if ( (err_dist == "ziig") | (err_dist == "ziigl") | (err_dist == "ziigl.mu") ) { 
+      
+      ## Split data by whether count is zero
+      IsZero <- (y == 0)
+      Y1 <- y[!IsZero]; X1 <- x[!IsZero]; E1 <- mu[!IsZero]
+      Y0 <- y[ IsZero]; X0 <- x[ IsZero]; E0 <- mu[ IsZero]
+
+      ## Set spike parameters on logit scale
+      if ( err_dist == "ziigl" ) { 
+        logitpi1 <- g0 + g1*log(E1)
+        logitpi0 <- g0 + g1*log(E0)
+      }
+      if ( err_dist == "ziigl.mu" ) { 
+        logitpi1 <- g0 + g1*E1
+        logitpi0 <- g0 + g1*E0
+      }
+      
+      ## Untransform spike parameters
+      if ( (err_dist == "ziigl") | (err_dist == "ziigl.mu") ) { 
+        pi1 <- exp(logitpi1) / ( 1 + exp(logitpi1) )
+        pi0 <- exp(logitpi0) / ( 1 + exp(logitpi0) )
+      }
+      ## Convert pi to vector for ziig
+      if ( err_dist == "ziig" ) {
+        pi1 <- rep(pi, length(Y1))
+        pi0 <- rep(pi, length(Y0))
+      }
+      
+      ## Caclculate negative log-likelihood - Positive data
+      if (sum(!IsZero) > 0) {
+        NegLogLikePos <- -sum(dinversegaussian(y=Y1, mu=E1, phi=phi, log=TRUE) + log(1-pi1))
+      } else {
+        NegLogLikePos <- 0
+      }
+      
+      ## Caclculate negative log-likelihood - Zero data
+      if (sum(IsZero) > 0) {
+        NegLogLikeZero <- -sum(log(pi0))
+      } else {
+        NegLogLikeZero <- 0
+      }
+      
+      ## Combine negative log-likelihood for zero and non-zero data
+      NegLogLike <- NegLogLikePos + NegLogLikeZero
+    }
   }
+
   
   ## Return negative log-likelihood
   return (NegLogLike)  

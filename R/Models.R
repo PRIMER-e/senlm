@@ -27,7 +27,7 @@
 #'   \item{"count"}{Count data;
 #'       ("poisson", "negbin", "zip", "zinb", "zipl", "zinbl", "zipl.mu", "zinbl.mu").}
 #'   \item{"abundance"}{Non-negative continous data;
-#'       ("gaussian", "tweedie", "zig", "zigl", "zigl.mu").}
+#'       ("gaussian", "tweedie", "zig", "zigl", "zigl.mu", "ziig", "ziigl", "ziigl.mu").}
 #' }
 #' 
 #' @return List containing vectors of mean functions and error distributions of given classes.
@@ -156,7 +156,7 @@ mean_functions <- function (mean_fun=NULL, mean_class=NULL) {
 #'   \item{"count"}{Count data;
 #'       ("poisson", "negbin", "zip", "zinb", "zipl", "zinbl", "zipl.mu", "zinbl.mu").}
 #'   \item{"abundance"}{Non-negative continous data;
-#'       ("gaussian", "tweedie", "zig", "zigl", "zigl.mu").}
+#'       ("gaussian", "tweedie", "zig", "zigl", "zigl.mu", "ziig", "ziigl", "ziigl.mu").}
 #' }
 #' 
 #' @return If no arguments supplied, return a data frame listing all possible error distributions
@@ -190,14 +190,18 @@ error_distributions <- function (err_dist=NULL, err_class=NULL) {
   ED <- c("bernoulli",  "binomial_count", "binomial_prop",
           "poisson",    "negbin",         "zip",           "zinb",
           "zipl",       "zinbl",          "zipl.mu",       "zinbl.mu",
-          "gaussian",   "tweedie",        "zig",           "zigl",        "zigl.mu",
+          "gaussian",   "tweedie",
+          "zig",        "zigl",           "zigl.mu",
+          "ziig",       "ziigl",          "ziigl.mu",
           "tab",        "zitab")
 
   ## --- Define corresponding error classes
   DC <- c("binary",     "binomial",        "binomial",
           "count",      "count",           "count",         "count",
           "count",      "count",           "count",         "count",
-          "abundance",  "abundance",       "abundance",     "abundance",  "abundance",
+          "abundance",  "abundance",
+          "abundance",  "abundance",       "abundance",
+          "abundance",  "abundance",       "abundance",         
           "percentage", "percentage")
   
   ## --- Create data frame to store error distributions with corresponding error class
@@ -383,7 +387,7 @@ qres <- function (Fit) {
     ## Quantile residuals
     qhat <- tweedie::ptweedie(q=mu, xi=rho, mu=mu, phi=phi)
     qres <- tweedie::ptweedie(q=y,  xi=rho, mu=mu, phi=phi) - qhat
-    
+   
   } else if (err_dist == "zig") {
     
     ## --- Zero-inflated gamma
@@ -428,6 +432,45 @@ qres <- function (Fit) {
     ## Quantile residuals
     qhat  <-  pi + (1-pi)*stats::pgamma (q=mu, shape=alpha, scale=scale)
     qres  <- (pi + (1-pi)*stats::pgamma (q=y,  shape=alpha, scale=scale)) - qhat
+
+ } else if (err_dist == "ziig") {
+    
+    ## --- Zero-inflated inverse gaussian
+    ## Grab parameters
+    pi    <- thetaE["pi"]
+    phi   <- thetaE["phi"]
+    ## Quantile residuals
+    qhat  <-  pi + (1-pi)*pinversegaussian (q=mu, mu=mu, phi=phi)
+    qres  <- (pi + (1-pi)*pinversegaussian (q=y,  mu=mu, phi=phi)) - qhat
+    
+  } else if (err_dist == "ziigl") {
+    
+    ## --- Zero-inflated inverse gaussian linked
+    ## Grab parameters
+    g0    <- thetaE["g0"]
+    g1    <- thetaE["g1"]
+    phi   <- thetaE["phi"]
+    ## Convert g0, g1, to pi
+    logitpi <- g0 + g1*log(mu)
+    pi   <- exp(logitpi)/(1 + exp(logitpi))
+    pi[mu==0] <- 1
+    ## Quantile residuals
+    qhat  <-  pi + (1-pi)*pinversegaussian (q=mu, mu=mu, phi=phi)
+    qres  <- (pi + (1-pi)*pinversegaussian (q=y,  mu=mu, phi=phi)) - qhat
+
+  } else if (err_dist == "ziigl.mu") {
+    
+    ## --- Zero-inflated inverse gaussian linked - mu
+    ## Grab parameters
+    g0    <- thetaE["g0"]
+    g1    <- thetaE["g1"]
+    phi   <- thetaE["phi"]
+    ## Convert g0, g1, to pi
+    logitpi <- g0 + g1*mu
+    pi   <- exp(logitpi)/(1 + exp(logitpi))
+    ## Quantile residuals
+    qhat  <-  pi + (1-pi)*pinversegaussian (q=mu, mu=mu, phi=phi)
+    qres  <- (pi + (1-pi)*pinversegaussian (q=y,  mu=mu, phi=phi)) - qhat
     
   } else if (err_dist == "tab") {
     
@@ -913,6 +956,9 @@ get_err_dist_parnames <- function (err_dist) {
   if (err_dist == "zig")            { thetaE <- c("pi","phi") }
   if (err_dist == "zigl")           { thetaE <- c("g0", "g1","phi") }
   if (err_dist == "zigl.mu")        { thetaE <- c("g0", "g1","phi") }
+  if (err_dist == "ziig")           { thetaE <- c("pi","phi") }
+  if (err_dist == "ziigl")          { thetaE <- c("g0", "g1","phi") }
+  if (err_dist == "ziigl.mu")       { thetaE <- c("g0", "g1","phi") }  
   if (err_dist == "gaussian")       { thetaE <- c("sigma") }
   if (err_dist == "tab")            { thetaE <- c("sigma") }
   if (err_dist == "zitab")          { thetaE <- c("pi","sigma") }

@@ -26,7 +26,7 @@ Possible values are:
   \item{"count"}{Count data;
       ("poisson", "negbin", "zip", "zinb", "zipl", "zinbl", "zipl.mu", "zinbl.mu").}
   \item{"abundance"}{Non-negative continous data;
-      ("gaussian", "tweedie", "zig", "zigl", "zigl.mu").}
+      ("gaussian", "tweedie", "zig", "zigl", "zigl.mu", "ziig", "ziigl", "ziigl.mu").}
 }}
 }
 \value{

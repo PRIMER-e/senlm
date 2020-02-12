@@ -119,9 +119,12 @@ get_default_par <- function (ModelInfo) {
   if (err_dist == "zinbl.mu")          { thetaE <- c(g0=-0.9, g1=-0.05, phi=1.5) }
   if (err_dist == "gaussian")          { thetaE <- c(sigma=5) }
   if (err_dist == "tweedie")           { thetaE <- c(phi=1.5, rho=1.1) }
-  if (err_dist == "zig")               { thetaE <- c(pi=0.3, phi=1.5) }
+  if (err_dist == "zig")               { thetaE <- c(pi=0.3, phi=0.5) }
   if (err_dist == "zigl")              { thetaE <- c(g0=-0.9, g1=-0.5, phi=0.5) }
   if (err_dist == "zigl.mu")           { thetaE <- c(g0=-0.9, g1=-0.5, phi=0.5) }
+  if (err_dist == "ziig")              { thetaE <- c(pi=0.3, phi=0.2) }
+  if (err_dist == "ziigl")             { thetaE <- c(g0=-0.9, g1=-0.5, phi=0.2) }
+  if (err_dist == "ziigl.mu")          { thetaE <- c(g0=-0.9, g1=-0.5, phi=0.2) }
   if (err_dist == "tab")               { thetaE <- c(sigma=0.1) }
   if (err_dist == "zitab")             { thetaE <- c(pi=0.3, sigma=0.1) }
   
@@ -551,7 +554,7 @@ simulate_data <- function (x, Par, seed=NULL) {
     y[mu==0] <- 0
   }
   
-  ## --- Zero-inflated Gamma error (data non-negative, zero when mean zero)
+  ## --- Zero-inflated gamma error (data non-negative, zero when mean zero)
   if (err_dist == "zig" ) {
 
     ## Grab parameters
@@ -620,6 +623,74 @@ simulate_data <- function (x, Par, seed=NULL) {
     ## Create spike parameter
     if (err_dist == "zigl")    { logitpi <- g0 + g1*log(Mu) }
     if (err_dist == "zigl.mu") { logitpi <- g0 + g1*Mu      }
+    pi <- exp(logitpi) / ( 1 + exp(logitpi) )
+    
+    ## Randomly change pi proportion to zero (extra zeros)
+    y[stats::runif(sum(NonZero)) < pi] <- 0
+  }
+  
+  
+  ## --- Zero-inflated inverse gaussian error (data non-negative, zero when mean zero)
+  if (err_dist == "ziig" ) {
+    
+    ## Grab parameters
+    pi  <- as.list(Par$theta)$pi
+    phi <- as.list(Par$theta)$phi
+    
+    ## --- Find where mean is positive
+    NonZero <- (mu > 0)
+    
+    ## Ignore observations where mean is zero
+    Mu    <- mu[NonZero]
+    y     <- rep (0, length(x))
+    
+    ## If phi=0 then data=mean
+    if (phi == 0) {
+      y[NonZero] <- Mu
+    } else {
+      ## Simulate data
+      y[NonZero] <- rinversegaussian(n=sum(NonZero), mu=Mu, phi=phi)
+    }
+    
+    ## Make sure observation are zero when mean is zero
+    y[y < 0] <- 0
+    y[mu==0] <- 0
+
+    ## Randomly change pi proportion to zero (extra zeros)
+    y[stats::runif(length(x)) < pi] <- 0
+  }
+  
+  
+  ## --- Zero-linked inverse gaussian
+  if ( (err_dist == "ziigl") | (err_dist == "ziigl.mu") ) {
+    
+    ## Grab parameters
+    g0  <- as.list(Par$theta)$g0
+    g1  <- as.list(Par$theta)$g1
+    phi <- as.list(Par$theta)$phi
+    
+    ## --- Find where mean is positive
+    NonZero <- (mu > 0)
+    
+    ## Ignore observations where mean is zero
+    Mu    <- mu[NonZero]
+    y     <- rep (0, length(x))
+
+    ## If phi=0 then data=mean
+    if (phi == 0) {
+      y[NonZero] <- Mu
+    } else {      
+      ## Simulate data
+      y[NonZero] <- rinversegaussian(n=sum(NonZero), mu=Mu, phi=phi)
+    }
+    
+    ## Make sure observation are zero when mean is zero
+    y[y < 0] <- 0
+    y[!NonZero] <- 0
+    
+    ## Create spike parameter
+    if (err_dist == "ziigl")    { logitpi <- g0 + g1*log(Mu) }
+    if (err_dist == "ziigl.mu") { logitpi <- g0 + g1*Mu      }
     pi <- exp(logitpi) / ( 1 + exp(logitpi) )
     
     ## Randomly change pi proportion to zero (extra zeros)
@@ -916,4 +987,64 @@ Log10 <- function (y) {
   ## Return data
   return (y)
 }
+
+rinversegaussian <- function (n, mu, phi) {
+  ## --- Simulate from an inverse gaussian
+
+  ## --- Check length of mu
+  if (length(mu)==1) { mu <- rep(mu, n)}
+  if (length(mu) != n) { stop ("length of mu must be 1 or n!") }
+    
+  ## Sample from a normal distribution with a mean of 0 and 1 standard deviation
+  v  <- rnorm(n)
+
+  ## Create possible return value 
+  y  <-  v^2
+  x  <-  mu + (mu^2 * y) / (2*phi) - (mu / (2*phi)) * sqrt(4*mu*phi*y + mu^2*y^2)
+
+  ## Perform test and set return value
+  Rand <-  runif(n)  
+  Test <- Rand <= mu/(mu+x)
+  Result <- mu^2/x
+  Result[Test] <- x[Test]
   
+  ## --- Return result
+  return (Result)
+}
+
+dinversegaussian  <- function (y, mu, phi, log=TRUE) {
+  ## --- Denisty of inverse gausssian
+
+  ## --- Stop if y or parameters are non-positive
+  if (any(y   <= 0)) { stop ("y must be positive!")  } 
+  if (any(mu  <= 0)) { stop ("mu must be positive!") }
+  if (any(phi <= 0)) { stop ("phi must be positive!") }
+
+  ## --- Calculate denisty on log scale
+  Result <- -(y - mu)^2/(2*y*phi*mu^2) - 0.5*(log(2*pi*phi) + 3*log(y))
+
+  ## --- Exponentiate if not in log scale  
+  if (log==FALSE) { Result <- exp(Result) }
+  
+  ## --- Return density/log-density
+  return (Result)
+}
+
+pinversegaussian <- function (q, mu, phi) {
+  ## --- Calculate CDF for inverse gaussian function
+
+  ## --- Stop if q or parameters are non-positive
+  if (any(q   <= 0)) { stop ("q must be positive!")  }
+  if (any(mu  <= 0)) { stop ("mu must be positive!") }
+  if (any(phi <= 0)) { stop ("phi must be positive")   }
+
+  ## --- Partial calculations
+  t <- q/mu
+  v <- sqrt(q * phi)
+
+  ## --- Calculate cdf
+  Result <- pnorm((t - 1)/v) + exp(2/(mu * phi)) * pnorm(-(t + 1)/v)
+
+  ## --- Return cdf
+  return (Result)
+}

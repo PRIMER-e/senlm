@@ -211,12 +211,13 @@ init_estimate_phi <- function (ModelInfo, DF, mu) {
   
   ## Grab error distribution
   err_dist <- ModelInfo$err_dist
-
+  
   ## Models with dispersion parameter
   if ( (err_dist=="negbin")  | (err_dist=="zinb"    ) |
        (err_dist=="zinbl" )  | (err_dist=="zinbl.mu") |
-       (err_dist=="tweedie") | (err_dist=="zig"     ) |
-       (err_dist=="zigl")    | (err_dist=="zigl.mu" ) ) {
+       (err_dist=="tweedie") |
+       (err_dist=="ziig")    | (err_dist=="ziigl")    | (err_dist=="ziigl.mu") |
+       (err_dist=="zig")     | (err_dist=="zigl")     | (err_dist=="zigl.mu")  ) {
     
     ## --- Estimate variance around mean
     SDat <- stats::na.omit (data.frame(x=DF$Dat$x, R=(DF$Dat$y-mu)^2))
@@ -330,13 +331,19 @@ init_estimate_pi <- function (ModelInfo, DF, mu, sigma, phi) {
     pi <- n0/nn
     if (ns <= n0) { pi <- (n0 - ns)/nn }
   }
+
+  ## --- ZIIG (zero inflated inverse-gaussian)
+   if ( (err_dist == "ziig") | (err_dist == "ziigl") | (err_dist == "ziigl.mu") )  {
+    ## No need to adjust for zeroes not from spike
+    pi <- n0/nn
+  }
   
   ## --- ZIG
   if ( (err_dist == "zig") | (err_dist == "zigl") | (err_dist == "zigl.mu") )  {
     ## No need to adjust for zeroes not from spike
     pi <- n0/nn
   }
-
+  
   ## Make sure estimate is not negative/too small
   if (!is.null(pi)) {
     if (pi < 0.01) { pi <- 0.01 }
@@ -355,13 +362,14 @@ init_estimate_linked_intercept <- function (ModelInfo, DF, pi) {
   ## Convert pi to anti-logit scale if linked model
   if ( (err_dist=="zipl")  | (err_dist=="zipl.mu")  |
        (err_dist=="zinbl") | (err_dist=="zinbl.mu") |
+       (err_dist=="ziigl") | (err_dist=="ziigl.mu") |
        (err_dist=="zigl")  | (err_dist=="zigl.mu")  ) {
     ## Zero-linked model parameters
     g0 <- log (pi/(1 - pi))
   } else {
     g0 <- NULL
   }
-
+  
   ## Return gamma_0
   return (g0)
 }
