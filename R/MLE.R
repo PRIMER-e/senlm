@@ -464,7 +464,7 @@ mle_default <- function (ModelInfo, Dat, theta0=NULL) {
     colnames(u.hessian) <- names(u.theta)
     rownames(u.hessian) <- names(u.theta)
 
-    ## --- Is standard error is ok?
+    ## --- Is standard error ok?
     StdErrOK <- TRUE
     
     ## --- Check if hessian is composed of finite numbers
@@ -476,13 +476,13 @@ mle_default <- function (ModelInfo, Dat, theta0=NULL) {
     if (StdErrOK) {
       if (det(u.hessian) <= 0 ) { StdErrOK <- FALSE }
     }
-
+    
     ## --- Check if standard errors are non-negative
     if (StdErrOK) { 
       u.stderr  <- sqrt(diag(solve(u.hessian)))
       if (any(u.stderr < 0)) { StdErrOK  <- FALSE }
-    }
-
+      }
+      
     ## --- Calculate approximate confidence intervals
     if (StdErrOK) {
       u.lb <- u.theta - 2*u.stderr
