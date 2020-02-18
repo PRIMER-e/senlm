@@ -139,83 +139,84 @@
 <a class="sourceLine" id="cb2-4" data-line-number="4">## --- Summarise the Profiling Data --- #</a>
 <a class="sourceLine" id="cb2-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/pkg/proftools/man/summaries.html">pathSummary</a></span>(pd)</a>
 <a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co">#&gt;                                                    total.pct</span></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co">#&gt; ...  fn -&gt; do.call -&gt; minuslogl -&gt; NLL.discrete        23.93</span></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co">#&gt; ...  NLL.discrete -&gt; do.call -&gt; mu_gaussian             5.98</span></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt; ...  minuslogl -&gt; NLL.discrete -&gt; make_bounded          5.98</span></a>
-<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">#&gt; ...  minuslogl -&gt; NLL.discrete -&gt; NLL.negbin            5.56</span></a>
-<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="co">#&gt; ...  &lt;Anonymous&gt; -&gt; lazyLoadDBfetch                     5.56</span></a>
-<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co">#&gt; ...  optim -&gt; .External2 -&gt; &lt;Anonymous&gt; -&gt; fn           3.42</span></a>
-<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">#&gt; ...  check_par_valid -&gt; make_bounded                    3.42</span></a>
-<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="co">#&gt; ...  minuslogl -&gt; NLL.discrete -&gt; check_par_valid       2.99</span></a>
-<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="co">#&gt; ...  do.call -&gt; minuslogl -&gt; NLL.discrete -&gt; sum        2.14</span></a>
-<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co">#&gt; ...  fn -&gt; relist2 -&gt; sapply -&gt; simplify2array          1.71</span></a>
-<a class="sourceLine" id="cb2-17" data-line-number="17"><span class="co">#&gt; ...  fn -&gt; relist2 -&gt; sapply -&gt; lapply                  1.71</span></a>
-<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="co">#&gt; ...  do.call -&gt; mu_gaussian -&gt; as.list                  1.71</span></a>
-<a class="sourceLine" id="cb2-19" data-line-number="19"><span class="co">#&gt; ...  relist2 -&gt; sapply -&gt; simplify2array -&gt; unique      1.28</span></a>
-<a class="sourceLine" id="cb2-20" data-line-number="20"><span class="co">#&gt; ...  NLL.discrete -&gt; NLL.negbin -&gt; lfactorial           1.28</span></a>
-<a class="sourceLine" id="cb2-21" data-line-number="21"><span class="co">#&gt; ...  getGroupMembers -&gt; .recMembers -&gt; is               1.28</span></a>
-<a class="sourceLine" id="cb2-22" data-line-number="22"><span class="co">#&gt; ...  fn -&gt; relist2 -&gt; sapply -&gt; isFALSE                 1.28</span></a>
-<a class="sourceLine" id="cb2-23" data-line-number="23"><span class="co">#&gt; ...  do.call -&gt; minuslogl -&gt; NLL.discrete -&gt; $          1.28</span></a>
-<a class="sourceLine" id="cb2-24" data-line-number="24"><span class="co">#&gt; ...  do.call -&gt; minuslogl -&gt; NLL.discrete               1.28</span></a>
-<a class="sourceLine" id="cb2-25" data-line-number="25"><span class="co">#&gt; ...  &lt;Anonymous&gt; -&gt; fn -&gt; relist2 -&gt; sapply             1.28</span></a>
-<a class="sourceLine" id="cb2-26" data-line-number="26"><span class="co">#&gt; ...  &lt;Anonymous&gt; -&gt; fn -&gt; relist2 -&gt; as.list            1.28</span></a>
-<a class="sourceLine" id="cb2-27" data-line-number="27"><span class="co">#&gt; ...  .External2 -&gt; &lt;Anonymous&gt; -&gt; fn -&gt; order           1.28</span></a>
-<a class="sourceLine" id="cb2-28" data-line-number="28"><span class="co">#&gt; ...  simplify2array -&gt; unique -&gt; unique.default         0.85</span></a>
-<a class="sourceLine" id="cb2-29" data-line-number="29"><span class="co">#&gt; ...  relist2 -&gt; sapply -&gt; lapply -&gt; match.fun           0.85</span></a>
-<a class="sourceLine" id="cb2-30" data-line-number="30"><span class="co">#&gt; ...  NLL.discrete -&gt; NLL.negbin -&gt; sum                  0.85</span></a>
-<a class="sourceLine" id="cb2-31" data-line-number="31"><span class="co">#&gt; ...  namedrop -&gt; unique -&gt; unique.default               0.85</span></a>
-<a class="sourceLine" id="cb2-32" data-line-number="32"><span class="co">#&gt; ...  minuslogl -&gt; NLL.discrete -&gt; do.call -&gt; paste      0.85</span></a>
-<a class="sourceLine" id="cb2-33" data-line-number="33"><span class="co">#&gt; ...  .updateMethodsInTable                              0.85</span></a>
-<a class="sourceLine" id="cb2-34" data-line-number="34"><span class="co">#&gt; ...  .resetInheritedMethods                             0.85</span></a>
-<a class="sourceLine" id="cb2-35" data-line-number="35"><span class="co">#&gt; ...  .recacheSubclasses -&gt; sort.list -&gt; match.arg       0.85</span></a>
-<a class="sourceLine" id="cb2-36" data-line-number="36"><span class="co">#&gt; ...  .External2 -&gt; &lt;Anonymous&gt; -&gt; fn -&gt; namedrop        0.85</span></a>
-<a class="sourceLine" id="cb2-37" data-line-number="37"><span class="co">#&gt; ...  .cacheGeneric -&gt; .cacheGenericTable                0.85</span></a>
-<a class="sourceLine" id="cb2-38" data-line-number="38"><span class="co">#&gt; ...  sort.list -&gt; order -&gt; match.arg -&gt; pmatch          0.43</span></a>
-<a class="sourceLine" id="cb2-39" data-line-number="39"><span class="co">#&gt; ...  sapply -&gt; simplify2array -&gt; unique -&gt; lengths      0.43</span></a>
-<a class="sourceLine" id="cb2-40" data-line-number="40"><span class="co">#&gt; ...  optim -&gt; .External2 -&gt; &lt;Anonymous&gt; -&gt; fn -&gt; c      0.43</span></a>
-<a class="sourceLine" id="cb2-41" data-line-number="41"><span class="co">#&gt; ...  NLL.discrete -&gt; check_par_valid -&gt; any             0.43</span></a>
-<a class="sourceLine" id="cb2-42" data-line-number="42"><span class="co">#&gt; ...  NLL.discrete -&gt; check_par_valid -&gt; $               0.43</span></a>
-<a class="sourceLine" id="cb2-43" data-line-number="43"><span class="co">#&gt; ...  loadNamespace -&gt; namespaceExport                   0.43</span></a>
-<a class="sourceLine" id="cb2-44" data-line-number="44"><span class="co">#&gt; ...  list2env -&gt; as.list -&gt; as.list.default             0.43</span></a>
-<a class="sourceLine" id="cb2-45" data-line-number="45"><span class="co">#&gt; ...  lazyLoad -&gt; lazyLoadDBexec -&gt; readRDS              0.43</span></a>
-<a class="sourceLine" id="cb2-46" data-line-number="46"><span class="co">#&gt; ...  lapply -&gt; FUN -&gt; lapply -&gt; FUN -&gt; c                0.43</span></a>
-<a class="sourceLine" id="cb2-47" data-line-number="47"><span class="co">#&gt; ...  getGroupMembers -&gt; .recMembers -&gt; getGeneric       0.43</span></a>
-<a class="sourceLine" id="cb2-48" data-line-number="48"><span class="co">#&gt; ...  getGeneric -&gt; .getGeneric                          0.43</span></a>
-<a class="sourceLine" id="cb2-49" data-line-number="49"><span class="co">#&gt; ...  getFunction -&gt; get0 -&gt; lazyLoadDBfetch             0.43</span></a>
-<a class="sourceLine" id="cb2-50" data-line-number="50"><span class="co">#&gt; ...  getClassDef -&gt; get0 -&gt; lazyLoadDBfetch             0.43</span></a>
-<a class="sourceLine" id="cb2-51" data-line-number="51"><span class="co">#&gt; ...  get -&gt; lazyLoadDBfetch                             0.43</span></a>
-<a class="sourceLine" id="cb2-52" data-line-number="52"><span class="co">#&gt; ...  func -&gt; relist2 -&gt; sapply -&gt; lapply                0.43</span></a>
-<a class="sourceLine" id="cb2-53" data-line-number="53"><span class="co">#&gt; ...  func -&gt; do.call -&gt; minuslogl -&gt; NLL.discrete       0.43</span></a>
-<a class="sourceLine" id="cb2-54" data-line-number="54"><span class="co">#&gt; ...  fn -&gt; relist2 -&gt; as.list -&gt; as.list.default        0.43</span></a>
-<a class="sourceLine" id="cb2-55" data-line-number="55"><span class="co">#&gt; ...  fn -&gt; namedrop -&gt; seq -&gt; seq.default               0.43</span></a>
-<a class="sourceLine" id="cb2-56" data-line-number="56"><span class="co">#&gt; ...  fn -&gt; do.call -&gt; namedrop -&gt; unique                0.43</span></a>
-<a class="sourceLine" id="cb2-57" data-line-number="57"><span class="co">#&gt; ...  fn -&gt; do.call -&gt; namedrop -&gt; seq                   0.43</span></a>
-<a class="sourceLine" id="cb2-58" data-line-number="58"><span class="co">#&gt; ...  cacheGenericsMetaData                              0.43</span></a>
-<a class="sourceLine" id="cb2-59" data-line-number="59"><span class="co">#&gt; ...  body&lt;- -&gt; body&lt;- -&gt; as -&gt; .getMethodsTable         0.43</span></a>
-<a class="sourceLine" id="cb2-60" data-line-number="60"><span class="co">#&gt; ...  bbmle::mle2 -&gt; do.call -&gt; optim -&gt; .External2      0.43</span></a>
-<a class="sourceLine" id="cb2-61" data-line-number="61"><span class="co">#&gt; ...  &lt;Anonymous&gt; -&gt; fn -&gt; namedrop -&gt; seq               0.43</span></a>
-<a class="sourceLine" id="cb2-62" data-line-number="62"><span class="co">#&gt; ...  .resetInheritedMethods -&gt; is -&gt; .identC            0.43</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co">#&gt; ...  fn -&gt; do.call -&gt; minuslogl -&gt; NLL.discrete        18.18</span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co">#&gt; ...  &lt;Anonymous&gt; -&gt; lazyLoadDBfetch                     8.66</span></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt; ...  NLL.discrete -&gt; do.call -&gt; mu_gaussian             6.06</span></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">#&gt; ...  minuslogl -&gt; NLL.discrete -&gt; NLL.negbin            5.19</span></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="co">#&gt; ...  relist2 -&gt; sapply -&gt; simplify2array -&gt; unlist      4.76</span></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co">#&gt; ...  minuslogl -&gt; NLL.discrete -&gt; make_bounded          4.33</span></a>
+<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">#&gt; ...  NLL.discrete -&gt; NLL.negbin -&gt; lfactorial           3.03</span></a>
+<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="co">#&gt; ...  do.call -&gt; mu_gaussian -&gt; as.list                  3.03</span></a>
+<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="co">#&gt; ...  check_par_valid -&gt; make_bounded                    3.03</span></a>
+<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co">#&gt; ...  simplify2array -&gt; unique -&gt; unique.default         2.60</span></a>
+<a class="sourceLine" id="cb2-17" data-line-number="17"><span class="co">#&gt; ...  optim -&gt; .External2 -&gt; &lt;Anonymous&gt; -&gt; fn           2.60</span></a>
+<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="co">#&gt; ...  fn -&gt; do.call -&gt; namedrop -&gt; unique                2.60</span></a>
+<a class="sourceLine" id="cb2-19" data-line-number="19"><span class="co">#&gt; ...  fn -&gt; relist2 -&gt; sapply -&gt; lapply                  2.16</span></a>
+<a class="sourceLine" id="cb2-20" data-line-number="20"><span class="co">#&gt; ...  do.call -&gt; minuslogl -&gt; NLL.discrete -&gt; sum        2.16</span></a>
+<a class="sourceLine" id="cb2-21" data-line-number="21"><span class="co">#&gt; ...  fn -&gt; relist2 -&gt; sapply -&gt; lapply -&gt; FUN           1.73</span></a>
+<a class="sourceLine" id="cb2-22" data-line-number="22"><span class="co">#&gt; ...  relist2 -&gt; sapply -&gt; simplify2array -&gt; unique      1.30</span></a>
+<a class="sourceLine" id="cb2-23" data-line-number="23"><span class="co">#&gt; ...  minuslogl -&gt; NLL.discrete -&gt; check_par_valid       1.30</span></a>
+<a class="sourceLine" id="cb2-24" data-line-number="24"><span class="co">#&gt; ...  .External2 -&gt; &lt;Anonymous&gt; -&gt; fn -&gt; relist2         1.30</span></a>
+<a class="sourceLine" id="cb2-25" data-line-number="25"><span class="co">#&gt; ...  unique -&gt; unique.default -&gt; is.factor              0.87</span></a>
+<a class="sourceLine" id="cb2-26" data-line-number="26"><span class="co">#&gt; ...  namedrop -&gt; unique -&gt; unique.default               0.87</span></a>
+<a class="sourceLine" id="cb2-27" data-line-number="27"><span class="co">#&gt; ...  fn -&gt; namedrop -&gt; seq -&gt; seq.default               0.87</span></a>
+<a class="sourceLine" id="cb2-28" data-line-number="28"><span class="co">#&gt; ...  do.call -&gt; minuslogl -&gt; NLL.discrete -&gt; $          0.87</span></a>
+<a class="sourceLine" id="cb2-29" data-line-number="29"><span class="co">#&gt; ...  &lt;Anonymous&gt; -&gt; fn -&gt; namedrop -&gt; seq               0.87</span></a>
+<a class="sourceLine" id="cb2-30" data-line-number="30"><span class="co">#&gt; ...  &lt;Anonymous&gt; -&gt; fn -&gt; do.call -&gt; minuslogl          0.87</span></a>
+<a class="sourceLine" id="cb2-31" data-line-number="31"><span class="co">#&gt; ...  .resetInheritedMethods                             0.87</span></a>
+<a class="sourceLine" id="cb2-32" data-line-number="32"><span class="co">#&gt; ...  .recMembers -&gt; getGeneric -&gt; genericForBasic       0.87</span></a>
+<a class="sourceLine" id="cb2-33" data-line-number="33"><span class="co">#&gt; ...  .External2 -&gt; &lt;Anonymous&gt; -&gt; fn -&gt; unlist          0.87</span></a>
+<a class="sourceLine" id="cb2-34" data-line-number="34"><span class="co">#&gt; ...  sort.list -&gt; match.arg -&gt; eval                     0.43</span></a>
+<a class="sourceLine" id="cb2-35" data-line-number="35"><span class="co">#&gt; ...  Recall -&gt; .checkGroupSigLength -&gt; is               0.43</span></a>
+<a class="sourceLine" id="cb2-36" data-line-number="36"><span class="co">#&gt; ...  nlminb -&gt; .Call -&gt; objective -&gt; order              0.43</span></a>
+<a class="sourceLine" id="cb2-37" data-line-number="37"><span class="co">#&gt; ...  NLL.discrete -&gt; do.call -&gt; is.list                 0.43</span></a>
+<a class="sourceLine" id="cb2-38" data-line-number="38"><span class="co">#&gt; ...  NLL.discrete -&gt; check_par_valid -&gt; $               0.43</span></a>
+<a class="sourceLine" id="cb2-39" data-line-number="39"><span class="co">#&gt; ...  mu_gaussian -&gt; as.list -&gt; as.list.default          0.43</span></a>
+<a class="sourceLine" id="cb2-40" data-line-number="40"><span class="co">#&gt; ...  minuslogl -&gt; NLL.discrete -&gt; do.call -&gt; paste      0.43</span></a>
+<a class="sourceLine" id="cb2-41" data-line-number="41"><span class="co">#&gt; ...  minuslogl -&gt; NLL.discrete -&gt; do.call               0.43</span></a>
+<a class="sourceLine" id="cb2-42" data-line-number="42"><span class="co">#&gt; ...  methodsPackageMetaName -&gt; paste                    0.43</span></a>
+<a class="sourceLine" id="cb2-43" data-line-number="43"><span class="co">#&gt; ...  lapply -&gt; FUN -&gt; readRDS -&gt; gzfile                 0.43</span></a>
+<a class="sourceLine" id="cb2-44" data-line-number="44"><span class="co">#&gt; ...  lapply -&gt; FUN -&gt; lapply -&gt; FUN                     0.43</span></a>
+<a class="sourceLine" id="cb2-45" data-line-number="45"><span class="co">#&gt; ...  is -&gt; getClassDef -&gt; .getClassesFromCache          0.43</span></a>
+<a class="sourceLine" id="cb2-46" data-line-number="46"><span class="co">#&gt; ...  is -&gt; .identC -&gt; class                             0.43</span></a>
+<a class="sourceLine" id="cb2-47" data-line-number="47"><span class="co">#&gt; ...  getGroupMembers -&gt; .recMembers -&gt; is               0.43</span></a>
+<a class="sourceLine" id="cb2-48" data-line-number="48"><span class="co">#&gt; ...  getClassDef -&gt; get0 -&gt; lazyLoadDBfetch             0.43</span></a>
+<a class="sourceLine" id="cb2-49" data-line-number="49"><span class="co">#&gt; ...  func -&gt; relist2 -&gt; sapply -&gt; simplify2array        0.43</span></a>
+<a class="sourceLine" id="cb2-50" data-line-number="50"><span class="co">#&gt; ...  func -&gt; do.call -&gt; minuslogl -&gt; NLL.discrete       0.43</span></a>
+<a class="sourceLine" id="cb2-51" data-line-number="51"><span class="co">#&gt; ...  fn -&gt; relist2 -&gt; sapply -&gt; simplify2array          0.43</span></a>
+<a class="sourceLine" id="cb2-52" data-line-number="52"><span class="co">#&gt; ...  fn -&gt; relist2 -&gt; as.list -&gt; as.list.default        0.43</span></a>
+<a class="sourceLine" id="cb2-53" data-line-number="53"><span class="co">#&gt; ...  fn -&gt; do.call -&gt; namedrop -&gt; seq                   0.43</span></a>
+<a class="sourceLine" id="cb2-54" data-line-number="54"><span class="co">#&gt; ...  eval -&gt; loadingNamespaceInfo -&gt; dynGet             0.43</span></a>
+<a class="sourceLine" id="cb2-55" data-line-number="55"><span class="co">#&gt; ...  eval -&gt; lazyLoad -&gt; lazyLoadDBexec -&gt; readRDS      0.43</span></a>
+<a class="sourceLine" id="cb2-56" data-line-number="56"><span class="co">#&gt; ...  do.call -&gt; minuslogl -&gt; NLL.discrete               0.43</span></a>
+<a class="sourceLine" id="cb2-57" data-line-number="57"><span class="co">#&gt; ...  as.data.frame.character -&gt; factor -&gt; force         0.43</span></a>
+<a class="sourceLine" id="cb2-58" data-line-number="58"><span class="co">#&gt; ...  &lt;Anonymous&gt; -&gt; fn -&gt; relist2 -&gt; sapply             0.43</span></a>
+<a class="sourceLine" id="cb2-59" data-line-number="59"><span class="co">#&gt; ...  &lt;Anonymous&gt; -&gt; fn -&gt; relist2 -&gt; as.list            0.43</span></a>
+<a class="sourceLine" id="cb2-60" data-line-number="60"><span class="co">#&gt; ...  &lt;Anonymous&gt; -&gt; fn -&gt; do.call -&gt; namedrop           0.43</span></a>
+<a class="sourceLine" id="cb2-61" data-line-number="61"><span class="co">#&gt; ...  &lt;Anonymous&gt; -&gt; .findInheritedMethods -&gt; @&lt;-        0.43</span></a>
+<a class="sourceLine" id="cb2-62" data-line-number="62"><span class="co">#&gt; ...  .updateMethodsInTable -&gt; .checkGroupSigLength      0.43</span></a>
 <a class="sourceLine" id="cb2-63" data-line-number="63"><span class="co">#&gt; ...  .resetInheritedMethods -&gt; is                       0.43</span></a>
-<a class="sourceLine" id="cb2-64" data-line-number="64"><span class="co">#&gt; ...  .recMembers -&gt; getGeneric -&gt; is -&gt; .identC         0.43</span></a>
-<a class="sourceLine" id="cb2-65" data-line-number="65"><span class="co">#&gt; ...  .recMembers -&gt; getGeneric -&gt; is                    0.43</span></a>
-<a class="sourceLine" id="cb2-66" data-line-number="66"><span class="co">#&gt; ...  .recMembers -&gt; getGeneric -&gt; genericForBasic       0.43</span></a>
-<a class="sourceLine" id="cb2-67" data-line-number="67"><span class="co">#&gt; ...  .getGenericFromCacheTable -&gt; exists                0.43</span></a>
-<a class="sourceLine" id="cb2-68" data-line-number="68"><span class="co">#&gt; ...  .getGenericFromCacheTable                          0.43</span></a>
-<a class="sourceLine" id="cb2-69" data-line-number="69"><span class="co">#&gt; ...  .External2 -&gt; &lt;Anonymous&gt; -&gt; fn -&gt; unlist          0.43</span></a>
-<a class="sourceLine" id="cb2-70" data-line-number="70"><span class="co">#&gt; ...  .External2 -&gt; &lt;Anonymous&gt; -&gt; fn -&gt; relist2         0.43</span></a>
-<a class="sourceLine" id="cb2-71" data-line-number="71"><span class="co">#&gt; ...  .checkGroupSigLength -&gt; getGroupMembers            0.43</span></a>
-<a class="sourceLine" id="cb2-72" data-line-number="72"><span class="co">#&gt; ...  .cacheClass -&gt; is -&gt; getClassDef                   0.43</span></a>
-<a class="sourceLine" id="cb2-73" data-line-number="73"><span class="co">#&gt; ...  .cacheClass -&gt; .extendsForS3 -&gt; extends -&gt; is      0.43</span></a>
-<a class="sourceLine" id="cb2-74" data-line-number="74"><span class="co">#&gt; ...  .cacheClass -&gt; .extendsForS3 -&gt; extends            0.43</span></a>
-<a class="sourceLine" id="cb2-75" data-line-number="75">##funSummary(pd)</a>
-<a class="sourceLine" id="cb2-76" data-line-number="76">##callSummary(pd)</a>
-<a class="sourceLine" id="cb2-77" data-line-number="77">##hotPaths(pd)</a>
-<a class="sourceLine" id="cb2-78" data-line-number="78">##flatProfile(pd)</a>
-<a class="sourceLine" id="cb2-79" data-line-number="79"></a>
-<a class="sourceLine" id="cb2-80" data-line-number="80">## --- Annotate Sourcecode with Profiling Data -- #</a>
-<a class="sourceLine" id="cb2-81" data-line-number="81"><span class="co"># annotateSource is very useful, but won't work within a vignette.</span></a>
-<a class="sourceLine" id="cb2-82" data-line-number="82"><span class="co">#annotateSource(pd, show = TRUE)</span></a>
-<a class="sourceLine" id="cb2-83" data-line-number="83">##srcSummary(pd)</a></code></pre></div>
+<a class="sourceLine" id="cb2-64" data-line-number="64"><span class="co">#&gt; ...  .recacheSubclasses -&gt; .cacheClass                  0.43</span></a>
+<a class="sourceLine" id="cb2-65" data-line-number="65"><span class="co">#&gt; ...  .mergeMethodsTable -&gt; is -&gt; .identC                0.43</span></a>
+<a class="sourceLine" id="cb2-66" data-line-number="66"><span class="co">#&gt; ...  .getGeneric -&gt; .getGenericFromCache                0.43</span></a>
+<a class="sourceLine" id="cb2-67" data-line-number="67"><span class="co">#&gt; ...  .External2 -&gt; &lt;Anonymous&gt; -&gt; fn -&gt; namedrop        0.43</span></a>
+<a class="sourceLine" id="cb2-68" data-line-number="68"><span class="co">#&gt; ...  .External2 -&gt; &lt;Anonymous&gt; -&gt; fn -&gt; do.call         0.43</span></a>
+<a class="sourceLine" id="cb2-69" data-line-number="69"><span class="co">#&gt; ...  .checkGroupSigLength -&gt; lapply                     0.43</span></a>
+<a class="sourceLine" id="cb2-70" data-line-number="70"><span class="co">#&gt; ...  .checkGroupSigLength -&gt; is                         0.43</span></a>
+<a class="sourceLine" id="cb2-71" data-line-number="71"><span class="co">#&gt; ...  .cacheGeneric -&gt; .cacheGenericTable                0.43</span></a>
+<a class="sourceLine" id="cb2-72" data-line-number="72"><span class="co">#&gt; ...  .cacheClass -&gt; isFALSE -&gt; is                       0.43</span></a>
+<a class="sourceLine" id="cb2-73" data-line-number="73"><span class="co">#&gt; ...  .cacheClass -&gt; .recacheSubclasses                  0.43</span></a>
+<a class="sourceLine" id="cb2-74" data-line-number="74"><span class="co">#&gt; ...  .cacheClass -&gt; .extendsForS3 -&gt; extends -&gt; is      0.43</span></a>
+<a class="sourceLine" id="cb2-75" data-line-number="75"><span class="co">#&gt; ...  .cacheClass -&gt; .extendsForS3 -&gt; extends            0.43</span></a>
+<a class="sourceLine" id="cb2-76" data-line-number="76">##funSummary(pd)</a>
+<a class="sourceLine" id="cb2-77" data-line-number="77">##callSummary(pd)</a>
+<a class="sourceLine" id="cb2-78" data-line-number="78">##hotPaths(pd)</a>
+<a class="sourceLine" id="cb2-79" data-line-number="79">##flatProfile(pd)</a>
+<a class="sourceLine" id="cb2-80" data-line-number="80"></a>
+<a class="sourceLine" id="cb2-81" data-line-number="81">## --- Annotate Sourcecode with Profiling Data -- #</a>
+<a class="sourceLine" id="cb2-82" data-line-number="82"><span class="co"># annotateSource is very useful, but won't work within a vignette.</span></a>
+<a class="sourceLine" id="cb2-83" data-line-number="83"><span class="co">#annotateSource(pd, show = TRUE)</span></a>
+<a class="sourceLine" id="cb2-84" data-line-number="84">##srcSummary(pd)</a></code></pre></div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
