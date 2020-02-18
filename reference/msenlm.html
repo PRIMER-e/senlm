@@ -132,7 +132,14 @@
     <p>'msenlm' fits multiple species-environment non-linear models via maximum likelihood.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>msenlm</span>(<span class='kw'>models</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>xvar</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>yvar</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>msenlm</span>(
+  <span class='kw'>models</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>xvar</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>yvar</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>echo</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"crossed"</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -153,6 +160,15 @@
       <th>yvar</th>
       <td><p>Names of response variables.</p></td>
     </tr>
+    <tr>
+      <th>echo</th>
+      <td><p>Not currently used.</p></td>
+    </tr>
+    <tr>
+      <th>method</th>
+      <td><p>If "crossed", fit all models to all response variables. If "paired",
+fit first model to first response variables, etc.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -163,9 +179,9 @@
     <pre class="examples"><div class='input'>
 <span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 
-<span class='no'>models</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='set_models.html'>set_models</a></span> (<span class='kw'>mean_class</span><span class='kw'>=</span><span class='st'>"test"</span>, <span class='kw'>err_dist</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"zip"</span>,<span class='st'>"zinb"</span>))
-<span class='no'>Fits</span> <span class='kw'>&lt;-</span> <span class='fu'>msenlm</span> (<span class='kw'>models</span><span class='kw'>=</span><span class='no'>models</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>haul</span>, <span class='kw'>xvar</span><span class='kw'>=</span><span class='st'>"depth"</span>,
-                <span class='kw'>yvar</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Albatrossia.pectoralis"</span>, <span class='st'>"Sebastolobus.altivelis"</span>))
+<span class='no'>models</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='set_models.html'>set_models</a></span>(<span class='kw'>mean_fun</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"gaussian"</span>,<span class='st'>"beta"</span>), <span class='kw'>err_dist</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"zip"</span>,<span class='st'>"zinb"</span>))
+<span class='no'>fits</span> <span class='kw'>&lt;-</span> <span class='fu'>msenlm</span>(<span class='kw'>models</span><span class='kw'>=</span><span class='no'>models</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>haul</span>, <span class='kw'>xvar</span><span class='kw'>=</span><span class='st'>"depth"</span>,
+               <span class='kw'>yvar</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Albatrossia.pectoralis"</span>, <span class='st'>"Sebastolobus.altivelis"</span>))
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

@@ -159,11 +159,11 @@ the following criteria: "nll", "AIC", "AICc", "BIC".</p></td>
 <span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 
 <span class='co'>## Summarise data</span>
-<span class='no'>models</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='set_models.html'>set_models</a></span> (<span class='kw'>mean_fun</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"gaussian"</span>, <span class='st'>"beta"</span>),
-                      <span class='kw'>err_dist</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"zinb"</span>, <span class='st'>"zip"</span>), <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"crossed"</span>)
-<span class='no'>fits</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='msenlm.html'>msenlm</a></span> (<span class='kw'>models</span><span class='kw'>=</span><span class='no'>models</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>haul</span>, <span class='kw'>xvar</span><span class='kw'>=</span><span class='st'>"depth"</span>,
-                <span class='kw'>yvar</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Albatrossia.pectoralis"</span>, <span class='st'>"Sebastolobus.altivelis"</span>))
-<span class='no'>best</span> <span class='kw'>&lt;-</span> <span class='fu'>msenlm.best</span> (<span class='no'>fits</span>, <span class='kw'>best</span><span class='kw'>=</span><span class='st'>"AICc"</span>)
+<span class='no'>models</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='set_models.html'>set_models</a></span>(<span class='kw'>mean_fun</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"gaussian"</span>, <span class='st'>"beta"</span>),
+                     <span class='kw'>err_dist</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"zinb"</span>, <span class='st'>"zip"</span>), <span class='kw'>method</span><span class='kw'>=</span><span class='st'>"crossed"</span>)
+<span class='no'>fits</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='msenlm.html'>msenlm</a></span>(<span class='kw'>models</span><span class='kw'>=</span><span class='no'>models</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>haul</span>, <span class='kw'>xvar</span><span class='kw'>=</span><span class='st'>"depth"</span>,
+               <span class='kw'>yvar</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Albatrossia.pectoralis"</span>, <span class='st'>"Sebastolobus.altivelis"</span>))
+<span class='no'>best</span> <span class='kw'>&lt;-</span> <span class='fu'>msenlm.best</span>(<span class='no'>fits</span>, <span class='kw'>best</span><span class='kw'>=</span><span class='st'>"AICc"</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>best</span>)
 }</div></pre>
   </div>

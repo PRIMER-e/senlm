@@ -36,7 +36,7 @@
 
 
 <meta property="og:title" content="Create list of simulated data sets — create_simulated_datasets" />
-<meta property="og:description" content="Simulate data sets defined by the given parameter list.Set" />
+<meta property="og:description" content="Simulate data sets defined by the given parameter list." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -129,11 +129,18 @@
     </div>
 
     <div class="ref-description">
-    <p>Simulate data sets defined by the given parameter list.Set</p>
+    <p>Simulate data sets defined by the given parameter list.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>create_simulated_datasets</span>(<span class='no'>Pars</span>, <span class='kw'>x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>500</span>, <span class='kw'>xmin</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>xmax</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>seed</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>echo</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>create_simulated_datasets</span>(
+  <span class='no'>Pars</span>,
+  <span class='kw'>x</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>N</span> <span class='kw'>=</span> <span class='fl'>500</span>,
+  <span class='kw'>xmin</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>xmax</span> <span class='kw'>=</span> <span class='fl'>100</span>,
+  <span class='kw'>seed</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>echo</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -170,7 +177,7 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>List containing simulated data sets.</p>
+    <p>Data frame containing one x variable and simulated data sets from Pars object.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>

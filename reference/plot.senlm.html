@@ -157,9 +157,9 @@
 <span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 
 <span class='co'>## Plot fitted model</span>
-<span class='no'>Model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='set_models.html'>set_models</a></span> (<span class='kw'>mean_fun</span><span class='kw'>=</span><span class='st'>"gaussian"</span>, <span class='kw'>err_dist</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"zip"</span>))
-<span class='no'>Fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='senlm.html'>senlm</a></span> (<span class='kw'>model</span><span class='kw'>=</span><span class='no'>Model</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>haul</span>, <span class='kw'>xvar</span><span class='kw'>=</span><span class='st'>"depth"</span>, <span class='kw'>yvar</span><span class='kw'>=</span><span class='st'>"Sebastolobus.altivelis"</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>Fit</span>)
+<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='set_models.html'>set_models</a></span>(<span class='kw'>mean_fun</span><span class='kw'>=</span><span class='st'>"gaussian"</span>, <span class='kw'>err_dist</span><span class='kw'>=</span><span class='st'>"zip"</span>)
+<span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='senlm.html'>senlm</a></span>(<span class='kw'>model</span><span class='kw'>=</span><span class='no'>model</span>, <span class='kw'>data</span><span class='kw'>=</span><span class='no'>haul</span>, <span class='kw'>xvar</span><span class='kw'>=</span><span class='st'>"depth"</span>, <span class='kw'>yvar</span><span class='kw'>=</span><span class='st'>"Sebastolobus.altivelis"</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>fit</span>)
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

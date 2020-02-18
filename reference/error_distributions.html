@@ -152,7 +152,7 @@
   <dt>"count"</dt><dd><p>Count data;
       ("poisson", "negbin", "zip", "zinb", "zipl", "zinbl", "zipl.mu", "zinbl.mu").</p></dd>
   <dt>"abundance"</dt><dd><p>Non-negative continous data;
-      ("gaussian", "tweedie", "zig", "zigl", "zigl.mu").</p></dd>
+      ("gaussian", "tweedie", "zig", "zigl", "zigl.mu", "ziig", "ziigl", "ziigl.mu").</p></dd>
 
 </dl></td>
     </tr>
@@ -185,14 +185,18 @@ corresponding error classes.</p>
 #&gt; 14            zig  abundance
 #&gt; 15           zigl  abundance
 #&gt; 16        zigl.mu  abundance
-#&gt; 17            tab percentage
-#&gt; 18          zitab percentage</div><div class='input'>
+#&gt; 17           ziig  abundance
+#&gt; 18          ziigl  abundance
+#&gt; 19       ziigl.mu  abundance
+#&gt; 20            tab percentage
+#&gt; 21          zitab percentage</div><div class='input'>
 <span class='co'>## Print all error distributions</span>
 <span class='fu'>error_distributions</span>(<span class='kw'>err_class</span><span class='kw'>=</span><span class='st'>"all"</span>)</div><div class='output co'>#&gt;  [1] "bernoulli"      "binomial_count" "binomial_prop"  "poisson"       
 #&gt;  [5] "negbin"         "zip"            "zinb"           "zipl"          
 #&gt;  [9] "zinbl"          "zipl.mu"        "zinbl.mu"       "gaussian"      
 #&gt; [13] "tweedie"        "zig"            "zigl"           "zigl.mu"       
-#&gt; [17] "tab"            "zitab"         </div><div class='input'>
+#&gt; [17] "ziig"           "ziigl"          "ziigl.mu"       "tab"           
+#&gt; [21] "zitab"         </div><div class='input'>
 <span class='co'>## Print error distributions for count data</span>
 <span class='fu'>error_distributions</span>(<span class='kw'>err_class</span><span class='kw'>=</span><span class='st'>"count"</span>)</div><div class='output co'>#&gt; [1] "poisson"  "negbin"   "zip"      "zinb"     "zipl"     "zinbl"    "zipl.mu" 
 #&gt; [8] "zinbl.mu"</div><div class='input'>

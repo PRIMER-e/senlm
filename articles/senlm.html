@@ -554,10 +554,22 @@ H &amp;= \mbox{Maximum value of mean function} ~(H &gt; 0, ~~\mbox{or}~~ 0 &lt; 
 <td align="left">abundance</td>
 </tr>
 <tr class="odd">
+<td align="left">ziig</td>
+<td align="left">abundance</td>
+</tr>
+<tr class="even">
+<td align="left">ziigl</td>
+<td align="left">abundance</td>
+</tr>
+<tr class="odd">
+<td align="left">ziigl.mu</td>
+<td align="left">abundance</td>
+</tr>
+<tr class="even">
 <td align="left">tab</td>
 <td align="left">percentage</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">zitab</td>
 <td align="left">percentage</td>
 </tr>
@@ -1006,8 +1018,8 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i)
 <a class="sourceLine" id="cb33-10" data-line-number="10"><span class="kw"><a href="../reference/set_models.html">set_models</a></span> (<span class="dt">mean_fun=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"gaussian"</span>, <span class="st">"beta"</span>), <span class="dt">err_dist=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"zinb"</span>, <span class="st">"zinbl"</span>),</a>
 <a class="sourceLine" id="cb33-11" data-line-number="11">            <span class="dt">method=</span><span class="st">"paired"</span>)</a>
 <a class="sourceLine" id="cb33-12" data-line-number="12">  mean_fun err_dist binomial_n</a>
-<a class="sourceLine" id="cb33-13" data-line-number="13"><span class="dv">1</span>     beta    zinbl         <span class="ot">NA</span></a>
-<a class="sourceLine" id="cb33-14" data-line-number="14"><span class="dv">2</span> gaussian     zinb         <span class="ot">NA</span></a>
+<a class="sourceLine" id="cb33-13" data-line-number="13"><span class="dv">1</span> gaussian     zinb         <span class="ot">NA</span></a>
+<a class="sourceLine" id="cb33-14" data-line-number="14"><span class="dv">2</span>     beta    zinbl         <span class="ot">NA</span></a>
 <a class="sourceLine" id="cb33-15" data-line-number="15">## Fit binomial model - with n=40</a>
 <a class="sourceLine" id="cb33-16" data-line-number="16"><span class="kw"><a href="../reference/set_models.html">set_models</a></span> (<span class="dt">mean_fun=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"gaussian"</span>), </a>
 <a class="sourceLine" id="cb33-17" data-line-number="17">            <span class="dt">err_dist=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"poisson"</span>, <span class="st">"binomial_prop"</span>, <span class="st">"binomial_count"</span>),</a>
@@ -1074,7 +1086,7 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i)
 <a class="sourceLine" id="cb36-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb36-7" data-line-number="7"><span class="op">$</span>theta</a>
 <a class="sourceLine" id="cb36-8" data-line-number="8">          H           m           s          pi </a>
-<a class="sourceLine" id="cb36-9" data-line-number="9"><span class="fl">817.5308128</span> <span class="fl">917.8020530</span> <span class="fl">225.5627156</span>   <span class="fl">0.5954236</span> </a>
+<a class="sourceLine" id="cb36-9" data-line-number="9"><span class="fl">817.5307516</span> <span class="fl">917.8020557</span> <span class="fl">225.5627489</span>   <span class="fl">0.5954255</span> </a>
 <a class="sourceLine" id="cb36-10" data-line-number="10"></a>
 <a class="sourceLine" id="cb36-11" data-line-number="11"><span class="op">$</span>IC</a>
 <a class="sourceLine" id="cb36-12" data-line-number="12">    npar      nll      AIC     AICc      BIC </a>
@@ -1083,17 +1095,44 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i)
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1">Models &lt;-<span class="st"> </span><span class="kw"><a href="../reference/set_models.html">set_models</a></span> (<span class="dt">mean_class=</span><span class="st">"test"</span>, <span class="dt">err_class=</span><span class="st">"binary"</span>)</a>
 <a class="sourceLine" id="cb37-2" data-line-number="2">Pars   &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_default_par_list.html">create_default_par_list</a></span> (<span class="dt">models=</span>Models)</a>
 <a class="sourceLine" id="cb37-3" data-line-number="3">Data   &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create_simulated_datasets.html">create_simulated_datasets</a></span> (Pars, <span class="dt">seed=</span><span class="dv">12345</span>)</a>
-<a class="sourceLine" id="cb37-4" data-line-number="4">Fits   &lt;-<span class="st"> </span><span class="kw"><a href="../reference/msenlm.html">msenlm</a></span> (<span class="dt">models=</span>Models, <span class="dt">data=</span>Data, <span class="dt">xvar=</span><span class="st">"depth"</span>, <span class="dt">yvar=</span><span class="st">"Sebastolobus.altivelis"</span>)</a>
+<a class="sourceLine" id="cb37-4" data-line-number="4">Fits   &lt;-<span class="st"> </span><span class="kw"><a href="../reference/msenlm.html">msenlm</a></span> (<span class="dt">models=</span>Models, <span class="dt">data=</span>Data, <span class="dt">xvar=</span><span class="st">"x"</span>, <span class="dt">yvar=</span><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(Data)[<span class="op">-</span><span class="dv">1</span>])</a>
 <a class="sourceLine" id="cb37-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span> (Models)</a>
-<a class="sourceLine" id="cb37-6" data-line-number="6"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span> (Fits)</a></code></pre></div>
-<p>Alternatively, one can fit multiple models to real data.</p>
+<a class="sourceLine" id="cb37-6" data-line-number="6">  mean_fun  err_dist binomial_n</a>
+<a class="sourceLine" id="cb37-7" data-line-number="7"><span class="dv">1</span> constant bernoulli         <span class="ot">NA</span></a>
+<a class="sourceLine" id="cb37-8" data-line-number="8"><span class="dv">2</span>  uniform bernoulli         <span class="ot">NA</span></a>
+<a class="sourceLine" id="cb37-9" data-line-number="9"><span class="kw"><a href="https://rdrr.io/r/base/summary.html">summary</a></span> (Fits)</a>
+<a class="sourceLine" id="cb37-10" data-line-number="10">  convergence                  y x              model mean_fun  err_dist         H         c</a>
+<a class="sourceLine" id="cb37-11" data-line-number="11"><span class="dv">1</span>           <span class="dv">0</span> constant_bernoulli x constant<span class="op">-</span>bernoulli constant bernoulli <span class="fl">0.9320000</span>        <span class="ot">NA</span></a>
+<a class="sourceLine" id="cb37-12" data-line-number="12"><span class="dv">2</span>           <span class="dv">0</span> constant_bernoulli x  uniform<span class="op">-</span>bernoulli  uniform bernoulli <span class="fl">0.9320000</span> <span class="fl">-3.942373</span></a>
+<a class="sourceLine" id="cb37-13" data-line-number="13"><span class="dv">3</span>           <span class="dv">0</span>  uniform_bernoulli x constant<span class="op">-</span>bernoulli constant bernoulli <span class="fl">0.3540000</span>        <span class="ot">NA</span></a>
+<a class="sourceLine" id="cb37-14" data-line-number="14"><span class="dv">4</span>           <span class="dv">0</span>  uniform_bernoulli x  uniform<span class="op">-</span>bernoulli  uniform bernoulli <span class="fl">0.9030612</span> <span class="fl">30.480317</span></a>
+<a class="sourceLine" id="cb37-15" data-line-number="15">          d npar       nll      AIC     AICc      BIC</a>
+<a class="sourceLine" id="cb37-16" data-line-number="16"><span class="dv">1</span>        <span class="ot">NA</span>    <span class="dv">1</span> <span class="fl">124.21729</span> <span class="fl">250.4346</span> <span class="fl">250.4426</span> <span class="fl">254.6492</span></a>
+<a class="sourceLine" id="cb37-17" data-line-number="17"><span class="dv">2</span> <span class="fl">109.72818</span>    <span class="dv">3</span> <span class="fl">124.21729</span> <span class="fl">254.4346</span> <span class="fl">254.4830</span> <span class="fl">267.0784</span></a>
+<a class="sourceLine" id="cb37-18" data-line-number="18"><span class="dv">3</span>        <span class="ot">NA</span>    <span class="dv">1</span> <span class="fl">324.94385</span> <span class="fl">651.8877</span> <span class="fl">651.8957</span> <span class="fl">656.1023</span></a>
+<a class="sourceLine" id="cb37-19" data-line-number="19"><span class="dv">4</span>  <span class="fl">69.92645</span>    <span class="dv">3</span>  <span class="fl">62.38763</span> <span class="fl">130.7753</span> <span class="fl">130.8236</span> <span class="fl">143.4191</span></a></code></pre></div>
+<p>Alternatively, one can fit multiple models to real data. The <tt>msenlm.best</tt> function picks the best model for each response variable using the given criteria. The <tt>summary</tt> function summarises the fitted models.</p>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1">Models &lt;-<span class="st"> </span><span class="kw"><a href="../reference/set_models.html">set_models</a></span> (<span class="dt">mean_fun=</span><span class="st">"gaussian"</span>, <span class="dt">err_dist=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"zip"</span>, <span class="st">"zinb"</span>))</a>
-<a class="sourceLine" id="cb38-2" data-line-number="2">Data &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/vector.html">vector</a></span> (<span class="dt">length=</span><span class="dv">2</span>, <span class="dt">mode=</span><span class="st">"list"</span>)</a>
-<a class="sourceLine" id="cb38-3" data-line-number="3">Data[[<span class="dv">1</span>]]<span class="op">$</span>x &lt;-<span class="st"> </span>haul<span class="op">$</span>depth</a>
-<a class="sourceLine" id="cb38-4" data-line-number="4">Data[[<span class="dv">1</span>]]<span class="op">$</span>y &lt;-<span class="st"> </span>haul<span class="op">$</span>Albatrossia.pectoralis</a>
-<a class="sourceLine" id="cb38-5" data-line-number="5">Data[[<span class="dv">2</span>]]<span class="op">$</span>x &lt;-<span class="st"> </span>haul<span class="op">$</span>depth</a>
-<a class="sourceLine" id="cb38-6" data-line-number="6">Data[[<span class="dv">2</span>]]<span class="op">$</span>y &lt;-<span class="st"> </span>haul<span class="op">$</span>Sebastolobus.altivelis</a>
-<a class="sourceLine" id="cb38-7" data-line-number="7">Fits   &lt;-<span class="st"> </span><span class="kw">senlm.multi</span> (Models, Data)</a></code></pre></div>
+<a class="sourceLine" id="cb38-2" data-line-number="2">Fits   &lt;-<span class="st"> </span><span class="kw"><a href="../reference/msenlm.html">msenlm</a></span> (<span class="dt">models=</span>Models, <span class="dt">data=</span>haul, <span class="dt">xvar=</span><span class="st">"depth"</span>, </a>
+<a class="sourceLine" id="cb38-3" data-line-number="3">                  <span class="dt">yvar=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Albatrossia.pectoralis"</span>, <span class="st">"Sebastolobus.altivelis"</span>))</a>
+<a class="sourceLine" id="cb38-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(Fits)</a>
+<a class="sourceLine" id="cb38-5" data-line-number="5">  convergence                      y     x         model mean_fun err_dist          H         m</a>
+<a class="sourceLine" id="cb38-6" data-line-number="6"><span class="dv">1</span>           <span class="dv">0</span> Albatrossia.pectoralis depth  gaussian<span class="op">-</span>zip gaussian      zip   <span class="fl">58.11774</span> <span class="fl">1537.8443</span></a>
+<a class="sourceLine" id="cb38-7" data-line-number="7"><span class="dv">2</span>           <span class="dv">0</span> Albatrossia.pectoralis depth gaussian<span class="op">-</span>zinb gaussian     zinb   <span class="fl">29.74406</span> <span class="fl">1145.7279</span></a>
+<a class="sourceLine" id="cb38-8" data-line-number="8"><span class="dv">3</span>           <span class="dv">0</span> Sebastolobus.altivelis depth  gaussian<span class="op">-</span>zip gaussian      zip  <span class="fl">817.53075</span>  <span class="fl">917.8021</span></a>
+<a class="sourceLine" id="cb38-9" data-line-number="9"><span class="dv">4</span>           <span class="dv">0</span> Sebastolobus.altivelis depth gaussian<span class="op">-</span>zinb gaussian     zinb <span class="fl">1448.37032</span>  <span class="fl">900.6964</span></a>
+<a class="sourceLine" id="cb38-10" data-line-number="10">         s            pi      phi npar        nll       AIC      AICc       BIC</a>
+<a class="sourceLine" id="cb38-11" data-line-number="11"><span class="dv">1</span> <span class="fl">369.7512</span>  <span class="fl">4.303471e-01</span>       <span class="ot">NA</span>    <span class="dv">4</span>  <span class="fl">3022.4148</span>  <span class="fl">6052.830</span>  <span class="fl">6052.867</span>  <span class="fl">6072.739</span></a>
+<a class="sourceLine" id="cb38-12" data-line-number="12"><span class="dv">2</span> <span class="fl">213.8882</span> <span class="fl">1.048578e-200</span> <span class="fl">3.044748</span>    <span class="dv">5</span>   <span class="fl">927.2072</span>  <span class="fl">1864.414</span>  <span class="fl">1864.471</span>  <span class="fl">1889.301</span></a>
+<a class="sourceLine" id="cb38-13" data-line-number="13"><span class="dv">3</span> <span class="fl">225.5628</span>  <span class="fl">5.954251e-01</span>       <span class="ot">NA</span>    <span class="dv">4</span> <span class="fl">36950.0517</span> <span class="fl">73908.103</span> <span class="fl">73908.141</span> <span class="fl">73928.013</span></a>
+<a class="sourceLine" id="cb38-14" data-line-number="14"><span class="dv">4</span> <span class="fl">164.9688</span>  <span class="fl">1.548456e-01</span> <span class="fl">1.575697</span>    <span class="dv">5</span>  <span class="fl">2910.8488</span>  <span class="fl">5831.698</span>  <span class="fl">5831.754</span>  <span class="fl">5856.584</span></a>
+<a class="sourceLine" id="cb38-15" data-line-number="15"><span class="kw"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="kw"><a href="../reference/msenlm.best.html">msenlm.best</a></span>(Fits, <span class="dt">best=</span><span class="st">"AICc"</span>))</a>
+<a class="sourceLine" id="cb38-16" data-line-number="16">  convergence                      y     x         model mean_fun err_dist          H         m</a>
+<a class="sourceLine" id="cb38-17" data-line-number="17"><span class="dv">1</span>           <span class="dv">0</span> Albatrossia.pectoralis depth gaussian<span class="op">-</span>zinb gaussian     zinb   <span class="fl">29.74406</span> <span class="fl">1145.7279</span></a>
+<a class="sourceLine" id="cb38-18" data-line-number="18"><span class="dv">2</span>           <span class="dv">0</span> Sebastolobus.altivelis depth gaussian<span class="op">-</span>zinb gaussian     zinb <span class="fl">1448.37032</span>  <span class="fl">900.6964</span></a>
+<a class="sourceLine" id="cb38-19" data-line-number="19">         s            pi      phi npar       nll      AIC     AICc      BIC</a>
+<a class="sourceLine" id="cb38-20" data-line-number="20"><span class="dv">1</span> <span class="fl">213.8882</span> <span class="fl">1.048578e-200</span> <span class="fl">3.044748</span>    <span class="dv">5</span>  <span class="fl">927.2072</span> <span class="fl">1864.414</span> <span class="fl">1864.471</span> <span class="fl">1889.301</span></a>
+<a class="sourceLine" id="cb38-21" data-line-number="21"><span class="dv">2</span> <span class="fl">164.9688</span>  <span class="fl">1.548456e-01</span> <span class="fl">1.575697</span>    <span class="dv">5</span> <span class="fl">2910.8488</span> <span class="fl">5831.698</span> <span class="fl">5831.754</span> <span class="fl">5856.584</span></a></code></pre></div>
 </div>
 </div>
 <div id="code-organisation" class="section level1">
