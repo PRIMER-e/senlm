@@ -574,6 +574,7 @@ mle_uniform_bernoulli <- function (ModelInfo, Dat) {
 #' @param data A data frame containing 'x' (explanatory) and 'y' (response) variables.
 #' @param xvar Name of explanatory variable (must be univariate).
 #' @param yvar Names of response variables.
+#' @param echo Not currently used.
 #' @param method If "crossed", fit all models to all response variables. If "paired",
 #' fit first model to first response variables, etc.
 #' 
