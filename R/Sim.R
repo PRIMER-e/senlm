@@ -1016,16 +1016,20 @@ dinversegaussian  <- function (y, mu, phi, log=TRUE) {
   ## --- Denisty of inverse gausssian
 
   ## --- Stop if y or parameters are non-positive
-  if (any(y   <= 0)) { stop ("y must be positive!")  } 
-  if (any(mu  <= 0)) { stop ("mu must be positive!") }
+  if (any(y   <  0)) { stop ("y must be positive!")   } 
+  if (any(mu  <= 0)) { stop ("mu must be positive!")  }
   if (any(phi <= 0)) { stop ("phi must be positive!") }
-
+  
   ## --- Calculate denisty on log scale
   Result <- -(y - mu)^2/(2*y*phi*mu^2) - 0.5*(log(2*pi*phi) + 3*log(y))
-
-  ## --- Exponentiate if not in log scale  
-  if (log==FALSE) { Result <- exp(Result) }
+  Result[y==0] <- -Inf
+  Result[is.nan(Result)] <- -Inf
   
+  ## --- Exponentiate if not in log scale  
+  if (log==FALSE) {
+    Result <- exp(Result)
+  }
+    
   ## --- Return density/log-density
   return (Result)
 }
@@ -1034,17 +1038,21 @@ pinversegaussian <- function (q, mu, phi) {
   ## --- Calculate CDF for inverse gaussian function
 
   ## --- Stop if q or parameters are non-positive
-  if (any(q   <= 0)) { stop ("q must be positive!")  }
-  if (any(mu  <= 0)) { stop ("mu must be positive!") }
-  if (any(phi <= 0)) { stop ("phi must be positive")   }
-
+  if (any(q   <  0)) { stop ("q must be non-negative!") }
+  if (any(mu  <= 0)) { stop ("mu must be positive!")    }
+  if (any(phi <= 0)) { stop ("phi must be positive")    }
+  
   ## --- Partial calculations
   t <- q/mu
   v <- sqrt(q * phi)
 
   ## --- Calculate cdf
   Result <- pnorm((t - 1)/v) + exp(2/(mu * phi)) * pnorm(-(t + 1)/v)
-
+  
+  ## --- CDF is zero if q is zero
+  Result[q==0] <- 0
+  Result[is.nan(Result)] <- 0
+  
   ## --- Return cdf
   return (Result)
 }
