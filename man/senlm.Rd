@@ -13,7 +13,8 @@ senlm(
   err_dist = NULL,
   binomial_n = NULL,
   y = NULL,
-  x = NULL
+  x = NULL,
+  conf.level = 0.95
 )
 }
 \arguments{
@@ -35,6 +36,8 @@ is "binomial.count" or "binomial.percent" (if model not supplied).}
 \item{y}{Repsonse variable vector (if data not supplied).}
 
 \item{x}{Vector of x (domain) values (if data not supplied).}
+
+\item{conf.level}{Confidence level for parameter confidence intervals. Default is 0.95.}
 }
 \value{
 Object containg model fit to data y and x.

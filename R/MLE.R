@@ -17,6 +17,7 @@
 #' is "binomial.count" or "binomial.percent" (if model not supplied).
 #' @param y Repsonse variable vector (if data not supplied).
 #' @param x Vector of x (domain) values (if data not supplied).
+#' @param conf.level Confidence level for parameter confidence intervals. Default is 0.95.
 #'
 #' @return Object containg model fit to data y and x.
 #'
@@ -40,7 +41,8 @@
 #' @export
 #'
 senlm <- function (model=NULL, data=NULL, xvar=NULL, yvar=NULL,
-                   mean_fun=NULL, err_dist=NULL, binomial_n=NULL, y=NULL, x=NULL) {
+                   mean_fun=NULL, err_dist=NULL, binomial_n=NULL, y=NULL, x=NULL,
+                   conf.level=0.95) {
   ## --- Fit model using maximum likelihood
 
   ## --- Model not specified
@@ -114,13 +116,14 @@ senlm <- function (model=NULL, data=NULL, xvar=NULL, yvar=NULL,
   ## --- Names
   Fit$yname <- yname
   Fit$xname <- xname
-   
+  
   ## --- Fit mle
-  FitMLE <- try( mle_default (ModelInfo, Dat) )
-
+  FitMLE <- try( mle_default (ModelInfo, Dat, conf.level=conf.level) )
+  
   ## --- Store fitted values  
   Fit$convergence <- FitMLE$convergence
   Fit$theta <- FitMLE$theta
+  Fit$conf.level <- conf.level
   Fit$lb    <- FitMLE$lb
   Fit$ub    <- FitMLE$ub
   Fit$u.hessian <- FitMLE$u.hessian
@@ -390,7 +393,7 @@ fit_information_criteria <- function (ModelInfo, Dat, fit.theta) {
 ## ---- ---- ----
 
 
-mle_default <- function (ModelInfo, Dat, theta0=NULL) {
+mle_default <- function (ModelInfo, Dat, theta0=NULL, conf.level=conf.level) {
   ## --- Default maximum likelihood fitting method
 
   ## --- Estimate paramters using MOM from splines
@@ -485,8 +488,10 @@ mle_default <- function (ModelInfo, Dat, theta0=NULL) {
       
     ## --- Calculate approximate confidence intervals
     if (StdErrOK) {
-      u.lb <- u.theta - 2*u.stderr
-      u.ub <- u.theta + 2*u.stderr
+      ## Find confidence interval multiplier
+      mult <- qnorm((1 + conf.level)/2)
+      u.lb <- u.theta - mult*u.stderr
+      u.ub <- u.theta + mult*u.stderr
     } else {
       u.lb <- rep (NA, length(u.theta))
       u.ub <- rep (NA, length(u.theta))
@@ -576,6 +581,7 @@ mle_uniform_bernoulli <- function (ModelInfo, Dat) {
 #' @param yvar Names of response variables.
 #' @param method If "crossed", fit all models to all response variables. If "paired",
 #' fit first model to first response variables, etc.
+#' @param conf.level Confidence level for parameter confidence intervals. Default is 0.95.
 #' 
 #' @return Object containg model fits to data y and x.
 #'
@@ -591,7 +597,8 @@ mle_uniform_bernoulli <- function (ModelInfo, Dat) {
 #' }
 #' @export
 #'
-msenlm <- function (models=NULL, data=NULL, xvar=NULL, yvar=NULL, method="crossed") {
+msenlm <- function (models=NULL, data=NULL, xvar=NULL, yvar=NULL, method="crossed",
+                    conf.level=0.95) {
   ## --- Fit multiple senlm models using maximum likelihood to multiple response variables
 
   ## --- Check inputs
@@ -638,7 +645,8 @@ msenlm <- function (models=NULL, data=NULL, xvar=NULL, yvar=NULL, method="crosse
       ModelFits <-  vector (mode="list", length=1)
  
       ## --- Fit model
-      ModelFits[[1]]   <- senlm (model=models[i,], data=data, xvar=xvar, yvar=yvar[i])
+      ModelFits[[1]]   <- senlm (model=models[i,], data=data, xvar=xvar, yvar=yvar[i],
+                                 conf.level=conf.level)
       names(ModelFits) <- ModelFits[[1]]$model
     }
     
@@ -655,7 +663,8 @@ msenlm <- function (models=NULL, data=NULL, xvar=NULL, yvar=NULL, method="crosse
       for (j in 1:length(ModelFits)) {
         
         ## --- Fit model
-        Fit <- senlm (model=models[j,], data=data, xvar=xvar, yvar=yvar[i])
+        Fit <- senlm (model=models[j,], data=data, xvar=xvar, yvar=yvar[i],
+                      conf.level=conf.level)
         
         ## --- Store model
         ModelFits[[j]] <- Fit

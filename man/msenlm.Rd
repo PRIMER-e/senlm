@@ -9,7 +9,8 @@ msenlm(
   data = NULL,
   xvar = NULL,
   yvar = NULL,
-  method = "crossed"
+  method = "crossed",
+  conf.level = 0.95
 )
 }
 \arguments{
@@ -23,6 +24,8 @@ msenlm(
 
 \item{method}{If "crossed", fit all models to all response variables. If "paired",
 fit first model to first response variables, etc.}
+
+\item{conf.level}{Confidence level for parameter confidence intervals. Default is 0.95.}
 }
 \value{
 Object containg model fits to data y and x.
