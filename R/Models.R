@@ -748,7 +748,7 @@ set_model_info <- function (model=NULL,  mean_fun=NULL, err_dist=NULL,
   }
   
   ## --- Create model name
-  ModelInfo$model_name <- paste (ModelInfo$mean_fun, ModelInfo$err_dist, sep="-")
+  ModelInfo$model_name <- paste (ModelInfo$mean_fun, ModelInfo$err_dist, sep="_")
   
   ## --- Grab parameter information
   parinfo  <- get_parinfo (ModelInfo)  
@@ -820,7 +820,7 @@ estimate_delta <- function (y) {
 #'
 #' Get parameter names for given model.
 #'
-#' @param model_name Model_name in the form of "mean_fun-err_dist".
+#' @param model_name Model_name in the form of "meanfun_errdist".
 #' 
 #' @return List containing model names, character vector of mean function parameters,
 #' error distribution parameters, and constant parameters.
@@ -838,8 +838,8 @@ get_parnames <- function (model_name) {
   ## --- Define parameters for each model
 
   ## --- Grab error distribution, mean function, and model name
-  ## --- model_name the "mean_fun-err_dist" model name
-  Names      <- unlist (strsplit(model_name,"-"))
+  ## --- model_name the "meanfun_errdist" model name
+  Names      <- unlist (strsplit(model_name,"_"))
   mean_fun   <- Names[1]
   err_dist   <- Names[2]
   
@@ -1038,7 +1038,7 @@ list_all_parnames <- function () {
   ## --- Loop through models
   for (i in 1:nrow(Models)) {
     ## --- Set model name
-    model_name <- paste (Models$mean_fun, Models$err_dist, sep="-")
+    model_name <- paste (Models$mean_fun, Models$err_dist, sep="_")
     ## --- Get parameter names for model
     Par <- get_parnames (model_name)
     ## --- Store models parameters

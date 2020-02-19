@@ -9,7 +9,6 @@ msenlm(
   data = NULL,
   xvar = NULL,
   yvar = NULL,
-  echo = FALSE,
   method = "crossed"
 )
 }
@@ -21,8 +20,6 @@ msenlm(
 \item{xvar}{Name of explanatory variable (must be univariate).}
 
 \item{yvar}{Names of response variables.}
-
-\item{echo}{Not currently used.}
 
 \item{method}{If "crossed", fit all models to all response variables. If "paired",
 fit first model to first response variables, etc.}

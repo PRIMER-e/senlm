@@ -7,7 +7,7 @@
 get_parnames(model_name)
 }
 \arguments{
-\item{model_name}{Model_name in the form of "mean_fun-err_dist".}
+\item{model_name}{Model_name in the form of "meanfun_errdist".}
 }
 \value{
 List containing model names, character vector of mean function parameters,

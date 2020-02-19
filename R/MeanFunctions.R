@@ -28,7 +28,7 @@ mu_meanfunction <- function (ModelInfo, theta, x) {
   if (class(ModelInfo)=="character") { ModelInfo <- set_model_info (ModelInfo) }
   
   ## --- Set model name
-  model_name <- paste (ModelInfo$mean_fun, ModelInfo$err_dist, sep="-")
+  model_name <- paste (ModelInfo$mean_fun, ModelInfo$err_dist, sep="_")
   
   ## --- Get par names
   ParNames <- get_parnames (model_name)

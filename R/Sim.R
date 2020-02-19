@@ -819,7 +819,7 @@ create_simulated_datasets <- function (Pars, x=NULL, N=500, xmin=0, xmax=100,
     ## Response variable
     df[,i+1] <- Data[[i]]$y
     ## Variabe name - convert "-" to "_"
-    Names[i+1] <- gsub ("-", "_", Data[[i]]$model_name)
+    Names[i+1] <- gsub ("-", "_", Data[[i]]$model_name) ## *** This line should not be needed!
   }
   ## Add names to data frame
   names(df) <- Names

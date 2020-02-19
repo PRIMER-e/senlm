@@ -102,7 +102,7 @@ senlm <- function (model=NULL, data=NULL, xvar=NULL, yvar=NULL,
   Fit <- list()
 
   ## --- Model name
-  Fit$model <- gsub ("-", "_", ModelInfo$model)
+  Fit$model <- gsub ("-", "_", ModelInfo$model) ## *** This line should not be needed!
   
   ## --- Model info
   Fit$model_info <- ModelInfo
@@ -574,7 +574,6 @@ mle_uniform_bernoulli <- function (ModelInfo, Dat) {
 #' @param data A data frame containing 'x' (explanatory) and 'y' (response) variables.
 #' @param xvar Name of explanatory variable (must be univariate).
 #' @param yvar Names of response variables.
-#' @param echo Not currently used.
 #' @param method If "crossed", fit all models to all response variables. If "paired",
 #' fit first model to first response variables, etc.
 #' 
@@ -592,12 +591,11 @@ mle_uniform_bernoulli <- function (ModelInfo, Dat) {
 #' }
 #' @export
 #'
-msenlm <- function (models=NULL, data=NULL, xvar=NULL, yvar=NULL, echo=FALSE,
-                    method="crossed") {
+msenlm <- function (models=NULL, data=NULL, xvar=NULL, yvar=NULL, method="crossed") {
   ## --- Fit multiple senlm models using maximum likelihood to multiple response variables
 
   ## --- Check inputs
-
+  
   ## Check x and y specified
   if (is.null(xvar) | is.null(yvar)) { stop ("Must specify xvar and yvar!") }
 
@@ -626,7 +624,7 @@ msenlm <- function (models=NULL, data=NULL, xvar=NULL, yvar=NULL, echo=FALSE,
   Fits <- vector (mode="list", length=length(yvar))
   names(Fits) <- yvar
 
-
+  
   ## --- Initialise model names if method is paired
   if (method == "paired") { ModelNames <- rep (NA, length=nrow(models)) }
 
