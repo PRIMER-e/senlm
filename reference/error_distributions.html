@@ -146,7 +146,7 @@
       <td><p>String that indicates the which error distributions to list.</p><dl class='dl-horizontal'>
   <dt>"binary"</dt><dd><p>0/1 data; ("bernoulli").</p></dd>
   <dt>"binomial"</dt><dd><p>Binomial data represented as counts or proportions;
-      ("binomial_count", "binomial_prop").</p></dd>
+      ("binomial.count", "binomial.prop").</p></dd>
   <dt>"percentage"</dt><dd><p>[0-1] data;
       ("tab", "zitab").</p></dd>
   <dt>"count"</dt><dd><p>Count data;
@@ -170,8 +170,8 @@ corresponding error classes.</p>
 <span class='co'>## Print data frame of all error distributions with corresponding error classes</span>
 <span class='fu'>error_distributions</span>()</div><div class='output co'>#&gt;          err_dist  err_class
 #&gt; 1       bernoulli     binary
-#&gt; 2  binomial_count   binomial
-#&gt; 3   binomial_prop   binomial
+#&gt; 2  binomial.count   binomial
+#&gt; 3   binomial.prop   binomial
 #&gt; 4         poisson      count
 #&gt; 5          negbin      count
 #&gt; 6             zip      count
@@ -191,7 +191,7 @@ corresponding error classes.</p>
 #&gt; 20            tab percentage
 #&gt; 21          zitab percentage</div><div class='input'>
 <span class='co'>## Print all error distributions</span>
-<span class='fu'>error_distributions</span>(<span class='kw'>err_class</span><span class='kw'>=</span><span class='st'>"all"</span>)</div><div class='output co'>#&gt;  [1] "bernoulli"      "binomial_count" "binomial_prop"  "poisson"       
+<span class='fu'>error_distributions</span>(<span class='kw'>err_class</span><span class='kw'>=</span><span class='st'>"all"</span>)</div><div class='output co'>#&gt;  [1] "bernoulli"      "binomial.count" "binomial.prop"  "poisson"       
 #&gt;  [5] "negbin"         "zip"            "zinb"           "zipl"          
 #&gt;  [9] "zinbl"          "zipl.mu"        "zinbl.mu"       "gaussian"      
 #&gt; [13] "tweedie"        "zig"            "zigl"           "zigl.mu"       

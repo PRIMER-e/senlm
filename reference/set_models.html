@@ -194,11 +194,11 @@ of all created models.</p>
 #&gt; 1     beta      zip         NA
 #&gt; 2     sech     zinb         NA</div><div class='input'>
 <span class='co'>## Create a model with a binomial n parameter</span>
-<span class='fu'>set_models</span>(<span class='kw'>mean_fun</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"beta"</span>,<span class='st'>"sech"</span>), <span class='kw'>err_dist</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"zip"</span>,<span class='st'>"binomial_count"</span>), <span class='kw'>binomial_n</span><span class='kw'>=</span><span class='fl'>40</span>)</div><div class='output co'>#&gt;   mean_fun       err_dist binomial_n
+<span class='fu'>set_models</span>(<span class='kw'>mean_fun</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"beta"</span>,<span class='st'>"sech"</span>), <span class='kw'>err_dist</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"zip"</span>,<span class='st'>"binomial.count"</span>), <span class='kw'>binomial_n</span><span class='kw'>=</span><span class='fl'>40</span>)</div><div class='output co'>#&gt;   mean_fun       err_dist binomial_n
 #&gt; 1     beta            zip         NA
-#&gt; 2     beta binomial_count         40
+#&gt; 2     beta binomial.count         40
 #&gt; 3     sech            zip         NA
-#&gt; 4     sech binomial_count         40</div><div class='input'>
+#&gt; 4     sech binomial.count         40</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
