@@ -33,7 +33,7 @@ devtools::install_github("PRIMER-e/senlm")
 # Loading the senlm package
 
 ```{r setup}
-library(senlm)
+library("senlm")
 ```
 
 # Models
@@ -216,21 +216,21 @@ get_mean_fun_parnames("sech")
 ```
 
 
-### <tt>sech_p1</tt> (sub)
+### <tt>sech.p1</tt> (sub)
 
 This is the same mean function as <tt>sech</tt> but with $p = 1$.
 
 ```{r}
-get_mean_fun_parnames("sech_p1")
+get_mean_fun_parnames("sech.p1")
 ```
 
 
-### <tt>sech_r0p1</tt> (sub)
+### <tt>sech.r0p1</tt> (sub)
 
 This is the same mean function as <tt>sech</tt> but with $r = 0$, and $p = 1$.
 
 ```{r}
-get_mean_fun_parnames("sech_r0p1")
+get_mean_fun_parnames("sech.r0p1")
 ```
 
 
@@ -290,13 +290,13 @@ get_mean_fun_parnames("mixgaussian")
 ```
 
 
-### <tt>mixgaussian_equal</tt> (sub)
+### <tt>mixgaussian.equal</tt> (sub)
 
 This mean function is a the same as the <tt>mixgaussian</tt> mean function, but
 with the constraint that $s_1 = s_2 ~(=s)$.
 
 ```{r}
-get_mean_fun_parnames("mixgaussian_equal")
+get_mean_fun_parnames("mixgaussian.equal")
 ```
 
 
@@ -459,7 +459,7 @@ P (Y_i = y_i \mid \theta_M, ~\theta_E , ~x_i)
 \end{aligned}
 $$
 
-### <tt>binomial_count</tt> (binomial)
+### <tt>binomial.count</tt> (binomial)
 
 The binomial distribution is used for modelling count data that is bounded 
 between 0 and $n$. The mean function is bounded between 0 and $n$.
@@ -475,13 +475,13 @@ P (Y_i = y_i \mid ~\theta_M , ~\theta_C , ~x_i)
 \end{aligned}
 $$
 ```{r}
-get_constant_parnames("binomial_count")
+get_constant_parnames("binomial.count")
 ```
 
 
-### <tt>binomial_prop</tt> (binomial)
+### <tt>binomial.prop</tt> (binomial)
 
-This is that same model as the <tt>binomial_count</tt> distribution, except the
+This is that same model as the <tt>binomial.count</tt> distribution, except the
 data recorded as proportions (counts divided by $n$). 
 
 $$
@@ -494,7 +494,7 @@ P (Y_i = ny_i \mid ~\theta_M , ~\theta_C , ~x_i)
 \end{aligned}
 $$
 ```{r}
-get_constant_parnames("binomial_prop")
+get_constant_parnames("binomial.prop")
 ```
 
 
@@ -806,7 +806,7 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~x_i)
   0, & \mbox{w.p.} ~~\pi.
   \end{array}\right.\\
 \mbox{E}(Y_i) &= (1 - \pi)\mu_i \\
-\mbox{var}(Y_i) &= (1-\pi)^2\phi\mu_i^2
+\mbox{var}(Y_i) &= \pi(1-\pi)\mu^2 + (1-\pi)\phi\mu_i^2
 \end{aligned}
 $$
    
@@ -845,7 +845,7 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~x_i)
   0, & \mbox{w.p.} ~~\pi_i.
   \end{array}\right.\\
 \mbox{E}(Y_i) &= (1 - \pi)\mu_i \\
-\mbox{var}(Y_i) &= (1-\pi)^2\phi\mu_i^2
+\mbox{var}(Y_i) &= \pi(1-\pi)\mu^2 + (1-\pi)\phi\mu_i^2
 \end{aligned}
 $$
 
@@ -884,13 +884,129 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~x_i)
   0, & \mbox{w.p.} ~~\pi_i.
   \end{array}\right.\\
 \mbox{E}(Y_i) &= (1 - \pi)\mu_i \\
-\mbox{var}(Y_i) &= (1-\pi)^2\phi\mu_i^2
+\mbox{var}(Y_i) &= \pi(1-\pi)\mu^2 + (1-\pi)\phi\mu_i^2
 \end{aligned}
 $$
 
 ```{r}
 get_err_dist_parnames("zigl.mu")
 ```
+
+
+### <tt>ziig</tt> (abundance)
+
+The zero-inflated inverse-Gaussian (ZIIG) distribution has zero-spike parameter
+$\pi$, dispersion parameter $\phi$, and mean parameter $\mu_i$.
+
+$$
+\begin{aligned}
+y_i &\geq 0 \\
+\theta_E  &= \{\pi, ~\phi\} \\
+\pi &= \mbox{Zero-spike parameter}, ~(0 \leq \pi \leq 1) \\
+\phi &= \mbox{Dispersion parameter}, ~(\phi > 0) \\
+P(Y_i=y_i \mid \theta_M, ~\theta_E, ~x_i) 
+&\sim \mbox{ZIIG}(\mu_i, ~\pi, ~\phi) \\
+&\sim \left\{\begin{array}{ll}
+  \mbox{Inverse-Gaussian}(\mu_i, \phi)
+  & \mbox{w.p.} ~~1-\pi, \\
+  0, & \mbox{w.p.} ~~\pi.
+  \end{array}\right.\\
+\mbox{E}(Y_i) &= (1 - \pi)\mu_i \\
+\mbox{var}(Y_i) &= \pi(1 - \pi)\mu_i^2 + (1-\pi)\phi\mu_i^3
+\end{aligned}
+$$
+   
+
+```{r}
+get_err_dist_parnames("ziig")
+```
+
+### <tt>ziigl</tt> (abundance)
+
+The zero-inflated inverse-Gaussian linked (ZIIGL) distribution is an inverse-Gaussian 
+distribution with mean parameter $\mu_i$, a dispersion parameter $\phi$,
+and a zero spike that has parameters $\gamma_0$ and $\gamma_1$. 
+The zero-spike parameters are linked to the mean function on the 
+logit/log scale as follows:
+
+\[ \mbox{logit}(\pi_i) = \gamma_0 + \gamma_1\log(\mu_i), \]
+
+where $\pi_i$ is the value of the zero-spike parameter at $x_i$.
+
+$$
+\begin{aligned}
+y_i &\geq 0 \\
+\theta_E  &= \{\gamma_0, ~\gamma_1, ~\phi\} \\
+\gamma_0 &= \mbox{Zero-spike parameter intercept} 
+~(-\infty \leq \gamma_0 \leq \infty) \\
+\gamma_1 &= \mbox{Zero-spike parameter slope} 
+~(-\infty \leq \gamma_1 \leq \infty) \\
+\phi &= \mbox{Dispersion parameter}, ~(\phi > 0) \\
+P(Y_i=y_i \mid \theta_M, ~\theta_E, ~x_i) 
+&\sim \mbox{ZIIGL}(\mu_i, ~\gamma_0, ~\gamma_1, ~\phi) \\
+&\sim \left\{\begin{array}{ll}
+  \mbox{Gamma}(\mbox{shape}=1/\phi, 
+  ~\mbox{scale} = \phi\mu_i)
+  & \mbox{w.p.} ~~1-\pi_i, \\
+  0, & \mbox{w.p.} ~~\pi_i.
+  \end{array}\right.\\
+\mbox{E}(Y_i) &= (1 - \pi)\mu_i \\
+\mbox{var}(Y_i) &= \pi(1-\pi)\mu^2 + (1-\pi)\phi\mu_i^3
+\end{aligned}
+$$
+
+```{r}
+get_err_dist_parnames("ziigl")
+```
+
+
+### <tt>ziigl.mu</tt> (abundance)
+
+The zero-inflated inverse-Gaussian linked-$\mu$ (ZIIGL-$\mu$) 
+distribution is an inverse-Gaussian 
+distribution with mean parameter $\mu_i$, a dispersion parameter $\phi$,
+and a zero spike that has parameters $\gamma_0$ and $\gamma_1$. 
+The zero-spike parameters are linked to the mean function on the 
+logit/linear scale as follows:
+
+\[ \mbox{logit}(\pi_i) = \gamma_0 + \gamma_1\mu_i, \]
+
+where $\pi_i$ is the value of the zero-spike parameter at $x_i$.
+
+$$
+\begin{aligned}
+y_i &\geq 0 \\
+\theta_E  &= \{\gamma_0, ~\gamma_1, ~\phi\} \\
+\gamma_0 &= \mbox{Zero-spike parameter intercept} 
+~(-\infty \leq \gamma_0 \leq \infty) \\
+\gamma_1 &= \mbox{Zero-spike parameter slope} 
+~(-\infty \leq \gamma_1 \leq \infty) \\
+\phi &= \mbox{Dispersion parameter}, ~(\phi > 0) \\
+P(Y_i=y_i \mid \theta_M, ~\theta_E, ~x_i) 
+&\sim \mbox{ZIIGL-}\mu(\mu_i, ~\gamma_0, ~\gamma_1, ~\phi) \\
+&\sim \left\{\begin{array}{ll}
+  \mbox{Gamma}(\mbox{shape}=1/\phi, 
+  ~\mbox{scale} = \phi\mu_i)
+  & \mbox{w.p.} ~~1-\pi_i, \\
+  0, & \mbox{w.p.} ~~\pi_i.
+  \end{array}\right.\\
+\mbox{E}(Y_i) &= (1 - \pi)\mu_i \\
+\mbox{var}(Y_i) &= \pi(1-\pi)\mu^2 + (1-\pi)\phi\mu_i^3
+\end{aligned}
+$$
+
+```{r}
+get_err_dist_parnames("ziigl.mu")
+```
+
+
+
+
+
+
+
+
+
 
 
 ### <tt>tab</tt> (percentage)
@@ -976,8 +1092,6 @@ get_constant_parnames("zitab")
 ```
 
 
-
-
 # Fitting models
 
 ## Setting models to fit
@@ -994,7 +1108,7 @@ set_models (mean_fun=c("gaussian", "beta"), err_dist=c("zinb", "zinbl"),
             method="paired")
 ## Fit binomial model - with n=40
 set_models (mean_fun=c("gaussian"), 
-            err_dist=c("poisson", "binomial_prop", "binomial_count"),
+            err_dist=c("poisson", "binomial.prop", "binomial.count"),
             binomial_n=40, method="paired")
 ## Can also specify via mean and error class
 set_models (mean_class="main", err_class="percentage")
@@ -1074,11 +1188,6 @@ Fits   <- msenlm (models=Models, data=haul, xvar="depth",
 summary(Fits)
 summary(msenlm.best(Fits, best="AICc"))
 ```
-
-
-
-
-# Code organisation
 
 
 

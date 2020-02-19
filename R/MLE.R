@@ -14,7 +14,7 @@
 #' @param mean_fun Mean function (if model not supplied).
 #' @param err_dist Error distribution (if model not supplied).
 #' @param binomial_n The binomial n parameter, if error distribution
-#' is "binomial_count" or "binomial_percent" (if model not supplied).
+#' is "binomial.count" or "binomial.percent" (if model not supplied).
 #' @param y Repsonse variable vector (if data not supplied).
 #' @param x Vector of x (domain) values (if data not supplied).
 #'
@@ -26,7 +26,7 @@
 #'
 #' \dontrun{
 #' ## Simulate data
-#' pars <- create_default_par_list(mean_fun="gaussian", err_dist="poisson")
+#' 
 #' dat  <- create_simulated_datasets(pars, N=100, xmin=0, xmax=100, seed=12345)
 #' ## Fit model
 #' fit <- senlm(mean_fun="gaussian", err_dist="poisson", data=dat,
@@ -102,8 +102,8 @@ senlm <- function (model=NULL, data=NULL, xvar=NULL, yvar=NULL,
   Fit <- list()
 
   ## --- Model name
-  Fit$model <- ModelInfo$model
-
+  Fit$model <- gsub ("-", "_", ModelInfo$model)
+  
   ## --- Model info
   Fit$model_info <- ModelInfo
 
@@ -768,11 +768,11 @@ summary.msenlm <- function (object, best=NULL, ...) {
       SDat[Row,]$x <- object[[i]][[j]]$xname
 
       ## Grab mean function and error distribution
-      MeanErr  <- unlist(strsplit(object[[i]][[j]]$model, "-"))
+      MeanErr  <- unlist(strsplit(object[[i]][[j]]$model, "_"))
       SDat[Row,]$model    <- object[[i]][[j]]$model
       SDat[Row,]$mean_fun <- MeanErr[1]
       SDat[Row,]$err_dist <- MeanErr[2]
-
+      
       ## --- Was fit successful?
       if (Convergence == 0) {
 
@@ -788,7 +788,7 @@ summary.msenlm <- function (object, best=NULL, ...) {
       Row <- Row + 1
     }
   }
-
+  
   ## --- Find best models
   if (!is.null(best)) {
     
@@ -883,7 +883,7 @@ msenlm.best <- function (object, best="AICc" ) {
     ## Stop if best value is illegal
     if (all(best!=GOF)) { stop ('best option must be equal to "nll", "AIC", "AICc", "BIC"!') }
   }
-
+  
   ## --- Create best fits object
   BFits <- vector (mode="list", length=length(object))
   names(BFits) <- names(object)

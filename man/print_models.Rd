@@ -20,7 +20,7 @@ Possible values are:
 \describe{
   \item{"binary"}{0/1 data; ("bernoulli"). }
   \item{"binomial"}{Binomial data represented as counts or proportions;
-      ("binomial_count", "binomial_prop"). }
+      ("binomial.count", "binomial.prop"). }
   \item{"percentage"}{[0-1] data;
       ("tab", "zitab").}
   \item{"count"}{Count data;

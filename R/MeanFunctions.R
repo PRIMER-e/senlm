@@ -120,7 +120,7 @@ mu_gaussian <- function (thetaM, x) {
 
 ## --- Mixture of two Gaussians: Common standard deviation
 
-mu_mixgaussian_equal <- function (thetaM, x) {
+mu_mixgaussian.equal <- function (thetaM, x) {
   ## --- Gaussian mean function
 
   ## Grab parameters
@@ -261,7 +261,7 @@ mu_sech <- function (thetaM, x) {
 
 ## --- Sech (p=1) function
 
-mu_sech_p1 <- function (thetaM, x) {
+mu_sech.p1 <- function (thetaM, x) {
   ## --- Sech mean function
   ## Peakedness parameter set to 1 (default)
 
@@ -277,7 +277,7 @@ mu_sech_p1 <- function (thetaM, x) {
 
 ## --- Sech (r=0, p=1) function
 
-mu_sech_r0p1 <- function (thetaM, x) {
+mu_sech.r0p1 <- function (thetaM, x) {
   ## --- Sech mean function
   ## Peakedness parameter set to 1 (default)
   ## Skewness parameter set to 0 (symmetric)

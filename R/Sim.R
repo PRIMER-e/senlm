@@ -23,7 +23,7 @@
 #' set_sim_par(mean_fun="gaussian", err_dist="negbin",
 #'             thetaM=c(H=60,m=50,s=10), thetaE=c(phi=1.5))
 #' ## Sim simulation parameters for binomial model
-#' set_sim_par(mean_fun="gaussian", err_dist="binomial_count",
+#' set_sim_par(mean_fun="gaussian", err_dist="binomial.count",
 #'             thetaM=c(H=60,m=50,s=10), thetaC=c(binomial_n=100))
 #' 
 #' @export
@@ -107,8 +107,8 @@ get_default_par <- function (ModelInfo) {
 
   ## --- Error distributions
   if (err_dist == "bernoulli")         { thetaE <- NULL }
-  if (err_dist == "binomial_count")    { thetaE <- NULL }
-  if (err_dist == "binomial_prop")     { thetaE <- NULL }
+  if (err_dist == "binomial.count")    { thetaE <- NULL }
+  if (err_dist == "binomial.prop")     { thetaE <- NULL }
   if (err_dist == "poisson")           { thetaE <- NULL }
   if (err_dist == "negbin")            { thetaE <- c(phi=1.5) }
   if (err_dist == "zip")               { thetaE <- c(pi=0.3) }
@@ -133,11 +133,11 @@ get_default_par <- function (ModelInfo) {
   if (mean_fun == "uniform")           { thetaM <- c(H=60, c=30, d=70) }
   if (mean_fun == "gaussian")          { thetaM <- c(H=60, m=50, s=10) }
   if (mean_fun == "mixgaussian")       { thetaM <- c(H=60, a=0.7, m1=35, m2=65, s1=10, s2=5) }
-  if (mean_fun == "mixgaussian_equal") { thetaM <- c(H=60, a=0.7, m1=35, m2=65, s=5) }
+  if (mean_fun == "mixgaussian.equal") { thetaM <- c(H=60, a=0.7, m1=35, m2=65, s=5) }
   if (mean_fun == "beta")              { thetaM <- c(H=60, c=30, d=70, u=0.4, v=0.2) }
   if (mean_fun == "sech")              { thetaM <- c(H=60, m=50, s=5, r=0.75, p=1.5) }
-  if (mean_fun == "sech_p1")           { thetaM <- c(H=60, m=50, s=5, r=0.75) }
-  if (mean_fun == "sech_r0p1")         { thetaM <- c(H=60, m=50, s=5) }
+  if (mean_fun == "sech.p1")           { thetaM <- c(H=60, m=50, s=5, r=0.75) }
+  if (mean_fun == "sech.r0p1")         { thetaM <- c(H=60, m=50, s=5) }
   if (mean_fun == "hofII")             { thetaM <- c(H=60, m=50, w0=-0.3) }
   if (mean_fun == "hofIV")             { thetaM <- c(H=60, m=50, w=0.3, k=10) }
   if (mean_fun == "hofIVb")            { thetaM <- c(H=60, m=50, w=0.3) }
@@ -147,7 +147,7 @@ get_default_par <- function (ModelInfo) {
   ## --- Constant
   if (is.null(thetaC)) {
     ## binomial_n
-    if ( (err_dist == "binomial_count") | (err_dist == "binomial_prop") ) {
+    if ( (err_dist == "binomia.count") | (err_dist == "binomial.prop") ) {
       thetaC <- c(binomial_n=40)
     }
     ## delta
@@ -157,13 +157,13 @@ get_default_par <- function (ModelInfo) {
   }
 
   ## --- Rescale H for bernoulli/percentage models
-  if ( (err_dist == "bernoulli") | (err_dist == "binomial_prop") |
+  if ( (err_dist == "bernoulli") | (err_dist == "binomial.prop") |
        (err_dist == "tab")       | (err_dist == "zitab")         ) {
     if (any(names(thetaM) == "H"))  { thetaM["H"]  <- 0.9 }
   }
   
   ## --- Binomial count
-  if (err_dist == "binomial_count") {
+  if (err_dist == "binomial.count") {
     ## Make H 0.9 times binomial n parameter
     if (any(names(thetaM) == "H"))  { thetaM["H"] <- round(0.9*thetaC["binomial_n"]) }
   }
@@ -351,14 +351,14 @@ simulate_data <- function (x, Par, seed=NULL) {
   }
   
   ## --- Binomial - count
-  if (err_dist == "binomial_count" ) {
+  if (err_dist == "binomial.count" ) {
     n <- as.list(Par$thetaC)$binomial_n
     p <- mu/n
     y <- stats::rbinom (n=length(x), prob=p, size=n)
   }
   
   ## --- Binomial - prop
-  if (err_dist == "binomial_prop" ) {
+  if (err_dist == "binomial.prop" ) {
     n <- as.list(Par$thetaC)$binomial_n
     p <- mu
     y <- (stats::rbinom (n=length(x), prob=p, size=n)) / n

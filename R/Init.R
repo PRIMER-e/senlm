@@ -433,7 +433,7 @@ init_mean_par <- function (ModelInfo, DF, MF) {
   }
   
   ## --- Mixture gaussian
-  if ( (mean_fun == "mixgaussian_equal") | (mean_fun == "mixgaussian") ) {
+  if ( (mean_fun == "mixgaussian.equal") | (mean_fun == "mixgaussian") ) {
     thetaM <- init_mean_mixgaussian (ModelInfo, DF, MF)
   }
 
@@ -443,7 +443,7 @@ init_mean_par <- function (ModelInfo, DF, MF) {
   }
 
   ## --- Sech
-  if ( (mean_fun == "sech") | (mean_fun == "sech_p1") | (mean_fun == "sech_r0p1") ) {
+  if ( (mean_fun == "sech") | (mean_fun == "sech.p1") | (mean_fun == "sech.r0p1") ) {
     thetaM <- init_mean_sech (ModelInfo, DF, MF)
   }
   
@@ -541,7 +541,7 @@ init_mean_mixgaussian <- function (ModelInfo, DF, MF) {
   m2 <- as.numeric(stats::quantile (min(x[y>0]):max(x[y>0]), c(0.65)))
   
   ## Set standard deviations
-  if (mean_fun == "mixgaussian_equal") {
+  if (mean_fun == "mixgaussian.equal") {
     ## Component standard deviations equal
     s  <- MF$s; s1 <- NULL; s2 <- NULL
   } else {
@@ -660,8 +660,8 @@ init_mean_sech <- function (ModelInfo, DF, MF) {
   
   ## Store mean parameters
   if (mean_fun == "sech"     ) { thetaM <- c(H=H, m=m, s=s, r=r, p=p) }
-  if (mean_fun == "sech_p1"  ) { thetaM <- c(H=H, m=m, s=s, r=r) }
-  if (mean_fun == "sech_r0p1") { thetaM <- c(H=H, m=m, s=s) }
+  if (mean_fun == "sech.p1"  ) { thetaM <- c(H=H, m=m, s=s, r=r) }
+  if (mean_fun == "sech.r0p1") { thetaM <- c(H=H, m=m, s=s) }
   
   ## Return mean parameters
   return (thetaM)

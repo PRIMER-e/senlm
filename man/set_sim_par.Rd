@@ -38,7 +38,7 @@ Set parameters for one model.
 set_sim_par(mean_fun="gaussian", err_dist="negbin",
             thetaM=c(H=60,m=50,s=10), thetaE=c(phi=1.5))
 ## Sim simulation parameters for binomial model
-set_sim_par(mean_fun="gaussian", err_dist="binomial_count",
+set_sim_par(mean_fun="gaussian", err_dist="binomial.count",
             thetaM=c(H=60,m=50,s=10), thetaC=c(binomial_n=100))
 
 }

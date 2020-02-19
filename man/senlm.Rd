@@ -30,7 +30,7 @@ senlm(
 \item{err_dist}{Error distribution (if model not supplied).}
 
 \item{binomial_n}{The binomial n parameter, if error distribution
-is "binomial_count" or "binomial_percent" (if model not supplied).}
+is "binomial.count" or "binomial.percent" (if model not supplied).}
 
 \item{y}{Repsonse variable vector (if data not supplied).}
 
@@ -46,7 +46,7 @@ Object containg model fit to data y and x.
 
 \dontrun{
 ## Simulate data
-pars <- create_default_par_list(mean_fun="gaussian", err_dist="poisson")
+
 dat  <- create_simulated_datasets(pars, N=100, xmin=0, xmax=100, seed=12345)
 ## Fit model
 fit <- senlm(mean_fun="gaussian", err_dist="poisson", data=dat,

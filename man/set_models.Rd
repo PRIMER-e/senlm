@@ -46,7 +46,7 @@ set_models(mean_fun=c("beta","sech"), err_dist=c("zip","zinb"), method="crossed"
 set_models(mean_fun=c("beta","sech"), err_dist=c("zip","zinb"), method="paired")
 
 ## Create a model with a binomial n parameter
-set_models(mean_fun=c("beta","sech"), err_dist=c("zip","binomial_count"), binomial_n=40)
+set_models(mean_fun=c("beta","sech"), err_dist=c("zip","binomial.count"), binomial_n=40)
 
 }
 \keyword{information}

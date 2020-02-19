@@ -21,7 +21,7 @@
 #' \describe{
 #'   \item{"binary"}{0/1 data; ("bernoulli"). }
 #'   \item{"binomial"}{Binomial data represented as counts or proportions;
-#'       ("binomial_count", "binomial_prop"). }
+#'       ("binomial.count", "binomial.prop"). }
 #'   \item{"percentage"}{[0-1] data;
 #'       ("tab", "zitab").}
 #'   \item{"count"}{Count data;
@@ -106,7 +106,7 @@ mean_functions <- function (mean_fun=NULL, mean_class=NULL) {
   ## --- Define mean functions
   MF <- c("constant", "uniform",
           "beta", "sech", "gaussian", "mixgaussian", "hofV",
-          "sech_p1", "sech_r0p1", "mixgaussian_equal", 
+          "sech.p1", "sech.r0p1", "mixgaussian.equal", 
           "hofII", "hofIV", "hofIVb", "hofVb")
   
   ## --- Define corresponding mean function classes
@@ -150,7 +150,7 @@ mean_functions <- function (mean_fun=NULL, mean_class=NULL) {
 #' \describe{
 #'   \item{"binary"}{0/1 data; ("bernoulli"). }
 #'   \item{"binomial"}{Binomial data represented as counts or proportions;
-#'       ("binomial_count", "binomial_prop"). }
+#'       ("binomial.count", "binomial.prop"). }
 #'   \item{"percentage"}{[0-1] data;
 #'       ("tab", "zitab").}
 #'   \item{"count"}{Count data;
@@ -187,7 +187,7 @@ error_distributions <- function (err_dist=NULL, err_class=NULL) {
   ##     If no input is supplied, return error class, error distribution list
   
   ## --- Define error distributions
-  ED <- c("bernoulli",  "binomial_count", "binomial_prop",
+  ED <- c("bernoulli",  "binomial.count", "binomial.prop",
           "poisson",    "negbin",         "zip",           "zinb",
           "zipl",       "zinbl",          "zipl.mu",       "zinbl.mu",
           "gaussian",   "tweedie",
@@ -256,7 +256,7 @@ qres <- function (Fit) {
     qhat <- stats::pbinom (q=mu, size=1, prob=mu)
     qres <- stats::pbinom (q=y,  size=1, prob=mu) - qhat
     
-  } else if (err_dist == "binomial_count") {
+  } else if (err_dist == "binomial.count") {
     
     ## --- Binomial - count
     ## Grab parameter
@@ -266,7 +266,7 @@ qres <- function (Fit) {
     qhat <- stats::pbinom (q=mu, size=binomial_n, prob=prob)
     qres <- stats::pbinom (q=y,  size=binomial_n, prob=prob) - qhat
     
-  } else if (err_dist == "binomial_prop") {
+  } else if (err_dist == "binomial.prop") {
     
     ## --- Binomial - proportion
 
@@ -563,7 +563,7 @@ qres <- function (Fit) {
 #' set_models(mean_fun=c("beta","sech"), err_dist=c("zip","zinb"), method="paired")
 #'
 #' ## Create a model with a binomial n parameter
-#' set_models(mean_fun=c("beta","sech"), err_dist=c("zip","binomial_count"), binomial_n=40)
+#' set_models(mean_fun=c("beta","sech"), err_dist=c("zip","binomial.count"), binomial_n=40)
 #'
 #' @export
 set_models   <- function (mean_fun=NULL, err_dist=NULL, mean_class=NULL, err_class=NULL,
@@ -687,7 +687,7 @@ set_models_crossed <- function (mean_fun=NULL, err_dist=NULL, binomial_n=NA) {
 #' Model <- set_models (mean_fun=c("gaussian"), err_dist=c("zitab"), method="crossed")
 #' set_model_info (model=Model)
 #' set_model_info (mean_fun="gaussian", err_dist="negbin")
-#' set_model_info (mean_fun="gaussian", err_dist="binomial_count", binomial_n=50)
+#' set_model_info (mean_fun="gaussian", err_dist="binomial.count", binomial_n=50)
 #' set_model_info (mean_fun="gaussian", err_dist="tab", delta=0.01)
 #'
 #' @export
@@ -713,8 +713,8 @@ set_model_info <- function (model=NULL,  mean_fun=NULL, err_dist=NULL,
   check_mean_functions_and_error_distributions (mean_fun, err_dist)
   
   ## --- Create data frame of model information
-  ModelInfo <- list (model_name=NA, mean_fun=mean_fun, err_dist=err_dist, binomial_n=NA, delta=NA,
-                     theta=NA, u.theta=NA, trans=NA, theta.lb=NA, theta.ub=NA)
+  ModelInfo <- list (model_name=NA, mean_fun=mean_fun, err_dist=err_dist, binomial_n=NA,
+                     delta=NA, theta=NA, u.theta=NA, trans=NA, theta.lb=NA, theta.ub=NA)
   
   ## --- Add model constants: Tail-adjusted beta delta
   if ( (err_dist == "tab") | (err_dist == "zitab") ) {
@@ -738,7 +738,7 @@ set_model_info <- function (model=NULL,  mean_fun=NULL, err_dist=NULL,
   
   ## --- Add model constants: Binomial n
   ## binomial_n parameter specification priority: thetaC > binomial_n
-  if ((err_dist=="binomial_count") | (err_dist=="binomial_prop")) {
+  if ((err_dist=="binomial.count") | (err_dist=="binomial.prop")) {
     ## Use supplied argument
     ModelInfo$binomial_n <- binomial_n
     ## Replace binomial_n if supplied via thetaC
@@ -896,11 +896,11 @@ get_mean_fun_parnames <- function (mean_fun) {
   if (mean_fun == "uniform")           { thetaM <- c("H","c","d") }
   if (mean_fun == "gaussian")          { thetaM <- c("H","m","s") }
   if (mean_fun == "mixgaussian")       { thetaM <- c("H","a","m1","m2","s1","s2") }
-  if (mean_fun == "mixgaussian_equal") { thetaM <- c("H","a","m1","m2","s") }
+  if (mean_fun == "mixgaussian.equal") { thetaM <- c("H","a","m1","m2","s") }
   if (mean_fun == "beta")              { thetaM <- c("H","c","d","u","v") }
   if (mean_fun == "sech")              { thetaM <- c("H","m","s","r","p") }
-  if (mean_fun == "sech_p1")           { thetaM <- c("H","m","s","r") }
-  if (mean_fun == "sech_r0p1")         { thetaM <- c("H","m","s") }
+  if (mean_fun == "sech.p1")           { thetaM <- c("H","m","s","r") }
+  if (mean_fun == "sech.r0p1")         { thetaM <- c("H","m","s") }
   if (mean_fun == "hofII")             { thetaM <- c("H","m","w0") }
   if (mean_fun == "hofIV")             { thetaM <- c("H","m","w","k") }
   if (mean_fun == "hofIVb")            { thetaM <- c("H","m","w") }
@@ -942,8 +942,8 @@ get_err_dist_parnames <- function (err_dist) {
 
   ## --- Define parameters: error distributions
   if (err_dist == "bernoulli")      { thetaE <- NULL }
-  if (err_dist == "binomial_count") { thetaE <- NULL }
-  if (err_dist == "binomial_prop")  { thetaE <- NULL }
+  if (err_dist == "binomial.count") { thetaE <- NULL }
+  if (err_dist == "binomial.prop")  { thetaE <- NULL }
   if (err_dist == "poisson")        { thetaE <- NULL }
   if (err_dist == "negbin")         { thetaE <- c("phi") }
   if (err_dist == "zip")            { thetaE <- c("pi") }
@@ -997,8 +997,8 @@ get_constant_parnames <- function (err_dist) {
   thetaC <- NULL
   
   ## --- Define constant parameters: error distributions
-  if (err_dist == "binomial_count") { thetaC <- "binomial_n" }
-  if (err_dist == "binomial_prop")  { thetaC <- "binomial_n" }
+  if (err_dist == "binomial.count") { thetaC <- "binomial_n" }
+  if (err_dist == "binomial.prop")  { thetaC <- "binomial_n" }
   if (err_dist == "tab")            { thetaC <- "delta" }
   if (err_dist == "zitab")          { thetaC <- "delta" }
   
@@ -1141,7 +1141,7 @@ check_binomial_n <- function (binomial_n, err_dist) {
   }
   
   ## --- Binomial distribution
-  BIndex <- (err_dist=="binomial_count") | (err_dist=="binomial_prop")
+  BIndex <- (err_dist=="binomial.count") | (err_dist=="binomial.prop")
   ## --- Stop if n parameter is not given for binomial distributions
   if (any(BIndex) & is.na(binomial_n)) {
     stop ("binomial_n is not specified for binomial distributions!")

@@ -68,11 +68,11 @@ get_parinfo  <- function (ModelInfo) {
     nLogitPars <- c()                                                      ##  0 - n
  
     ## --- Transformation for H depends on model
-    if ( (err_dist == "bernoulli") | (err_dist == "binomial_prop") |
+    if ( (err_dist == "bernoulli") | (err_dist == "binomial.prop") |
          (err_dist == "tab")       | (err_dist == "zitab")         ) {
       ## 0-1 : logit
       LogitPars <- c("H", LogitPars)
-    } else if (err_dist == "binomial_count") {
+    } else if (err_dist == "binomial.count") {
       ## 0-n : n logit
       nLogitPars <- c("H")
     } else {
@@ -279,7 +279,7 @@ check_par_valid <- function (u.theta, ModelInfo, Dat) {
     }
     
     ## --- Mix gaussian
-    if ( (mean_fun == "mixgaussian_equal") | (mean_fun == "mixgaussian") ) {
+    if ( (mean_fun == "mixgaussian.equal") | (mean_fun == "mixgaussian") ) {
       ## Make sure m1 is less than m2 to prevent label switching
       
       ## Grab parameters
@@ -364,7 +364,7 @@ NLL.bernoulli <- function (mu.mean, y) {
 }
 
 
-NLL.binomial_count <- function (n, mu.mean, y) {
+NLL.binomial.count <- function (n, mu.mean, y) {
   ## --- Caclculate negative log-likelihood for binomial data with n given
 
   ## Grab probabilities
@@ -379,7 +379,7 @@ NLL.binomial_count <- function (n, mu.mean, y) {
 }
 
 
-NLL.binomial_prop <- function (n, mu.mean, y) {
+NLL.binomial.prop <- function (n, mu.mean, y) {
   ## --- Caclculate negative log-likelihood for binomial data with n given
 
   ## Grab probabilities
@@ -539,15 +539,15 @@ NLL.discrete <- function (u.theta, ModelInfo, Dat) {
     }
     
     ## --- Binomial - count
-    if ( err_dist == "binomial_count" ) {
+    if ( err_dist == "binomial.count" ) {
       ## Caclculate negative log-likelihood
-      NegLogLike <- NLL.binomial_count (n=binomial_n, mu.mean=mu, y=y)
+      NegLogLike <- NLL.binomial.count (n=binomial_n, mu.mean=mu, y=y)
     }
     
     ## --- Binomial - prop
-    if ( err_dist == "binomial_prop" ) {
+    if ( err_dist == "binomial.prop" ) {
       ## Caclculate negative log-likelihood
-      NegLogLike <- NLL.binomial_prop (n=binomial_n, mu.mean=mu, y=y)
+      NegLogLike <- NLL.binomial.prop (n=binomial_n, mu.mean=mu, y=y)
     }
     
     ## --- Poisson

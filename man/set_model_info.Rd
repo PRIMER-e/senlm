@@ -42,7 +42,7 @@ Create model information data frame (one row).
 Model <- set_models (mean_fun=c("gaussian"), err_dist=c("zitab"), method="crossed")
 set_model_info (model=Model)
 set_model_info (mean_fun="gaussian", err_dist="negbin")
-set_model_info (mean_fun="gaussian", err_dist="binomial_count", binomial_n=50)
+set_model_info (mean_fun="gaussian", err_dist="binomial.count", binomial_n=50)
 set_model_info (mean_fun="gaussian", err_dist="tab", delta=0.01)
 
 }
