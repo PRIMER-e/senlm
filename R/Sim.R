@@ -1039,7 +1039,7 @@ pinversegaussian <- function (q, mu, phi) {
 
   ## --- Stop if q or parameters are non-positive
   if (any(q   <  0)) { stop ("q must be non-negative!") }
-  if (any(mu  <= 0)) { stop ("mu must be positive!")    }
+  if (any(mu  <  0)) { stop ("mu must be non-negative!")    }
   if (any(phi <= 0)) { stop ("phi must be positive")    }
   
   ## --- Partial calculations
