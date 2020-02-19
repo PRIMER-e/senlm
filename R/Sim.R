@@ -1000,7 +1000,7 @@ rinversegaussian <- function (n, mu, phi) {
 
   ## Create possible return value 
   y  <-  v^2
-  x  <-  mu + (mu^2 * y) / (2*phi) - (mu / (2*phi)) * sqrt(4*mu*phi*y + mu^2*y^2)
+  x  <-  mu + (0.5 * phi * mu^2 * y) - (0.5 * mu * phi) * sqrt(4*mu*y/phi + mu^2*y^2)
 
   ## Perform test and set return value
   Rand <-  runif(n)  
