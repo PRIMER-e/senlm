@@ -474,18 +474,55 @@ mle_default <- function (ModelInfo, Dat, theta0=NULL, conf.level=conf.level) {
     if (any(is.nan(u.hessian)))     { StdErrOK <- FALSE }
     if (any(is.na(u.hessian)))      { StdErrOK <- FALSE }
     if (any(!is.finite(u.hessian))) { StdErrOK <- FALSE }
-    
-    ## --- Check invertibility of hessian
+   
+    ## --- Check if inverse hessian is calculable and composed of finite numbers
     if (StdErrOK) {
-      if (det(u.hessian) <= 0 ) { StdErrOK <- FALSE }
+      ## --- Try solve()
+      Invert1Fail <- FALSE
+      Invert1 <- try (ihessian1 <- solve(u.hessian), silent=TRUE)
+      if (class(Invert1) == "try-error") {
+        Invert1Fail <- TRUE
+      } else {
+        if (any(is.nan(ihessian1)))     { Invert1Fail <- TRUE }
+        if (any(is.na(ihessian1)))      { Invert1Fail <- TRUE }
+        if (any(!is.finite(ihessian1))) { Invert1Fail <- TRUE }
+        if (any(diag(ihessian1) < 0))   { Invert1Fail <- TRUE }
+      }
+
+      ## --- Try QR
+      Invert2Fail <- FALSE
+      Invert2 <- try (ihessian2 <- qr.solve(qr(u.hessian)), silent=TRUE)
+      if (class(Invert2) == "try-error") {
+        Invert2Fail <- TRUE
+      } else {
+        if (any(is.nan(ihessian2)))     { Invert2Fail <- TRUE }
+        if (any(is.na(ihessian2)))      { Invert2Fail <- TRUE }
+        if (any(!is.finite(ihessian2))) { Invert2Fail <- TRUE }
+        if (any(diag(ihessian2) < 0))   { Invert2Fail <- TRUE }
+      }
+
+      ## --- If QR method works use it, else take solve() results
+      if ((Invert1Fail == FALSE) & (Invert2Fail == TRUE))  {
+        ihessian <- ihessian1
+        StdErrOK <- TRUE
+      }
+      if ((Invert1Fail == TRUE)  & (Invert2Fail == FALSE)) {
+        ihessian <- ihessian2
+        StdErrOK <- TRUE
+      }
+      if ((Invert1Fail == FALSE) & (Invert2Fail == FALSE)) {
+        ihessian <- ihessian2
+        StdErrOK <- TRUE
+      }
+      if ((Invert1Fail == TRUE)  & (Invert2Fail == TRUE))  {
+        ihessian <- NULL
+        StdErrOK <- FALSE
+      }
     }
     
     ## --- Check if standard errors are non-negative
-    if (StdErrOK) { 
-      u.stderr  <- sqrt(diag(solve(u.hessian)))
-      if (any(u.stderr < 0)) { StdErrOK  <- FALSE }
-      }
-      
+    if (StdErrOK) { u.stderr  <- sqrt(diag(ihessian)) }
+    
     ## --- Calculate approximate confidence intervals
     if (StdErrOK) {
       ## Find confidence interval multiplier
@@ -535,7 +572,6 @@ mle_constant_poisson <- function (ModelInfo, Dat) {
 
 mle_uniform_bernoulli <- function (ModelInfo, Dat) {
   ## --- MLE for uniform-bernoulli mean function
-  ## *** THIS FUNCTION IS OUTDATED / NOT CALLED ***
 
   ## --- Grab count data
   y <- Dat$y
@@ -547,8 +583,8 @@ mle_uniform_bernoulli <- function (ModelInfo, Dat) {
   ## Remove data where y is 0
   xlim <- range(X[Y>0])
   ## Find bounds of uniform
-  xminpos <- which(X==xlim[1])
-  xmaxpos <- which(X==xlim[2])
+  xminpos <- min(which(X==xlim[1]))
+  xmaxpos <- max(which(X==xlim[2]))
   if (xminpos > 1)         { xminpos <- c(xminpos-1, xminpos)   }
   if (xmaxpos < length(x)) { xmaxpos <- c(xmaxpos,   xmaxpos+1) }
 
@@ -661,6 +697,9 @@ msenlm <- function (models=NULL, data=NULL, xvar=NULL, yvar=NULL, method="crosse
       
       ## --- Loop throough models
       for (j in 1:length(ModelFits)) {
+
+        ## --- Display model being fit
+        print (models[j,])
         
         ## --- Fit model
         Fit <- senlm (model=models[j,], data=data, xvar=xvar, yvar=yvar[i],
