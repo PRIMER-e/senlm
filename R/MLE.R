@@ -1,6 +1,5 @@
 ## --- Model fitting : Maximum likelihood estimation
 
-
 ## ---- ---- ----
 
 #' Fit species-environment non-linear model via maximum likelihood
