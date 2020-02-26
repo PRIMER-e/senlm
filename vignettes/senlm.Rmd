@@ -1097,7 +1097,8 @@ get_constant_parnames("zitab")
 ## Setting models to fit
 
 The <tt>set_models()</tt> function is used to create a data frame that contains 
-the mean functions, error distributions, and if appropriate the binomial $n$ parameter, of all models that one would wish to fit or simulate data from.
+the mean functions, error distributions, and if appropriate the binomial $n$ parameter,
+of all models that one would wish to fit or simulate data from.
 
 ```{r}
 ## All possible combinations of mean functions and error distrbiutions
@@ -1154,19 +1155,27 @@ head (haul)
 
 ## Fitting models to data
 
-To fit one model to a data set we use the <tt>senlm()</tt> function. We illustrate this with the 
-<tt>haul</tt> dataset.
+To fit one model to a data set we use the <tt>senlm()</tt> function. We illustrate this with
+the <tt>haul</tt> dataset.
 
 ```{r}
 Fit <- senlm (data=haul, xvar="depth", yvar="Sebastolobus.altivelis", 
-              mean_fun="gaussian", err_dist="zip")
+              mean_fun="gaussian", err_dist="zip", conf.level=0.95)
 summary (Fit)
 ```
 
+Confidence intervals for the estimated parameters can be display as follows. The default
+confidence level is 95% which is set when fitting the model. Occasionly due to numerical
+instability of the estimated Hessian matrix the standard errors are not calculated.
+
+```{r}
+rbind (lower=Fit$lb, upper=Fit$ub)
+```
 
 To fit multiple models to multiple data sets, one can use the <tt>msenlm()</tt> function.
-The models to fit are specified with the <tt>set_models()</tt> function. The data should be stored in 
-a list. It could be simulated data create using the <tt>create_simulated_datasets()</tt> function.
+The models to fit are specified with the <tt>set_models()</tt> function. The data should be
+stored in a list. It could be simulated data create using the
+<tt>create_simulated_datasets()</tt> function.
 
 ```{r}
 Models <- set_models (mean_class="test", err_class="binary")
