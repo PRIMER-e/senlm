@@ -407,35 +407,61 @@ mle_default <- function (ModelInfo, Dat, theta0=NULL, conf.level=conf.level) {
   bbmle::parnames (NLL) <- names(u.theta0)
   
   ## --- SANN : Find mle using simulated annealing
-  FitMLE <- try ( suppressWarnings (
-    bbmle::mle2 (minuslogl=NLL, optimizer="optim", method="SANN", vecpar=TRUE, start=u.theta0) ))
+  FitMLE.sann <- try ( suppressWarnings (
+    bbmle::mle2 (minuslogl=NLL, optimizer="optim", method="SANN", vecpar=TRUE,
+                 start=u.theta0) ))
   
   ## --- Test if sann model fit
-  if (class(FitMLE) != "try-error") {
-    
+
+  ## Did model fit?
+  if ( (class(FitMLE) == "try-error") | (attributes(FitMLE.sann)$details$convergence!=0) ) {
+    FitError1 <- TRUE
+  } else {
+    FitError1 <- FALSE
+  }
+  
+  if (FitError1 == FALSE) {
     ## --- Fit using nlminb from sann estimate
-    FitMLE <- try ( suppressWarnings (
-      bbmle::mle2 (minuslogl=NLL, optimizer="nlminb", vecpar=TRUE, start=bbmle::coef(FitMLE)) ))
+    FitMLE.nlsann <- try ( suppressWarnings (
+      bbmle::mle2 (minuslogl=NLL, optimizer="nlminb", vecpar=TRUE,
+                   start=bbmle::coef(FitMLE.sann)) ))
+
+    ## Did model fit?
+    if ( (class(FitMLE) == "try-error") | (attributes(FitMLE.nlsann)$details$convergence!=0) ) {
+      FitError2 <- TRUE
+    } else {
+      FitError2 <- FALSE
+    }
     
     ## --- Test if nlminb from sann fits
-    if (class(FitMLE) != "try-error") {
+    if (FitError2 == FALSE) {
       ## --- nlminb based on sann succeeded
-      FitType   <- "nl-sann"
+      FitType  <- "nl-sann"
+      FitMLE <- FitMLE.nlsann
     } else {
       ## --- nlminb failed - use sann
       FitType   <- "sann"
+      FitMLE <- FitMLE.sann
     }
-
+    
   } else {
 
     ## --- Fit using nlminb from init estimate
-    FitMLE <- try ( suppressWarnings (
+    FitMLE.nl <- try ( suppressWarnings (
       bbmle::mle2 (minuslogl=NLL, optimizer="nlminb", vecpar=TRUE, start=u.theta0) ))
+
+    ## Did model fit?
+    if ( (class(FitMLE) == "try-error") | (attributes(FitMLE.nl)$details$convergence!=0) ) {
+      FitError3 <- TRUE
+    } else {
+      FitError3 <- FALSE
+    }
     
     ## --- Test if nlminb from init fits
-    if (class(FitMLE) != "try-error") {
+    if (FitError3 == FALSE) {
       ## --- nlminb  - use init
       FitType   <- "nl"
+      FitMLE <- FitMLE.nl
     } else {
       ## --- Fail
       FitType <- "fail"
