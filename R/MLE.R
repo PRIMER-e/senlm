@@ -414,7 +414,7 @@ mle_default <- function (ModelInfo, Dat, theta0=NULL, conf.level=conf.level) {
   ## --- Test if sann model fit
 
   ## Did model fit?
-  if ( (class(FitMLE) == "try-error") | (attributes(FitMLE.sann)$details$convergence!=0) ) {
+  if ( (class(FitMLE.sann) == "try-error") | (attributes(FitMLE.sann)$details$convergence!=0) ) {
     FitError1 <- TRUE
   } else {
     FitError1 <- FALSE
@@ -427,7 +427,7 @@ mle_default <- function (ModelInfo, Dat, theta0=NULL, conf.level=conf.level) {
                    start=bbmle::coef(FitMLE.sann)) ))
 
     ## Did model fit?
-    if ( (class(FitMLE) == "try-error") | (attributes(FitMLE.nlsann)$details$convergence!=0) ) {
+    if ( (class(FitMLE.nlsann) == "try-error") | (attributes(FitMLE.nlsann)$details$convergence!=0) ) {
       FitError2 <- TRUE
     } else {
       FitError2 <- FALSE
@@ -451,7 +451,7 @@ mle_default <- function (ModelInfo, Dat, theta0=NULL, conf.level=conf.level) {
       bbmle::mle2 (minuslogl=NLL, optimizer="nlminb", vecpar=TRUE, start=u.theta0) ))
 
     ## Did model fit?
-    if ( (class(FitMLE) == "try-error") | (attributes(FitMLE.nl)$details$convergence!=0) ) {
+    if ( (class(FitMLE.nl) == "try-error") | (attributes(FitMLE.nl)$details$convergence!=0) ) {
       FitError3 <- TRUE
     } else {
       FitError3 <- FALSE
