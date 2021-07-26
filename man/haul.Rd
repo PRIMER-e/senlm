@@ -4,14 +4,16 @@
 \name{haul}
 \alias{haul}
 \title{Haul data set}
-\format{A data frame with 1072 rows and 5 variables:
+\format{
+A data frame with 1072 rows and 5 variables:
 \describe{
   \item{year}{year data was collected}
   \item{depth}{depth that fish count was recorded, in meters}
   \item{lattitude}{lattitude was fish count was recorded, in degrees}
   \item{Albatrossia.pectoralis}{count of Albatrossia pectoralis species}
   \item{Sebastolobus.altivelis}{count of Sebastolobus altivelis}
-}}
+}
+}
 \source{
 URL of data source should go here.
 }

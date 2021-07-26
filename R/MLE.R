@@ -505,7 +505,7 @@ mle_default <- function (ModelInfo, Dat, theta0=NULL, conf.level=conf.level) {
       ## --- Try solve()
       Invert1Fail <- FALSE
       Invert1 <- try (ihessian1 <- solve(u.hessian), silent=TRUE)
-      if (class(Invert1) == "try-error") {
+      if (any(class(Invert1) == "try-error")) {
         Invert1Fail <- TRUE
       } else {
         if (any(is.nan(ihessian1)))     { Invert1Fail <- TRUE }
@@ -517,7 +517,7 @@ mle_default <- function (ModelInfo, Dat, theta0=NULL, conf.level=conf.level) {
       ## --- Try QR
       Invert2Fail <- FALSE
       Invert2 <- try (ihessian2 <- qr.solve(qr(u.hessian)), silent=TRUE)
-      if (class(Invert2) == "try-error") {
+      if (any(class(Invert2) == "try-error")) {
         Invert2Fail <- TRUE
       } else {
         if (any(is.nan(ihessian2)))     { Invert2Fail <- TRUE }

@@ -4,7 +4,8 @@
 \name{haul2}
 \alias{haul2}
 \title{Haul data set 2}
-\format{A data frame with 1072 rows and 5 variables:
+\format{
+A data frame with 1072 rows and 5 variables:
 \describe{
   \item{year}{year data was collected}
   \item{depth}{depth that fish count was recorded, in meters}
@@ -15,7 +16,8 @@
   \item{Antimora.microlepis}{count of Antimora.microlepis species}
   \item{Coryphaenoides.acrolepis}{count of Coryphaenoides acrolepis species}
   \item{Alepocephalus.tenebrosus}{count of Alepocephalus tenebrosus species}
-}}
+}
+}
 \source{
 URL of data source should go here.
 }
