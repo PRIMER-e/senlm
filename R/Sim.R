@@ -420,8 +420,8 @@ simulate_data <- function (x, Par) {
   if ( (err_dist == "zipl") | (err_dist == "zipl.mu") ) {
 
     ## Grab parameters
-    g0 <- as.list(Par$theta)$g0
-    g1 <- as.list(Par$theta)$g1
+    g0 <- as.list(Par$thetaE)$g0
+    g1 <- as.list(Par$thetaE)$g1
     NonZero <- (mu > 0)
 
     ## Create y vector
@@ -452,9 +452,9 @@ simulate_data <- function (x, Par) {
   if ( (err_dist == "zinbl") | (err_dist == "zinbl.mu") ) {
     
     ## Grab parameters
-    g0  <- as.list(Par$theta)$g0
-    g1  <- as.list(Par$theta)$g1
-    phi <- as.list(Par$theta)$phi
+    g0  <- as.list(Par$thetaE)$g0
+    g1  <- as.list(Par$thetaE)$g1
+    phi <- as.list(Par$thetaE)$phi
     NonZero <- (mu > 0)
 
     ## Convert mean and dispersion parameter to shape parameters of Gamma distribution
@@ -548,8 +548,8 @@ simulate_data <- function (x, Par) {
   if (err_dist == "zig" ) {
 
     ## Grab parameters
-    pi  <- as.list(Par$theta)$pi
-    phi <- as.list(Par$theta)$phi
+    pi  <- as.list(Par$thetaE)$pi
+    phi <- as.list(Par$thetaE)$phi
 
     ## --- Find where mean is positive
     NonZero <- (mu > 0)
@@ -583,9 +583,9 @@ simulate_data <- function (x, Par) {
   if ( (err_dist == "zigl") | (err_dist == "zigl.mu") ) {
 
     ## Grab parameters
-     g0  <- as.list(Par$theta)$g0
-    g1  <- as.list(Par$theta)$g1
-    phi <- as.list(Par$theta)$phi
+    g0  <- as.list(Par$thetaE)$g0
+    g1  <- as.list(Par$thetaE)$g1
+    phi <- as.list(Par$thetaE)$phi
 
     ## --- Find where mean is positive
     NonZero <- (mu > 0)
@@ -624,9 +624,9 @@ simulate_data <- function (x, Par) {
   if (err_dist == "ziig" ) {
     
     ## Grab parameters
-    pi  <- as.list(Par$theta)$pi
-    phi <- as.list(Par$theta)$phi
-    
+    pi  <- as.list(Par$thetaE)$pi
+    phi <- as.list(Par$thetaE)$phi
+
     ## --- Find where mean is positive
     NonZero <- (mu > 0)
     
@@ -655,10 +655,10 @@ simulate_data <- function (x, Par) {
   if ( (err_dist == "ziigl") | (err_dist == "ziigl.mu") ) {
     
     ## Grab parameters
-    g0  <- as.list(Par$theta)$g0
-    g1  <- as.list(Par$theta)$g1
-    phi <- as.list(Par$theta)$phi
-    
+    g0  <- as.list(Par$thetaE)$g0
+    g1  <- as.list(Par$thetaE)$g1
+    phi <- as.list(Par$thetaE)$phi
+
     ## --- Find where mean is positive
     NonZero <- (mu > 0)
     
