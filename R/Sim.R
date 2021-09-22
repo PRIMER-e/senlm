@@ -986,7 +986,7 @@ rinversegaussian <- function (n, mu, phi) {
   if (length(mu) != n) { stop ("length of mu must be 1 or n!") }
     
   ## Sample from a normal distribution with a mean of 0 and 1 standard deviation
-  v  <- rnorm(n)
+  v  <- stats::rnorm(n)
 
   ## Create possible return value 
   y  <-  v^2

@@ -830,7 +830,7 @@ estimate_delta <- function (y) {
 #' @examples
 #'
 #' ## Get parameters for a "gaussian-zinb" model
-#' get_parnames ("gaussian-zinb")
+#' get_parnames ("gaussian_zinb")
 #'
 #' @export
 #'
