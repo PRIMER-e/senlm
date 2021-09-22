@@ -320,7 +320,7 @@ create_default_par_list <- function (models=NULL,
 }
 
 
-simulate_data <- function (x, Par, seed=NULL) {
+simulate_data <- function (x, Par) {
   ## --- Simulate data
   
   ## --- Grab error distribution
@@ -329,16 +329,6 @@ simulate_data <- function (x, Par, seed=NULL) {
   ## Create data object
   Dat <- list()
 
-  ## Random number seed
-  if ( is.null (seed) ) {
-    ## Define seed if not given
-    seed <- as.numeric(paste(c(sample(1:9, 1), sample(0:9,(5-1))), collapse=""))
-  }
-  ## Set seed
-  set.seed (seed)
-  ## Store seed
-  Dat$seed <- seed
-  
   ## Calculate mean function
   mu <- do.call (paste("mu_", Par$mean_fun, sep=""), list(Par$thetaM, x))
   

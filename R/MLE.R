@@ -264,9 +264,18 @@ simulate.senlm <- function (object, nsim=1, seed=NULL, newdata=NULL, ...) {
   Dat <- as.data.frame(matrix(NA, ncol=nsim, nrow=length(newdata)))
   names(Dat) <- paste("sim_", 1:nsim, sep="")
 
+  ## Random number seed
+  if ( is.null (seed) ) {
+    ## Define seed if not given
+    seed <- as.numeric(paste(c(sample(1:9, 1), sample(0:9,(5-1))), collapse=""))
+  }
+  ## Set and store seed
+  set.seed (seed)
+  attr(Dat, 'seed') <- seed
+
   ## --- Simulate data
   for (i in 1:nsim) {
-    SimData <- simulate_data (x=newdata, Par=Par, seed=seed)
+    SimData <- simulate_data (x=newdata, Par=Par)
     Dat[,i] <- SimData$y
   }
 
