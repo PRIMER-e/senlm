@@ -1003,7 +1003,7 @@ rinversegaussian <- function (n, mu, phi) {
   x  <-  mu + (0.5 * phi * mu^2 * y) - (0.5 * mu * phi) * sqrt(4*mu*y/phi + mu^2*y^2)
 
   ## Perform test and set return value
-  Rand <-  runif(n)  
+  Rand <-  stats::runif(n)
   Test <- Rand <= mu/(mu+x)
   Result <- mu^2/x
   Result[Test] <- x[Test]
@@ -1047,8 +1047,7 @@ pinversegaussian <- function (q, mu, phi) {
   v <- sqrt(q * phi)
 
   ## --- Calculate cdf
-  Result <- pnorm((t - 1)/v) + exp(2/(mu * phi)) * pnorm(-(t + 1)/v)
-  
+  Result <- stats::pnorm((t - 1)/v) + exp(2/(mu * phi)) * stats::pnorm(-(t + 1)/v)
   ## --- CDF is zero if q is zero
   Result[q==0] <- 0
   Result[is.nan(Result)] <- 0

@@ -8,7 +8,8 @@ mu_meanfunction(ModelInfo, theta, x)
 }
 \arguments{
 \item{ModelInfo}{A row from the output of set_models(), containing the
-mean_function and error distribution of the model in question.}
+mean_function and error distribution of the model in question. Or a string
+in the form of "meanfun_errdist".}
 
 \item{theta}{Vector containing parameter values of model.}
 
@@ -18,8 +19,8 @@ mean_function and error distribution of the model in question.}
 Calculates the constant mean functions defined by thetaM at points x.
 }
 \description{
-Evalautes the mean function defined in ModelInfo, with the
-parameters given in theta, at the points given by the vector x.
+Evalautes the mean function defined in ModelInfo, with the parameters given
+in theta, at the points given by the vector x.
 }
 \examples{
 

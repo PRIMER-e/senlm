@@ -551,7 +551,7 @@ mle_default <- function (ModelInfo, Dat, theta0=NULL, conf.level=conf.level) {
     ## --- Calculate approximate confidence intervals
     if (StdErrOK) {
       ## Find confidence interval multiplier
-      mult <- qnorm((1 + conf.level)/2)
+      mult <- stats::qnorm((1 + conf.level)/2)
       u.lb <- u.theta - mult*u.stderr
       u.ub <- u.theta + mult*u.stderr
     } else {

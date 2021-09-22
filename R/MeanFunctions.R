@@ -7,7 +7,8 @@
 #' parameters given in theta, at the points given by the vector x.
 #'
 #' @param ModelInfo A row from the output of set_models(), containing the
-#' mean_function and error distribution of the model in question.
+#'   mean_function and error distribution of the model in question. Or a string
+#'   in the form of "meanfun_errdist".
 #' @param theta Vector containing parameter values of model.
 #' @param x Values at which to calculate the mean function.
 #'
@@ -23,10 +24,14 @@
 #' @export
 mu_meanfunction <- function (ModelInfo, theta, x) {
   ## --- Calculate mean function at values x
-  
-  ## --- Create ModelInfo object if character string "err_dist-mean_fun" is supplied
-  if (class(ModelInfo)=="character") { ModelInfo <- set_model_info (ModelInfo) }
-  
+
+  ## --- Create ModelInfo object if character string "mean-fun_err-dist" is supplied
+  if (all(class(ModelInfo)=="character")) {
+    Names <- unlist (strsplit(ModelInfo, "_"))
+    ModelInfo <- set_model_info (mean_fun = Names[1],
+                                 err_dist = Names[2])
+  }
+
   ## --- Set model name
   model_name <- paste (ModelInfo$mean_fun, ModelInfo$err_dist, sep="_")
   

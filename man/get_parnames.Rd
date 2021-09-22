@@ -19,7 +19,7 @@ Get parameter names for given model.
 \examples{
 
 ## Get parameters for a "gaussian-zinb" model
-get_parnames ("gaussian-zinb")
+get_parnames ("gaussian_zinb")
 
 }
 \keyword{model}
