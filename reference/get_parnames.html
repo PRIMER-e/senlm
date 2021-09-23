@@ -142,8 +142,19 @@ error distribution parameters, and constant parameters.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'>## Get parameters for a "gaussian-zinb" model</span>
-<span class='fu'>get_parnames</span> <span class='op'>(</span><span class='st'>"gaussian-zinb"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='error'>Error in if (err_dist == "bernoulli") {    thetaE &lt;- NULL}: missing value where TRUE/FALSE needed</span></div><div class='input'>
+<span class='fu'>get_parnames</span> <span class='op'>(</span><span class='st'>"gaussian_zinb"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $model_name
+#&gt; [1] "gaussian_zinb"
+#&gt; 
+#&gt; $thetaM
+#&gt; [1] "H" "m" "s"
+#&gt; 
+#&gt; $thetaE
+#&gt; [1] "pi"  "phi"
+#&gt; 
+#&gt; $theta
+#&gt; [1] "H"   "m"   "s"   "pi"  "phi"
+#&gt; </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
