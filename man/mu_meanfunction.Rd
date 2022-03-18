@@ -19,8 +19,8 @@ in the form of "meanfun_errdist".}
 Calculates the constant mean functions defined by thetaM at points x.
 }
 \description{
-Evalautes the mean function defined in ModelInfo, with the parameters given
-in theta, at the points given by the vector x.
+Evalautes the mean function defined in ModelInfo, with the
+parameters given in theta, at the points given by the vector x.
 }
 \examples{
 

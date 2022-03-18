@@ -156,7 +156,7 @@ init_spline_mean_function <- function (ModelInfo, DF, spar=NULL) {
     ## --- Mode location
     m <- mean(x[mu==max(mu)])
     ## --- Conservative estimate of standard deviation
-    s <- diff(range(x[y>0] - 50))/4
+    s <- diff(range(x[y>0]))/4
   }
 
   ## Store parameters
