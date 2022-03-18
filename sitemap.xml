@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://primer-e.github.io/senlm/404.html</loc>
+  </url>
+  <url>
+    <loc>https://primer-e.github.io/senlm/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://primer-e.github.io/senlm/articles/senlm.html</loc>
+  </url>
+  <url>
+    <loc>https://primer-e.github.io/senlm/authors.html</loc>
+  </url>
+  <url>
     <loc>https://primer-e.github.io/senlm/index.html</loc>
+  </url>
+  <url>
+    <loc>https://primer-e.github.io/senlm/news/index.html</loc>
   </url>
   <url>
     <loc>https://primer-e.github.io/senlm/reference/create_default_par_list.html</loc>
@@ -31,6 +46,9 @@
     <loc>https://primer-e.github.io/senlm/reference/haul2.html</loc>
   </url>
   <url>
+    <loc>https://primer-e.github.io/senlm/reference/index.html</loc>
+  </url>
+  <url>
     <loc>https://primer-e.github.io/senlm/reference/init_mle.html</loc>
   </url>
   <url>
@@ -40,10 +58,10 @@
     <loc>https://primer-e.github.io/senlm/reference/mean_functions.html</loc>
   </url>
   <url>
-    <loc>https://primer-e.github.io/senlm/reference/msenlm.html</loc>
+    <loc>https://primer-e.github.io/senlm/reference/msenlm.best.html</loc>
   </url>
   <url>
-    <loc>https://primer-e.github.io/senlm/reference/msenlm.best.html</loc>
+    <loc>https://primer-e.github.io/senlm/reference/msenlm.html</loc>
   </url>
   <url>
     <loc>https://primer-e.github.io/senlm/reference/mu_constant.html</loc>
@@ -80,8 +98,5 @@
   </url>
   <url>
     <loc>https://primer-e.github.io/senlm/reference/summary.senlm.html</loc>
-  </url>
-  <url>
-    <loc>https://primer-e.github.io/senlm/articles/senlm.html</loc>
   </url>
 </urlset>

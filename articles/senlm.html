@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">senlm</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../articles/senlm.html">Get started</a>
 </li>
@@ -55,7 +51,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/PRIMER-e/senlm/">
+  <a href="https://github.com/PRIMER-e/senlm/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -76,36 +72,36 @@
       <h1 data-toc-skip>Using the <code>senlm</code> package</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/PRIMER-e/senlm/blob/master/vignettes/senlm.Rmd"><code>vignettes/senlm.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/PRIMER-e/senlm/blob/HEAD/vignettes/senlm.Rmd" class="external-link"><code>vignettes/senlm.Rmd</code></a></small>
       <div class="hidden name"><code>senlm.Rmd</code></div>
 
     </div>
 
     
     
-<div id="installing-the-senlm-package" class="section level1">
-<h1 class="hasAnchor">
-<a href="#installing-the-senlm-package" class="anchor"></a>Installing the senlm package</h1>
+<div class="section level2">
+<h2 id="installing-the-senlm-package">Installing the senlm package<a class="anchor" aria-label="anchor" href="#installing-the-senlm-package"></a>
+</h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span>
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"PRIMER-e/senlm"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="loading-the-senlm-package" class="section level1">
-<h1 class="hasAnchor">
-<a href="#loading-the-senlm-package" class="anchor"></a>Loading the senlm package</h1>
+<div class="section level2">
+<h2 id="loading-the-senlm-package">Loading the senlm package<a class="anchor" aria-label="anchor" href="#loading-the-senlm-package"></a>
+</h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://primer-e.github.io/senlm/">"senlm"</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://primer-e.github.io/senlm/">"senlm"</a></span><span class="op">)</span></code></pre></div>
 </div>
-<div id="models" class="section level1">
-<h1 class="hasAnchor">
-<a href="#models" class="anchor"></a>Models</h1>
+<div class="section level2">
+<h2 id="models">Models<a class="anchor" aria-label="anchor" href="#models"></a>
+</h2>
 <p>The models (mean functions and error distributions) described here are for non-negative data. If it is possible to simulate negative data from these models (e.g. Gaussian error) then it is understood that those data points will be set to zero. Also, if a mean function takes a negative value, then the mean function should be set to zero at that location. Any data simulated from a mean function equal to zero, must be zero.</p>
 <p>If the data is Bernoulli or percentage data then the data is bounded inclusively between 0 and 1.</p>
 <p>If the data is binomial count data, then then the data is bounded inclusively between 0 and <span class="math inline">\(n\)</span>.</p>
 <p>The parameters for the mean function are stored in <span class="math inline">\(\theta_M\)</span>, the parameters for the error distribution are stored in <span class="math inline">\(\theta_E\)</span>. The binomial <span class="math inline">\(n\)</span> value, and the <span class="math inline">\(\delta\)</span> parameter of the tail-adjusted beta are stored in <span class="math inline">\(\theta_C\)</span>.</p>
-<div id="mean-functions" class="section level2">
-<h2 class="hasAnchor">
-<a href="#mean-functions" class="anchor"></a>Mean functions</h2>
+<div class="section level3">
+<h3 id="mean-functions">Mean functions<a class="anchor" aria-label="anchor" href="#mean-functions"></a>
+</h3>
 <p>The available mean functions can be printed via the <tt>mean_function()</tt> function. The mean functions are further classified as being of type <tt>test</tt>, <tt>main</tt>, or <tt>sub</tt>. The <tt>test</tt> class functions are mainly used for testing code, and the <tt>sub</tt> class functions are special cases of the <tt>main</tt> functions.</p>
 <table class="table">
 <thead><tr class="header">
@@ -173,9 +169,10 @@
 </table>
 <p>All mean functions have an <span class="math inline">\(H\)</span> parameter determining the maximum height of the mean function. The range of this parameter depends on the the error distribution (see next section). If the error distribution class is <tt>binary</tt> or <tt>percentage</tt>, then <span class="math inline">\(H\)</span> is between 0 and 1; if the error distribution class <tt>binomial</tt>, then <span class="math inline">\(H\)</span> is between 0 and <span class="math inline">\(n\)</span>; otherwise <span class="math inline">\(H\)</span> must be positive.</p>
 <p>The mean functions, <span class="math inline">\(\mu_{\theta_M}(x)\)</span>, are listed below in detail, with parameter descriptions, and their classification in parentheses in the title. The <tt>get_mean_fun_parnames()</tt> output displays the name of the parameters used in the package - sometimes the code uses a simpler roman character rather than a greek spelling e.g. <tt>w</tt> for <span class="math inline">\(\omega\)</span> (<tt>omega</tt>).</p>
-<div id="constant-test" class="section level3">
-<h3 class="hasAnchor">
-<a href="#constant-test" class="anchor"></a><tt>constant</tt> (test)</h3>
+<div class="section level4">
+<h4 id="constant-test">
+<tt>constant</tt> (test)<a class="anchor" aria-label="anchor" href="#constant-test"></a>
+</h4>
 <p>The constant mean function.</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -187,9 +184,10 @@ H &amp;= \mbox{Mean response (}H &gt; 0, ~0 &lt; H &lt; 1, ~0 &lt; H &lt; n) \\
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">get_mean_fun_parnames</span>(<span class="st">"constant"</span>)</span>
 <span id="cb3-2"><a href="#cb3-2"></a>[<span class="dv">1</span>] <span class="st">"H"</span></span></code></pre></div>
 </div>
-<div id="uniform-test" class="section level3">
-<h3 class="hasAnchor">
-<a href="#uniform-test" class="anchor"></a><tt>uniform</tt> (test)</h3>
+<div class="section level4">
+<h4 id="uniform-test">
+<tt>uniform</tt> (test)<a class="anchor" aria-label="anchor" href="#uniform-test"></a>
+</h4>
 <p>This mean function is uniform between <span class="math inline">\(c\)</span> and <span class="math inline">\(d\)</span>, with constant value between <span class="math inline">\(c\)</span> and <span class="math inline">\(d\)</span> of <span class="math inline">\(H\)</span>, and zero elsewhere.</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -207,9 +205,10 @@ d &amp;= \mbox{Upper bound} ~(-\infty &lt; d &lt; \infty, ~c &lt; d) \\
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">get_mean_fun_parnames</span>(<span class="st">"uniform"</span>)</span>
 <span id="cb4-2"><a href="#cb4-2"></a>[<span class="dv">1</span>] <span class="st">"H"</span> <span class="st">"c"</span> <span class="st">"d"</span></span></code></pre></div>
 </div>
-<div id="beta-main" class="section level3">
-<h3 class="hasAnchor">
-<a href="#beta-main" class="anchor"></a><tt>beta</tt> (main)</h3>
+<div class="section level4">
+<h4 id="beta-main">
+<tt>beta</tt> (main)<a class="anchor" aria-label="anchor" href="#beta-main"></a>
+</h4>
 <p>This mean curve is a modified version of the p.d.f. of a beta distribution. A standard beta distribution p.d.f. has the form:</p>
 <p><span class="math display">\[ f(x) = \frac{x^{a-1} (1-x)^{b-1}}{B(a,b)}, \]</span></p>
 <p>where <span class="math inline">\(a,b &gt; 0\)</span>, <span class="math inline">\(0 \leq x \leq 1\)</span>, and <span class="math inline">\(B(a,b)\)</span> is the beta function (normalising constant). The density curve takes different shapes as follows:</p>
@@ -280,9 +279,10 @@ v &amp;= \mbox{Shape parameter} ~(v &gt; 0)
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">get_mean_fun_parnames</span>(<span class="st">"beta"</span>)</span>
 <span id="cb5-2"><a href="#cb5-2"></a>[<span class="dv">1</span>] <span class="st">"H"</span> <span class="st">"c"</span> <span class="st">"d"</span> <span class="st">"u"</span> <span class="st">"v"</span></span></code></pre></div>
 </div>
-<div id="sech-main" class="section level3">
-<h3 class="hasAnchor">
-<a href="#sech-main" class="anchor"></a><tt>sech</tt> (main)</h3>
+<div class="section level4">
+<h4 id="sech-main">
+<tt>sech</tt> (main)<a class="anchor" aria-label="anchor" href="#sech-main"></a>
+</h4>
 <p>This mean function is a modified sech function. The basic sech function has the following form:</p>
 <p><span class="math display">\[ \mbox{sech} (x) = \frac{2}{e^x + e^{-x}}. \]</span></p>
 <p>This is a symmetric, unimodal function centered around zero. This function is modified as follows.</p>
@@ -303,23 +303,26 @@ p &amp;= \mbox{Peakedness parameter} ~(p &gt; 0)
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw">get_mean_fun_parnames</span>(<span class="st">"sech"</span>)</span>
 <span id="cb6-2"><a href="#cb6-2"></a>[<span class="dv">1</span>] <span class="st">"H"</span> <span class="st">"m"</span> <span class="st">"s"</span> <span class="st">"r"</span> <span class="st">"p"</span></span></code></pre></div>
 </div>
-<div id="sech-p1-sub" class="section level3">
-<h3 class="hasAnchor">
-<a href="#sech-p1-sub" class="anchor"></a><tt>sech.p1</tt> (sub)</h3>
+<div class="section level4">
+<h4 id="sech-p1-sub">
+<tt>sech.p1</tt> (sub)<a class="anchor" aria-label="anchor" href="#sech-p1-sub"></a>
+</h4>
 <p>This is the same mean function as <tt>sech</tt> but with <span class="math inline">\(p = 1\)</span>.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">get_mean_fun_parnames</span>(<span class="st">"sech.p1"</span>)</span>
 <span id="cb7-2"><a href="#cb7-2"></a>[<span class="dv">1</span>] <span class="st">"H"</span> <span class="st">"m"</span> <span class="st">"s"</span> <span class="st">"r"</span></span></code></pre></div>
 </div>
-<div id="sech-r0p1-sub" class="section level3">
-<h3 class="hasAnchor">
-<a href="#sech-r0p1-sub" class="anchor"></a><tt>sech.r0p1</tt> (sub)</h3>
+<div class="section level4">
+<h4 id="sech-r0p1-sub">
+<tt>sech.r0p1</tt> (sub)<a class="anchor" aria-label="anchor" href="#sech-r0p1-sub"></a>
+</h4>
 <p>This is the same mean function as <tt>sech</tt> but with <span class="math inline">\(r = 0\)</span>, and <span class="math inline">\(p = 1\)</span>.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw">get_mean_fun_parnames</span>(<span class="st">"sech.r0p1"</span>)</span>
 <span id="cb8-2"><a href="#cb8-2"></a>[<span class="dv">1</span>] <span class="st">"H"</span> <span class="st">"m"</span> <span class="st">"s"</span></span></code></pre></div>
 </div>
-<div id="gaussian-main" class="section level3">
-<h3 class="hasAnchor">
-<a href="#gaussian-main" class="anchor"></a><tt>gaussian</tt> (main)</h3>
+<div class="section level4">
+<h4 id="gaussian-main">
+<tt>gaussian</tt> (main)<a class="anchor" aria-label="anchor" href="#gaussian-main"></a>
+</h4>
 <p>This mean function is a Gaussian curve with a maximum height <span class="math inline">\(H\)</span>, located at mean/mode <span class="math inline">\(m\)</span>, and a standard deviation of <span class="math inline">\(s\)</span>.</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -335,9 +338,10 @@ s &amp;= \mbox{Standard deviation of mean function} ~(s &gt; 0) \\
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw">get_mean_fun_parnames</span>(<span class="st">"gaussian"</span>)</span>
 <span id="cb9-2"><a href="#cb9-2"></a>[<span class="dv">1</span>] <span class="st">"H"</span> <span class="st">"m"</span> <span class="st">"s"</span></span></code></pre></div>
 </div>
-<div id="mixgaussian-main" class="section level3">
-<h3 class="hasAnchor">
-<a href="#mixgaussian-main" class="anchor"></a><tt>mixgaussian</tt> (main)</h3>
+<div class="section level4">
+<h4 id="mixgaussian-main">
+<tt>mixgaussian</tt> (main)<a class="anchor" aria-label="anchor" href="#mixgaussian-main"></a>
+</h4>
 <p>This mean function is a mixture of two Gaussian curves. The first component has a maximum height located at mean/mode <span class="math inline">\(m_1\)</span>, with a standard deviation of <span class="math inline">\(s_1\)</span>. Similarly the second component has a maximum height located at mean/mode <span class="math inline">\(m_2\)</span>, with a standard deviation of <span class="math inline">\(s_2\)</span>. The mixture probability is given by <span class="math inline">\(\alpha\)</span>, and the maximum height of the curve is given by <span class="math inline">\(H\)</span>. The condition, <span class="math inline">\(m_1 \leq m_2\)</span>, ensures that component one is always on the left.</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -358,16 +362,18 @@ H &amp;= \mbox{Maximum value of mean function} ~(H &gt; 0, ~~\mbox{or}~~ 0 &lt; 
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">get_mean_fun_parnames</span>(<span class="st">"mixgaussian"</span>)</span>
 <span id="cb10-2"><a href="#cb10-2"></a>[<span class="dv">1</span>] <span class="st">"H"</span>  <span class="st">"a"</span>  <span class="st">"m1"</span> <span class="st">"m2"</span> <span class="st">"s1"</span> <span class="st">"s2"</span></span></code></pre></div>
 </div>
-<div id="mixgaussian-equal-sub" class="section level3">
-<h3 class="hasAnchor">
-<a href="#mixgaussian-equal-sub" class="anchor"></a><tt>mixgaussian.equal</tt> (sub)</h3>
+<div class="section level4">
+<h4 id="mixgaussian-equal-sub">
+<tt>mixgaussian.equal</tt> (sub)<a class="anchor" aria-label="anchor" href="#mixgaussian-equal-sub"></a>
+</h4>
 <p>This mean function is a the same as the <tt>mixgaussian</tt> mean function, but with the constraint that <span class="math inline">\(s_1 = s_2 ~(=s)\)</span>.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw">get_mean_fun_parnames</span>(<span class="st">"mixgaussian.equal"</span>)</span>
 <span id="cb11-2"><a href="#cb11-2"></a>[<span class="dv">1</span>] <span class="st">"H"</span>  <span class="st">"a"</span>  <span class="st">"m1"</span> <span class="st">"m2"</span> <span class="st">"s"</span> </span></code></pre></div>
 </div>
-<div id="hofv-main" class="section level3">
-<h3 class="hasAnchor">
-<a href="#hofv-main" class="anchor"></a><tt>hofV</tt> (main)</h3>
+<div class="section level4">
+<h4 id="hofv-main">
+<tt>hofV</tt> (main)<a class="anchor" aria-label="anchor" href="#hofv-main"></a>
+</h4>
 <p>This mean function is a scaled product of two sigmoid (logistic) growth curves (one increasing and one decreasing). The growth rates of each curve are <span class="math inline">\(\omega_1\)</span> and <span class="math inline">\(\omega_2\)</span> , and the points of inflection (half height locations) of each curve occur at <span class="math inline">\(m − k\)</span> and <span class="math inline">\(m + k\)</span> respectively.</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -389,9 +395,10 @@ H &amp;= \mbox{Maximum value of mean function} ~(H &gt; 0, ~~\mbox{or}~~ 0 &lt; 
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw">get_mean_fun_parnames</span>(<span class="st">"hofV"</span>)</span>
 <span id="cb12-2"><a href="#cb12-2"></a>[<span class="dv">1</span>] <span class="st">"H"</span>  <span class="st">"m"</span>  <span class="st">"w1"</span> <span class="st">"w2"</span> <span class="st">"k"</span> </span></code></pre></div>
 </div>
-<div id="hofii-sub" class="section level3">
-<h3 class="hasAnchor">
-<a href="#hofii-sub" class="anchor"></a><tt>hofII</tt> (sub)</h3>
+<div class="section level4">
+<h4 id="hofii-sub">
+<tt>hofII</tt> (sub)<a class="anchor" aria-label="anchor" href="#hofii-sub"></a>
+</h4>
 <p>This mean function is a sigmoid (logistic) growth curve with a maximum height of <span class="math inline">\(H\)</span>, a point of inflection <span class="math inline">\(m\)</span>, and a growth rate parameter of <span class="math inline">\(\omega_0\)</span>.</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -406,9 +413,10 @@ H &amp;= \mbox{Maximum value of mean function} ~(H &gt; 0, ~~\mbox{or}~~ 0 &lt; 
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw">get_mean_fun_parnames</span>(<span class="st">"hofII"</span>)</span>
 <span id="cb13-2"><a href="#cb13-2"></a>[<span class="dv">1</span>] <span class="st">"H"</span>  <span class="st">"m"</span>  <span class="st">"w0"</span></span></code></pre></div>
 </div>
-<div id="hofiv-sub" class="section level3">
-<h3 class="hasAnchor">
-<a href="#hofiv-sub" class="anchor"></a><tt>hofIV</tt> (sub)</h3>
+<div class="section level4">
+<h4 id="hofiv-sub">
+<tt>hofIV</tt> (sub)<a class="anchor" aria-label="anchor" href="#hofiv-sub"></a>
+</h4>
 <p>This mean function is a scaled product of two sigmoid (logistic) growth curves (one increasing and one decreasing). The growth rates of each curve is <span class="math inline">\(\omega\)</span>, and points of inflection (half height locations) of each curve occur at <span class="math inline">\(m − k\)</span> and <span class="math inline">\(m + k\)</span> respectively.</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -427,9 +435,10 @@ H &amp;= \mbox{Maximum value of mean function} ~(H &gt; 0, ~~\mbox{or}~~ 0 &lt; 
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="kw">get_mean_fun_parnames</span>(<span class="st">"hofIV"</span>)</span>
 <span id="cb14-2"><a href="#cb14-2"></a>[<span class="dv">1</span>] <span class="st">"H"</span> <span class="st">"m"</span> <span class="st">"w"</span> <span class="st">"k"</span></span></code></pre></div>
 </div>
-<div id="hofivb-sub" class="section level3">
-<h3 class="hasAnchor">
-<a href="#hofivb-sub" class="anchor"></a><tt>hofIVb</tt> (sub)</h3>
+<div class="section level4">
+<h4 id="hofivb-sub">
+<tt>hofIVb</tt> (sub)<a class="anchor" aria-label="anchor" href="#hofivb-sub"></a>
+</h4>
 <p>This is the same mean function as the <tt>hofIV</tt>, except that <span class="math inline">\(k = 0\)</span>.</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -446,9 +455,10 @@ H &amp;= \mbox{Maximum value of mean function} ~(H &gt; 0, ~~\mbox{or}~~ 0 &lt; 
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="kw">get_mean_fun_parnames</span>(<span class="st">"hofIVb"</span>)</span>
 <span id="cb15-2"><a href="#cb15-2"></a>[<span class="dv">1</span>] <span class="st">"H"</span> <span class="st">"m"</span> <span class="st">"w"</span></span></code></pre></div>
 </div>
-<div id="hofvb-sub" class="section level3">
-<h3 class="hasAnchor">
-<a href="#hofvb-sub" class="anchor"></a><tt>hofVb</tt> (sub)</h3>
+<div class="section level4">
+<h4 id="hofvb-sub">
+<tt>hofVb</tt> (sub)<a class="anchor" aria-label="anchor" href="#hofvb-sub"></a>
+</h4>
 <p>This is the same mean function as the <tt>hofV</tt>, except that <span class="math inline">\(k = 0\)</span>.</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -469,9 +479,9 @@ H &amp;= \mbox{Maximum value of mean function} ~(H &gt; 0, ~~\mbox{or}~~ 0 &lt; 
 <span id="cb16-2"><a href="#cb16-2"></a>[<span class="dv">1</span>] <span class="st">"H"</span>  <span class="st">"m"</span>  <span class="st">"w1"</span> <span class="st">"w2"</span></span></code></pre></div>
 </div>
 </div>
-<div id="error-disributions" class="section level2">
-<h2 class="hasAnchor">
-<a href="#error-disributions" class="anchor"></a>Error disributions</h2>
+<div class="section level3">
+<h3 id="error-disributions">Error disributions<a class="anchor" aria-label="anchor" href="#error-disributions"></a>
+</h3>
 <p>The error distributions are described in this section. Each error distribution is classified as to the type of data it is suited for. This information is shown in the table below.</p>
 <table class="table">
 <thead><tr class="header">
@@ -567,9 +577,10 @@ H &amp;= \mbox{Maximum value of mean function} ~(H &gt; 0, ~~\mbox{or}~~ 0 &lt; 
 </table>
 <p>In the sections that follow, the value of mean function at the <span class="math inline">\(i^{th}\)</span> observation <span class="math inline">\(x_i\)</span>, is denoted by <span class="math inline">\(\mu_i\)</span>. In other words:</p>
 <p><span class="math display">\[ \mu_i = \mu_{\theta_M} (x_i). \]</span></p>
-<div id="bernoulli-binary" class="section level3">
-<h3 class="hasAnchor">
-<a href="#bernoulli-binary" class="anchor"></a><tt>bernoulli</tt> (binary)</h3>
+<div class="section level4">
+<h4 id="bernoulli-binary">
+<tt>bernoulli</tt> (binary)<a class="anchor" aria-label="anchor" href="#bernoulli-binary"></a>
+</h4>
 <p>The Bernouli distribution is used for modelling binary data (<span class="math inline">\(0/1\)</span>). The mean function is bounded between 0 and 1. There are no extra parameters for this distribution.</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -580,9 +591,10 @@ P (Y_i = y_i \mid \theta_M, ~\theta_E , ~x_i)
 \end{aligned}
 \]</span></p>
 </div>
-<div id="binomial-count-binomial" class="section level3">
-<h3 class="hasAnchor">
-<a href="#binomial-count-binomial" class="anchor"></a><tt>binomial.count</tt> (binomial)</h3>
+<div class="section level4">
+<h4 id="binomial-count-binomial">
+<tt>binomial.count</tt> (binomial)<a class="anchor" aria-label="anchor" href="#binomial-count-binomial"></a>
+</h4>
 <p>The binomial distribution is used for modelling count data that is bounded between 0 and <span class="math inline">\(n\)</span>. The mean function is bounded between 0 and <span class="math inline">\(n\)</span>. There are no extra parameters for this distribution.</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -596,9 +608,10 @@ P (Y_i = y_i \mid ~\theta_M , ~\theta_C , ~x_i)
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="kw">get_constant_parnames</span>(<span class="st">"binomial.count"</span>)</span>
 <span id="cb17-2"><a href="#cb17-2"></a>[<span class="dv">1</span>] <span class="st">"binomial_n"</span></span></code></pre></div>
 </div>
-<div id="binomial-prop-binomial" class="section level3">
-<h3 class="hasAnchor">
-<a href="#binomial-prop-binomial" class="anchor"></a><tt>binomial.prop</tt> (binomial)</h3>
+<div class="section level4">
+<h4 id="binomial-prop-binomial">
+<tt>binomial.prop</tt> (binomial)<a class="anchor" aria-label="anchor" href="#binomial-prop-binomial"></a>
+</h4>
 <p>This is that same model as the <tt>binomial.count</tt> distribution, except the data recorded as proportions (counts divided by <span class="math inline">\(n\)</span>).</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -612,9 +625,10 @@ P (Y_i = ny_i \mid ~\theta_M , ~\theta_C , ~x_i)
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="kw">get_constant_parnames</span>(<span class="st">"binomial.prop"</span>)</span>
 <span id="cb18-2"><a href="#cb18-2"></a>[<span class="dv">1</span>] <span class="st">"binomial_n"</span></span></code></pre></div>
 </div>
-<div id="poisson-count" class="section level3">
-<h3 class="hasAnchor">
-<a href="#poisson-count" class="anchor"></a><tt>poisson</tt> (count)</h3>
+<div class="section level4">
+<h4 id="poisson-count">
+<tt>poisson</tt> (count)<a class="anchor" aria-label="anchor" href="#poisson-count"></a>
+</h4>
 <p>The Poisson distribution has mean parameter <span class="math inline">\(\lambda=\mu_{\theta_M} (x))\)</span>. There are no extra parameters for this distribution.</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -625,9 +639,10 @@ P (Y_i = y_i \mid \theta_M , ~\theta_E , ~x_i)
 \end{aligned}
 \]</span></p>
 </div>
-<div id="negbin-count" class="section level3">
-<h3 class="hasAnchor">
-<a href="#negbin-count" class="anchor"></a><tt>negbin</tt> (count)</h3>
+<div class="section level4">
+<h4 id="negbin-count">
+<tt>negbin</tt> (count)<a class="anchor" aria-label="anchor" href="#negbin-count"></a>
+</h4>
 <p>The negative-binomial distribution we use is actually a Gamma-Poisson distribution with the following form:</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -653,9 +668,10 @@ y_i &amp;\in \{0, 1, 2, \ldots \} \\
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="kw">get_err_dist_parnames</span>(<span class="st">"negbin"</span>)</span>
 <span id="cb19-2"><a href="#cb19-2"></a>[<span class="dv">1</span>] <span class="st">"phi"</span></span></code></pre></div>
 </div>
-<div id="zip-count" class="section level3">
-<h3 class="hasAnchor">
-<a href="#zip-count" class="anchor"></a><tt>zip</tt> (count)</h3>
+<div class="section level4">
+<h4 id="zip-count">
+<tt>zip</tt> (count)<a class="anchor" aria-label="anchor" href="#zip-count"></a>
+</h4>
 <p>The zero-inflated Poisson (ZIP) distribution has zero-spike parameter <span class="math inline">\(\pi\)</span>, and mean parameter <span class="math inline">\(\mu_i\)</span>.</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -674,9 +690,10 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~x_i)
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="kw">get_err_dist_parnames</span>(<span class="st">"zip"</span>)</span>
 <span id="cb20-2"><a href="#cb20-2"></a>[<span class="dv">1</span>] <span class="st">"pi"</span></span></code></pre></div>
 </div>
-<div id="zinb-count" class="section level3">
-<h3 class="hasAnchor">
-<a href="#zinb-count" class="anchor"></a><tt>zinb</tt> (count)</h3>
+<div class="section level4">
+<h4 id="zinb-count">
+<tt>zinb</tt> (count)<a class="anchor" aria-label="anchor" href="#zinb-count"></a>
+</h4>
 <p>The zero-inflated negative-binomial (ZINB) distribution has zero-spike parameter <span class="math inline">\(\pi\)</span>, dispersion parameter <span class="math inline">\(\phi\)</span>, and mean parameter <span class="math inline">\(\mu_i\)</span>.</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -696,9 +713,10 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~x_i)
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="kw">get_err_dist_parnames</span>(<span class="st">"zinb"</span>)</span>
 <span id="cb21-2"><a href="#cb21-2"></a>[<span class="dv">1</span>] <span class="st">"pi"</span>  <span class="st">"phi"</span></span></code></pre></div>
 </div>
-<div id="zipl-count" class="section level3">
-<h3 class="hasAnchor">
-<a href="#zipl-count" class="anchor"></a><tt>zipl</tt> (count)</h3>
+<div class="section level4">
+<h4 id="zipl-count">
+<tt>zipl</tt> (count)<a class="anchor" aria-label="anchor" href="#zipl-count"></a>
+</h4>
 <p>The zero-inflated Poisson linked (ZIPL) distribution is a Poisson distribution with mean parameter <span class="math inline">\(\mu_i\)</span>, with a zero spike that has parameters <span class="math inline">\(\gamma_0\)</span> and <span class="math inline">\(\gamma_1\)</span>. The zero-spike parameters are linked to the mean function on the logit/log scale as follows:</p>
 <p><span class="math display">\[ \mbox{logit}(\pi_i) = \gamma_0 + \gamma_1\log(\mu_i), \]</span></p>
 <p>where <span class="math inline">\(\pi_i\)</span> is the value of the zero-spike parameter at <span class="math inline">\(x_i\)</span>.</p>
@@ -722,9 +740,10 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~x_i)
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="kw">get_err_dist_parnames</span>(<span class="st">"zipl"</span>)</span>
 <span id="cb22-2"><a href="#cb22-2"></a>[<span class="dv">1</span>] <span class="st">"g0"</span> <span class="st">"g1"</span></span></code></pre></div>
 </div>
-<div id="zinbl-count" class="section level3">
-<h3 class="hasAnchor">
-<a href="#zinbl-count" class="anchor"></a><tt>zinbl</tt> (count)</h3>
+<div class="section level4">
+<h4 id="zinbl-count">
+<tt>zinbl</tt> (count)<a class="anchor" aria-label="anchor" href="#zinbl-count"></a>
+</h4>
 <p>The zero-inflated negative-binomial linked (ZINBL) distribution is a negative-binomial distribution with mean parameter <span class="math inline">\(\mu_i\)</span>, dispersion parameter <span class="math inline">\(\phi\)</span>, and has zero-spike parameters <span class="math inline">\(\gamma_0\)</span> and <span class="math inline">\(\gamma_1\)</span>. The zero-spike parameters are linked to the mean function on the logit/log scale as follows:</p>
 <p><span class="math display">\[ \mbox{logit}(\pi_i) = \gamma_0 + \gamma_1\log(\mu_i), \]</span></p>
 <p>where <span class="math inline">\(\pi_i\)</span> is the value of the zero-spike parameter at <span class="math inline">\(x_i\)</span>.</p>
@@ -749,9 +768,10 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~x_i)
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="kw">get_err_dist_parnames</span>(<span class="st">"zinbl"</span>)</span>
 <span id="cb23-2"><a href="#cb23-2"></a>[<span class="dv">1</span>] <span class="st">"g0"</span>  <span class="st">"g1"</span>  <span class="st">"phi"</span></span></code></pre></div>
 </div>
-<div id="zipl-mu-count" class="section level3">
-<h3 class="hasAnchor">
-<a href="#zipl-mu-count" class="anchor"></a><tt>zipl.mu</tt> (count)</h3>
+<div class="section level4">
+<h4 id="zipl-mu-count">
+<tt>zipl.mu</tt> (count)<a class="anchor" aria-label="anchor" href="#zipl-mu-count"></a>
+</h4>
 <p>The zero-inflated Poisson linked-<span class="math inline">\(\mu\)</span> (ZIPL<span class="math inline">\(-\mu\)</span>) distribution is a Poisson distribution with mean parameter <span class="math inline">\(\mu_i\)</span>, with a zero spike that has parameters <span class="math inline">\(\gamma_0\)</span> and <span class="math inline">\(\gamma_1\)</span>. The zero-spike parameters are linked to the mean function on the logit/linear scale as follows:</p>
 <p><span class="math display">\[ \mbox{logit}(\pi_i) = \gamma_0 + \gamma_1\mu_i, \]</span></p>
 <p>where <span class="math inline">\(\pi_i\)</span> is the value of the zero-spike parameter at <span class="math inline">\(x_i\)</span>.</p>
@@ -775,9 +795,10 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~x_i)
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="kw">get_err_dist_parnames</span>(<span class="st">"zipl.mu"</span>)</span>
 <span id="cb24-2"><a href="#cb24-2"></a>[<span class="dv">1</span>] <span class="st">"g0"</span> <span class="st">"g1"</span></span></code></pre></div>
 </div>
-<div id="zinbl-mu-count" class="section level3">
-<h3 class="hasAnchor">
-<a href="#zinbl-mu-count" class="anchor"></a><tt>zinbl.mu</tt> (count)</h3>
+<div class="section level4">
+<h4 id="zinbl-mu-count">
+<tt>zinbl.mu</tt> (count)<a class="anchor" aria-label="anchor" href="#zinbl-mu-count"></a>
+</h4>
 <p>The zero-inflated negative-binomial linked-<span class="math inline">\(\mu\)</span> (ZINBL-<span class="math inline">\(\mu\)</span>) distribution is a negative-binomial distribution with mean parameter <span class="math inline">\(\mu_i\)</span>, dispersion parameter <span class="math inline">\(\phi\)</span>, and has zero-spike parameters <span class="math inline">\(\gamma_0\)</span> and <span class="math inline">\(\gamma_1\)</span>. The zero-spike parameters are linked to the mean function on the logit/linear scale as follows:</p>
 <p><span class="math display">\[ \mbox{logit}(\pi_i) = \gamma_0 + \gamma_1\mu_i, \]</span></p>
 <p>where <span class="math inline">\(\pi_i\)</span> is the value of the zero-spike parameter at <span class="math inline">\(x_i\)</span>.</p>
@@ -802,9 +823,10 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~x_i)
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="kw">get_err_dist_parnames</span>(<span class="st">"zinbl.mu"</span>)</span>
 <span id="cb25-2"><a href="#cb25-2"></a>[<span class="dv">1</span>] <span class="st">"g0"</span>  <span class="st">"g1"</span>  <span class="st">"phi"</span></span></code></pre></div>
 </div>
-<div id="gaussian-abundance" class="section level3">
-<h3 class="hasAnchor">
-<a href="#gaussian-abundance" class="anchor"></a><tt>gaussian</tt> (abundance)</h3>
+<div class="section level4">
+<h4 id="gaussian-abundance">
+<tt>gaussian</tt> (abundance)<a class="anchor" aria-label="anchor" href="#gaussian-abundance"></a>
+</h4>
 <p>The Gaussian distribution has mean parameter <span class="math inline">\(\mu_i\)</span> and standard deviation <span class="math inline">\(\sigma\)</span>.</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -818,9 +840,10 @@ P(Y_i=y_i \mid ~\theta_M, ~\theta_E, ~x_i)
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="kw">get_err_dist_parnames</span>(<span class="st">"gaussian"</span>)</span>
 <span id="cb26-2"><a href="#cb26-2"></a>[<span class="dv">1</span>] <span class="st">"sigma"</span></span></code></pre></div>
 </div>
-<div id="tweedie-abundance" class="section level3">
-<h3 class="hasAnchor">
-<a href="#tweedie-abundance" class="anchor"></a><tt>tweedie</tt> (abundance)</h3>
+<div class="section level4">
+<h4 id="tweedie-abundance">
+<tt>tweedie</tt> (abundance)<a class="anchor" aria-label="anchor" href="#tweedie-abundance"></a>
+</h4>
 <p>Tweedie distributions are a class of exponential dispersion models where the variance is a function of the mean of the form:</p>
 <p><span class="math display">\[ \mbox{var}(Y_i) = \phi\mu_i^\rho,\]</span></p>
 <p>where <span class="math inline">\(\rho \in (-\infty, 0] \cup [1, \infty)\)</span>. Special cases include the normal (<span class="math inline">\(\rho = 0\)</span>), Poisson (<span class="math inline">\(\rho = 1\)</span>), Gamma (<span class="math inline">\(\rho = 2\)</span>) and inverse Gaussian (<span class="math inline">\(\rho = 3\)</span>) distributions. For <span class="math inline">\(1 &lt; \rho &lt; 2\)</span>, the distributions are continuous for <span class="math inline">\(Y &gt; 0\)</span> and have a discrete mass at <span class="math inline">\(Y = 0\)</span>. We will restrict our attention to <span class="math inline">\(1 &lt; \rho &lt; 2\)</span>.</p>
@@ -839,9 +862,10 @@ P(Y_i=y_i \mid ~\theta_M, ~\theta_E, ~x_i)
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="kw">get_err_dist_parnames</span>(<span class="st">"tweedie"</span>)</span>
 <span id="cb27-2"><a href="#cb27-2"></a>[<span class="dv">1</span>] <span class="st">"phi"</span> <span class="st">"rho"</span></span></code></pre></div>
 </div>
-<div id="zig-abundance" class="section level3">
-<h3 class="hasAnchor">
-<a href="#zig-abundance" class="anchor"></a><tt>zig</tt> (abundance)</h3>
+<div class="section level4">
+<h4 id="zig-abundance">
+<tt>zig</tt> (abundance)<a class="anchor" aria-label="anchor" href="#zig-abundance"></a>
+</h4>
 <p>The zero-inflated Gamma (ZIG) distribution has zero-spike parameter <span class="math inline">\(\pi\)</span>, dispersion parameter <span class="math inline">\(\phi\)</span>, and mean parameter <span class="math inline">\(\mu_i\)</span>.</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -864,9 +888,10 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~x_i)
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="kw">get_err_dist_parnames</span>(<span class="st">"zig"</span>)</span>
 <span id="cb28-2"><a href="#cb28-2"></a>[<span class="dv">1</span>] <span class="st">"pi"</span>  <span class="st">"phi"</span></span></code></pre></div>
 </div>
-<div id="zigl-abundance" class="section level3">
-<h3 class="hasAnchor">
-<a href="#zigl-abundance" class="anchor"></a><tt>zigl</tt> (abundance)</h3>
+<div class="section level4">
+<h4 id="zigl-abundance">
+<tt>zigl</tt> (abundance)<a class="anchor" aria-label="anchor" href="#zigl-abundance"></a>
+</h4>
 <p>The zero-inflated gamma linked (ZIGL) distribution is a Gamma distribution with mean parameter <span class="math inline">\(\mu_i\)</span>, a dispersion parameter <span class="math inline">\(\phi\)</span>, and a zero spike that has parameters <span class="math inline">\(\gamma_0\)</span> and <span class="math inline">\(\gamma_1\)</span>. The zero-spike parameters are linked to the mean function on the logit/log scale as follows:</p>
 <p><span class="math display">\[ \mbox{logit}(\pi_i) = \gamma_0 + \gamma_1\log(\mu_i), \]</span></p>
 <p>where <span class="math inline">\(\pi_i\)</span> is the value of the zero-spike parameter at <span class="math inline">\(x_i\)</span>.</p>
@@ -894,9 +919,10 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~x_i)
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="kw">get_err_dist_parnames</span>(<span class="st">"zigl"</span>)</span>
 <span id="cb29-2"><a href="#cb29-2"></a>[<span class="dv">1</span>] <span class="st">"g0"</span>  <span class="st">"g1"</span>  <span class="st">"phi"</span></span></code></pre></div>
 </div>
-<div id="zigl-mu-abundance" class="section level3">
-<h3 class="hasAnchor">
-<a href="#zigl-mu-abundance" class="anchor"></a><tt>zigl.mu</tt> (abundance)</h3>
+<div class="section level4">
+<h4 id="zigl-mu-abundance">
+<tt>zigl.mu</tt> (abundance)<a class="anchor" aria-label="anchor" href="#zigl-mu-abundance"></a>
+</h4>
 <p>The zero-inflated gamma linked-<span class="math inline">\(\mu\)</span> (ZIGL-<span class="math inline">\(\mu\)</span>) distribution is a Gamma distribution with mean parameter <span class="math inline">\(\mu_i\)</span>, a dispersion parameter <span class="math inline">\(\phi\)</span>, and a zero spike that has parameters <span class="math inline">\(\gamma_0\)</span> and <span class="math inline">\(\gamma_1\)</span>. The zero-spike parameters are linked to the mean function on the logit/linear scale as follows:</p>
 <p><span class="math display">\[ \mbox{logit}(\pi_i) = \gamma_0 + \gamma_1\mu_i, \]</span></p>
 <p>where <span class="math inline">\(\pi_i\)</span> is the value of the zero-spike parameter at <span class="math inline">\(x_i\)</span>.</p>
@@ -924,9 +950,10 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~x_i)
 <div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="kw">get_err_dist_parnames</span>(<span class="st">"zigl.mu"</span>)</span>
 <span id="cb30-2"><a href="#cb30-2"></a>[<span class="dv">1</span>] <span class="st">"g0"</span>  <span class="st">"g1"</span>  <span class="st">"phi"</span></span></code></pre></div>
 </div>
-<div id="ziig-abundance" class="section level3">
-<h3 class="hasAnchor">
-<a href="#ziig-abundance" class="anchor"></a><tt>ziig</tt> (abundance)</h3>
+<div class="section level4">
+<h4 id="ziig-abundance">
+<tt>ziig</tt> (abundance)<a class="anchor" aria-label="anchor" href="#ziig-abundance"></a>
+</h4>
 <p>The zero-inflated inverse-Gaussian (ZIIG) distribution has zero-spike parameter <span class="math inline">\(\pi\)</span>, dispersion parameter <span class="math inline">\(\phi\)</span>, and mean parameter <span class="math inline">\(\mu_i\)</span>.</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -948,9 +975,10 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~x_i)
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="kw">get_err_dist_parnames</span>(<span class="st">"ziig"</span>)</span>
 <span id="cb31-2"><a href="#cb31-2"></a>[<span class="dv">1</span>] <span class="st">"pi"</span>  <span class="st">"phi"</span></span></code></pre></div>
 </div>
-<div id="ziigl-abundance" class="section level3">
-<h3 class="hasAnchor">
-<a href="#ziigl-abundance" class="anchor"></a><tt>ziigl</tt> (abundance)</h3>
+<div class="section level4">
+<h4 id="ziigl-abundance">
+<tt>ziigl</tt> (abundance)<a class="anchor" aria-label="anchor" href="#ziigl-abundance"></a>
+</h4>
 <p>The zero-inflated inverse-Gaussian linked (ZIIGL) distribution is an inverse-Gaussian distribution with mean parameter <span class="math inline">\(\mu_i\)</span>, a dispersion parameter <span class="math inline">\(\phi\)</span>, and a zero spike that has parameters <span class="math inline">\(\gamma_0\)</span> and <span class="math inline">\(\gamma_1\)</span>. The zero-spike parameters are linked to the mean function on the logit/log scale as follows:</p>
 <p><span class="math display">\[ \mbox{logit}(\pi_i) = \gamma_0 + \gamma_1\log(\mu_i), \]</span></p>
 <p>where <span class="math inline">\(\pi_i\)</span> is the value of the zero-spike parameter at <span class="math inline">\(x_i\)</span>.</p>
@@ -978,9 +1006,10 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~x_i)
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="kw">get_err_dist_parnames</span>(<span class="st">"ziigl"</span>)</span>
 <span id="cb32-2"><a href="#cb32-2"></a>[<span class="dv">1</span>] <span class="st">"g0"</span>  <span class="st">"g1"</span>  <span class="st">"phi"</span></span></code></pre></div>
 </div>
-<div id="ziigl-mu-abundance" class="section level3">
-<h3 class="hasAnchor">
-<a href="#ziigl-mu-abundance" class="anchor"></a><tt>ziigl.mu</tt> (abundance)</h3>
+<div class="section level4">
+<h4 id="ziigl-mu-abundance">
+<tt>ziigl.mu</tt> (abundance)<a class="anchor" aria-label="anchor" href="#ziigl-mu-abundance"></a>
+</h4>
 <p>The zero-inflated inverse-Gaussian linked-<span class="math inline">\(\mu\)</span> (ZIIGL-<span class="math inline">\(\mu\)</span>) distribution is an inverse-Gaussian distribution with mean parameter <span class="math inline">\(\mu_i\)</span>, a dispersion parameter <span class="math inline">\(\phi\)</span>, and a zero spike that has parameters <span class="math inline">\(\gamma_0\)</span> and <span class="math inline">\(\gamma_1\)</span>. The zero-spike parameters are linked to the mean function on the logit/linear scale as follows:</p>
 <p><span class="math display">\[ \mbox{logit}(\pi_i) = \gamma_0 + \gamma_1\mu_i, \]</span></p>
 <p>where <span class="math inline">\(\pi_i\)</span> is the value of the zero-spike parameter at <span class="math inline">\(x_i\)</span>.</p>
@@ -1008,9 +1037,10 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~x_i)
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="kw">get_err_dist_parnames</span>(<span class="st">"ziigl.mu"</span>)</span>
 <span id="cb33-2"><a href="#cb33-2"></a>[<span class="dv">1</span>] <span class="st">"g0"</span>  <span class="st">"g1"</span>  <span class="st">"phi"</span></span></code></pre></div>
 </div>
-<div id="tab-percentage" class="section level3">
-<h3 class="hasAnchor">
-<a href="#tab-percentage" class="anchor"></a><tt>tab</tt> (percentage)</h3>
+<div class="section level4">
+<h4 id="tab-percentage">
+<tt>tab</tt> (percentage)<a class="anchor" aria-label="anchor" href="#tab-percentage"></a>
+</h4>
 <p>The tail-adjusted beta (TAB) distribution is a beta distribution where values less than <span class="math inline">\(\delta\)</span> are rounded down to zero, and values greater than <span class="math inline">\(1-\delta\)</span> are rounded up to one. This is used to model data that is between 0 and 1 (inclusive).</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -1044,9 +1074,10 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i)
 <span id="cb34-3"><a href="#cb34-3"></a><span class="kw">get_constant_parnames</span>(<span class="st">"tab"</span>)</span>
 <span id="cb34-4"><a href="#cb34-4"></a>[<span class="dv">1</span>] <span class="st">"delta"</span></span></code></pre></div>
 </div>
-<div id="zitab-percentage" class="section level3">
-<h3 class="hasAnchor">
-<a href="#zitab-percentage" class="anchor"></a><tt>zitab</tt> (percentage)</h3>
+<div class="section level4">
+<h4 id="zitab-percentage">
+<tt>zitab</tt> (percentage)<a class="anchor" aria-label="anchor" href="#zitab-percentage"></a>
+</h4>
 <p>The zero-inflated tail-adjusted Beta (ZITAB) distribution is the tail-adjusted beta distribution with a zero-inflated spike added.</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -1073,12 +1104,12 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i)
 </div>
 </div>
 </div>
-<div id="fitting-models" class="section level1">
-<h1 class="hasAnchor">
-<a href="#fitting-models" class="anchor"></a>Fitting models</h1>
-<div id="setting-models-to-fit" class="section level2">
-<h2 class="hasAnchor">
-<a href="#setting-models-to-fit" class="anchor"></a>Setting models to fit</h2>
+<div class="section level2">
+<h2 id="fitting-models">Fitting models<a class="anchor" aria-label="anchor" href="#fitting-models"></a>
+</h2>
+<div class="section level3">
+<h3 id="setting-models-to-fit">Setting models to fit<a class="anchor" aria-label="anchor" href="#setting-models-to-fit"></a>
+</h3>
 <p>The <tt>set_models()</tt> function is used to create a data frame that contains the mean functions, error distributions, and if appropriate the binomial <span class="math inline">\(n\)</span> parameter, of all models that one would wish to fit or simulate data from.</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="co">## All possible combinations of mean functions and error distrbiutions</span></span>
 <span id="cb36-2"><a href="#cb36-2"></a><span class="kw">set_models</span> (<span class="dt">mean_fun=</span><span class="kw">c</span>(<span class="st">"gaussian"</span>, <span class="st">"beta"</span>), <span class="dt">err_dist=</span><span class="kw">c</span>(<span class="st">"zinb"</span>, <span class="st">"zinbl"</span>),</span>
@@ -1116,13 +1147,13 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i)
 <span id="cb36-34"><a href="#cb36-34"></a><span class="dv">9</span>         sech      tab         <span class="ot">NA</span></span>
 <span id="cb36-35"><a href="#cb36-35"></a><span class="dv">10</span>        sech    zitab         <span class="ot">NA</span></span></code></pre></div>
 </div>
-<div id="simulated-data" class="section level2">
-<h2 class="hasAnchor">
-<a href="#simulated-data" class="anchor"></a>Simulated data</h2>
+<div class="section level3">
+<h3 id="simulated-data">Simulated data<a class="anchor" aria-label="anchor" href="#simulated-data"></a>
+</h3>
 <p>This section describes how to simulate data sets for any possible model. The <tt>create_default_par_list()</tt> function set default parameter values for each selected model.</p>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## --- Set models</span>
-<span class="va">Models</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/set_models.html">set_models</a></span> <span class="op">(</span>mean_fun<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"gaussian"</span><span class="op">)</span>, err_dist<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"zip"</span>, <span class="st">"zinb"</span><span class="op">)</span><span class="op">)</span>
+<span class="va">Models</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/set_models.html">set_models</a></span> <span class="op">(</span>mean_fun<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gaussian"</span><span class="op">)</span>, err_dist<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"zip"</span>, <span class="st">"zinb"</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co">## --- Set default parameters list</span>
 <span class="va">Pars</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_default_par_list.html">create_default_par_list</a></span> <span class="op">(</span><span class="va">Models</span><span class="op">)</span>
@@ -1131,9 +1162,9 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i)
 <span class="va">Data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_simulated_datasets.html">create_simulated_datasets</a></span> <span class="op">(</span><span class="va">Pars</span>, N<span class="op">=</span><span class="fl">200</span>, xmin<span class="op">=</span><span class="fl">0</span>, xmax<span class="op">=</span><span class="fl">100</span>, seed<span class="op">=</span><span class="fl">12345</span><span class="op">)</span></code></pre></div>
 <p>This code creates simulates data for the <tt>gaussian-zip</tt>, and <tt>gaussian-zinb</tt> models. The objects <tt>Pars</tt> is a list containing parameters for each model. The object <tt>Data</tt> is a list containing the data for each model; <tt>Data[[1]]</tt> is the data for the first model, etc.</p>
 </div>
-<div id="real-data" class="section level2">
-<h2 class="hasAnchor">
-<a href="#real-data" class="anchor"></a>Real data</h2>
+<div class="section level3">
+<h3 id="real-data">Real data<a class="anchor" aria-label="anchor" href="#real-data"></a>
+</h3>
 <p>The <tt>senlm</tt> packages contains the following data sets:</p>
 <ul>
 <li><tt>haul</tt></li>
@@ -1149,9 +1180,9 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i)
 <span id="cb38-8"><a href="#cb38-8"></a><span class="dv">1721</span> <span class="dv">2003</span> <span class="fl">172.6837</span>  <span class="fl">47.01439</span>                      <span class="dv">0</span>                      <span class="dv">0</span></span>
 <span id="cb38-9"><a href="#cb38-9"></a><span class="dv">1722</span> <span class="dv">2003</span> <span class="fl">985.7053</span>  <span class="fl">47.56385</span>                     <span class="dv">18</span>                    <span class="dv">534</span></span></code></pre></div>
 </div>
-<div id="fitting-models-to-data" class="section level2">
-<h2 class="hasAnchor">
-<a href="#fitting-models-to-data" class="anchor"></a>Fitting models to data</h2>
+<div class="section level3">
+<h3 id="fitting-models-to-data">Fitting models to data<a class="anchor" aria-label="anchor" href="#fitting-models-to-data"></a>
+</h3>
 <p>To fit one model to a data set we use the <tt>senlm()</tt> function. We illustrate this with the <tt>haul</tt> dataset.</p>
 <div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a>Fit &lt;-<span class="st"> </span><span class="kw">senlm</span> (<span class="dt">data=</span>haul, <span class="dt">xvar=</span><span class="st">"depth"</span>, <span class="dt">yvar=</span><span class="st">"Sebastolobus.altivelis"</span>, </span>
 <span id="cb39-2"><a href="#cb39-2"></a>              <span class="dt">mean_fun=</span><span class="st">"gaussian"</span>, <span class="dt">err_dist=</span><span class="st">"zip"</span>, <span class="dt">conf.level=</span><span class="fl">0.95</span>)</span>
@@ -1161,7 +1192,7 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i)
 <span id="cb39-6"><a href="#cb39-6"></a></span>
 <span id="cb39-7"><a href="#cb39-7"></a><span class="op">$</span>theta</span>
 <span id="cb39-8"><a href="#cb39-8"></a>          H           m           s          pi </span>
-<span id="cb39-9"><a href="#cb39-9"></a><span class="fl">817.5307778</span> <span class="fl">917.8020413</span> <span class="fl">225.5627312</span>   <span class="fl">0.5954256</span> </span>
+<span id="cb39-9"><a href="#cb39-9"></a><span class="fl">817.5307423</span> <span class="fl">917.8020428</span> <span class="fl">225.5627460</span>   <span class="fl">0.5954253</span> </span>
 <span id="cb39-10"><a href="#cb39-10"></a></span>
 <span id="cb39-11"><a href="#cb39-11"></a><span class="op">$</span>IC</span>
 <span id="cb39-12"><a href="#cb39-12"></a>    npar      nll      AIC     AICc      BIC </span>
@@ -1169,8 +1200,8 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i)
 <p>Confidence intervals for the estimated parameters can be display as follows. The default confidence level is 95% which is set when fitting the model. Occasionly due to numerical instability of the estimated Hessian matrix the standard errors are not calculated.</p>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="kw">rbind</span> (<span class="dt">lower=</span>Fit<span class="op">$</span>lb, <span class="dt">upper=</span>Fit<span class="op">$</span>ub)</span>
 <span id="cb40-2"><a href="#cb40-2"></a>             H        m        s        pi</span>
-<span id="cb40-3"><a href="#cb40-3"></a>lower <span class="fl">812.7322</span> <span class="fl">916.2962</span> <span class="fl">224.2578</span> <span class="fl">0.5615010</span></span>
-<span id="cb40-4"><a href="#cb40-4"></a>upper <span class="fl">822.3577</span> <span class="fl">919.3079</span> <span class="fl">226.8752</span> <span class="fl">0.6284622</span></span></code></pre></div>
+<span id="cb40-3"><a href="#cb40-3"></a>lower <span class="fl">812.7322</span> <span class="fl">916.2962</span> <span class="fl">224.2579</span> <span class="fl">0.5615008</span></span>
+<span id="cb40-4"><a href="#cb40-4"></a>upper <span class="fl">822.3576</span> <span class="fl">919.3079</span> <span class="fl">226.8752</span> <span class="fl">0.6284619</span></span></code></pre></div>
 <p>To fit multiple models to multiple data sets, one can use the <tt>msenlm()</tt> function. The models to fit are specified with the <tt>set_models()</tt> function. The data should be stored in a list. It could be simulated data create using the <tt>create_simulated_datasets()</tt> function.</p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>Models &lt;-<span class="st"> </span><span class="kw">set_models</span> (<span class="dt">mean_class=</span><span class="st">"test"</span>, <span class="dt">err_class=</span><span class="st">"binary"</span>)</span>
 <span id="cb41-2"><a href="#cb41-2"></a>Pars   &lt;-<span class="st"> </span><span class="kw">create_default_par_list</span> (<span class="dt">models=</span>Models)</span>
@@ -1244,11 +1275,13 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i)
 
 
       <footer><div class="copyright">
-  <p>Developed by Daniel Walsh, Marti Anderson, Andrew Punnett, Nurudeen Adegoke.</p>
+  <p></p>
+<p>Developed by Daniel Walsh, Marti Anderson, Andrew Punnett, Nurudeen Adegoke.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -1256,6 +1289,8 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i)
 
   
 
+
+  
 
   </body>
 </html>
