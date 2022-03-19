@@ -42,7 +42,7 @@ init_mle <- function (ModelInfo, Dat) {
     ## --- Estimate mean function via spline
     MF <- init_spline_mean_function (ModelInfo, DF, spar)
     spar <- MF$spar
-     
+    
     ## --- Estimate error distribution parameters
     thetaE <- init_error_par (ModelInfo, DF, MF)
     
@@ -354,7 +354,7 @@ init_estimate_pi <- function (ModelInfo, DF, mu, sigma, phi) {
 }
 
 init_estimate_linked_intercept <- function (ModelInfo, DF, pi) {
-  ## --- Estimate the zero spike proportion parameter, gamma 0
+  ## --- Estimate the zero spike proportion intercept parameter, gamma 0
 
   ## Grab error distribution
   err_dist <- ModelInfo$err_dist
@@ -375,7 +375,7 @@ init_estimate_linked_intercept <- function (ModelInfo, DF, pi) {
 }
 
 init_estimate_linked_slope <- function (ModelInfo, DF, g0) {
-  ## --- Estimate the zero spike proportion parameter, gamma 0
+  ## --- Estimate the zero spike proportion slope parameter, gamma 1
 
   ## Grab error distribution
   err_dist <- ModelInfo$err_dist
@@ -689,7 +689,7 @@ init_mean_hofII <- function (ModelInfo, DF, MF) {
   e <- abs(mu - H/2)
   m <- x[which (e==min(e))[1]]
 
-  ## The slope of the hoffII curve at x=m equals H*w0/4
+  ## The slope of the hofII curve at x=m equals H*w0/4
   ## We estimate the slope at x=m by considering points
   ## at x= m - (1/w0), and x= m + (1/w0)
   ## Or at where -w0(x-m) = {-1, 1}

@@ -1199,9 +1199,191 @@ summary(msenlm.best(Fits, best="AICc"))
 ```
 
 
+# Initial Parameter Estimates
+
+The maximum likelihood estimation needs good initial parameter estimates to work well. 
+In this section we describe the methods used to obtain these estimates.
+
+## Smoothing spline
+
+Given data ${x_i, y_i}$, we first approximate the mean function, using a smoothing spline 
+(<tt>stats::smooth.spline</tt>) resulting in a set of points ${x_i,\mu_i}$. Since our data
+are non-negative, any negative values of the spline ($\mu_i$ values) are set to zero.
+
+From this we extract the following estimates.
+
+- $H$: The maximum value (height) of the spline.
+- $m$: The location ($x$) of the maxium height. If the maximum height is reached
+  in multiple locations we average these locations.
+- $s$: This is a conservative estimate of the spread of the data. We take one quarter of 
+  the range of the $x$-values where the $\mu$-value is positive.
+  
+## Error parameter estimates
+
+
+The table below list the parameters of each error model.
+
+
+|           Model | Parameters |  |       |        |          |        |
+| --------------- |:-----:|:-----:|:-----:|:------:|:--------:|:------:|
+|       bernoulli |       |       |       |        |          |        |
+|  binomial.count |       |       |       |        |          |        |
+|   binomial.prop |       |       |       |        |          |        |
+|         poisson |       |       |       |        |          |        |
+|          negbin |       |       |       | $\phi$ |          |        |
+|             zip |       |       | $\pi$ |        |          |        |
+|            zinb |       |       | $\pi$ | $\phi$ |          |        |
+|            zipl | $\gamma_0$ | $\gamma_1$ |       |        |          |        |
+|           zinbl | $\gamma_0$ | $\gamma_1$ |       | $\phi$ |          |        |
+|         zipl.mu | $\gamma_0$ | $\gamma_1$ |       |        |          |        |
+|        zinbl.mu | $\gamma_0$ | $\gamma_1$ |       | $\phi$ |          |        |
+|        gaussian |       |       |       |        | $\sigma$ |        | 
+|         tweedie |       |       |       | $\phi$ |          | $\rho$ |
+|             zig |       |       | $\pi$ | $\phi$ |          |        |
+|            zigl | $\gamma_0$ | $\gamma_1$ |       | $\phi$ |          |        |
+|         zigl.mu | $\gamma_0$ | $\gamma_1$ |       | $\phi$ |          |        |
+|            ziig |       |       | $\pi$ | $\phi$ |          |        |
+|           ziigl | $\gamma_0$ | $\gamma_1$ |       | $\phi$ |          |        |
+|             tab |       |       |       |        | $\sigma$ |        |
+|           zitab |       |       | $\pi$ |        | $\sigma$ |        |
+
+
+### $\phi$
+
+The dispersion parameter, $\phi$, is estimated as follows.
+
+   - Find the residuals, $r_i$, of the data $y_i$ around the spline fit $\mu_i$.
+   - Fit another smoothing spline to the squared residuals versus $x_i$. Call these points $v_i$.
+   - Set any negative values of $v_i$ to zero.
+   - Estimate $\phi$ as the median of the absolute value of $(v_i - \mu_i)/\mu^2$. (This is
+	 motivated by the mean/variance relationship of a negative binomial).
+
+
+### $\sigma$
+
+For a guassian error distribution, $\sigma$ is a standard deviation and is estimated as 
+the standard deviation of $y_i - \mu_i$.
+
+For a tail-adjusted beta, and a zero-inflated tail adjusted beta, $\sigma$ is a 
+shape parameter which is estimated using the method of moments.
+
+   - Let $V$ be the variance of $y_i - \mu_i$.
+   - Let $S_i = V/(\mu_i*(1-mu_i) - V)$.
+   - Estimate $\sigma$ with the average of the non-negative $S_i$. 
+
+
+### $\pi$
+
+The parameter $\pi$ is usually estimated to be the proportion of zeros in the data ($y$) minus the 
+expected number of zeros due to the spike. For the zitab model, $\pi$ was estimated using the method of
+moments.
+
+If the final estimate of $\pi$ is less than 0.01 then it is set to 0.01.
+
+
+### $\gamma_0$
+
+Given an estimate of $\pi$ as above we estimate the zero spike proportion intercept parameter,
+$\gamma_0$, with $\log (\pi/(1 - \pi))$.
+
+
+### $\gamma_1$
+
+The  zero spike proportion slope parameter, $\gamma_1$, is initially set to 0.
 
 
 
+### $\rho$
+
+The tweedie exponent parameter, $\rho$,  is initially set to 1.1.
+
+
+
+## Mean function parameters 
+
+The table below list the parameters of each mean function.
+
+
+|              Model | Parameters |  |       |        |          |        |
+| ------------------ |:-----:|:-----:|:-----:|:------:|:--------:|:------:|
+|           constant | $H$ | | | | |
+|            uniform | $H$ | $c$ | $d$ | | | 
+|               beta | $H$ | $c$ | $d$ | $u$ | $v$ |
+|           gaussian | $H$ | $m$ | $s$ | | |
+|        mixgaussian | $H$ | $m_1$ $m_2$ | $s_1$ $s_2$ | $\alpha$ | |
+|  mixgaussian.equal | $H$ | $m_1$ $m_2$ | $s$ | $\alpha$ |
+|               sech | $H$ | $m$ | $s$ | $r$ | $p$ |
+|            sech.p1 | $H$ | $m$ | $s$ | $r$ | |
+|          sech.r0p1 | $H$ | $m$ | $s$ |
+|               hofV | $H$ | $m$         | $w_1$ $w_2$ | $k$ | |
+|              hofII | $H$ | $m$ | $\omega_0$ | | |
+|              hofIV | $H$ | $m$ | $\omega$ | $k$ | |
+|             hofIVb | $H$ | $m$ | $\omega$ | | |
+|              hofVb | $H$ | $m$ | $\omega_1$ $\omega_2$ | | 
+
+
+
+### H
+
+The estimate of $H$ is the average of $y_i$. When the error distribution is bernoulli, tab, or zitab 
+(i.e. $y_i$ is 0-1), $H$ is thresholded to a maximum value of 0.9.
+
+
+### Uniform / Beta 
+
+The boundary parameters $c$ and $d$ are estimated to be the minimum and maximum values of $x_i$ 
+respectively, conditional on the $y_i$ being positive.
+
+The beta parameters $u$ and $v$ are estimated using the standard method of moments.
+
+
+### Gaussian
+
+The $m$ and $s$ parameters are estimated from the smoothing spline above.
+
+
+### Mixgaussian/Mixgaussian.equal
+
+The estimates of the means $m_1$ and $m_2$ are taken to be the 
+35th and 65th percentiles of the $x$ values (when $y$ is positive). 
+This is largely independent of the $y$ data but is a simple method for keeping the two 
+modes from converging too early in the fitting algorithm.
+
+The standard deviations $s$, or $s_1$ and $s_2$, are taken to be the estimate of $s$ from the 
+smoothing spline.
+
+The mixing parameter, $\alpha$, is set to 0.5.
+
+
+
+### Sech, Sech.p1, Sech.r0p1
+
+The mode location parameter, $m$, is estimated from the smoothing spline.
+
+The skewness parameter, $r$, is set to 0.
+
+The peakedness parameter, $p$, is set to 1.
+
+For the spread parameter, $s$: let $s_x$ be the standard deviation of the 
+$x$ values weighted by the $y$ values, and let $s_0$ be the 
+smallest non-zero distance between the $x$ values. The initial estimate of 
+$s$ is taken to me the maximum of $s_x$ and $s_0$.
+
+
+### HofIV, HofIVb, HofV, HofVb
+
+The growth rate parameters, $\omega$, $\omega_1$, and $\omega_2$ are estimated to
+be $4\exp(-0.5)/s$ where $s$ is the spread estimate from the smoothing spline.
+
+$k$ is taken to be 1.
+
+### HofII
+
+The slope of the hofII curve at $x=m$ equals $H*\omega_0/4$.
+We use this fact to estimate this slope by considering points
+at $x= m - (1/w0)$, and $x= m + (1/w0)$ and then solving to estimate $\omega_0$.
+
+  
 
 
 
