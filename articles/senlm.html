@@ -1192,7 +1192,7 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i)
 <span id="cb39-6"><a href="#cb39-6"></a></span>
 <span id="cb39-7"><a href="#cb39-7"></a><span class="op">$</span>theta</span>
 <span id="cb39-8"><a href="#cb39-8"></a>          H           m           s          pi </span>
-<span id="cb39-9"><a href="#cb39-9"></a><span class="fl">817.5307423</span> <span class="fl">917.8020428</span> <span class="fl">225.5627460</span>   <span class="fl">0.5954253</span> </span>
+<span id="cb39-9"><a href="#cb39-9"></a><span class="fl">817.5307959</span> <span class="fl">917.8020459</span> <span class="fl">225.5627339</span>   <span class="fl">0.5954252</span> </span>
 <span id="cb39-10"><a href="#cb39-10"></a></span>
 <span id="cb39-11"><a href="#cb39-11"></a><span class="op">$</span>IC</span>
 <span id="cb39-12"><a href="#cb39-12"></a>    npar      nll      AIC     AICc      BIC </span>
@@ -1200,8 +1200,8 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i)
 <p>Confidence intervals for the estimated parameters can be display as follows. The default confidence level is 95% which is set when fitting the model. Occasionly due to numerical instability of the estimated Hessian matrix the standard errors are not calculated.</p>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="kw">rbind</span> (<span class="dt">lower=</span>Fit<span class="op">$</span>lb, <span class="dt">upper=</span>Fit<span class="op">$</span>ub)</span>
 <span id="cb40-2"><a href="#cb40-2"></a>             H        m        s        pi</span>
-<span id="cb40-3"><a href="#cb40-3"></a>lower <span class="fl">812.7322</span> <span class="fl">916.2962</span> <span class="fl">224.2579</span> <span class="fl">0.5615008</span></span>
-<span id="cb40-4"><a href="#cb40-4"></a>upper <span class="fl">822.3576</span> <span class="fl">919.3079</span> <span class="fl">226.8752</span> <span class="fl">0.6284619</span></span></code></pre></div>
+<span id="cb40-3"><a href="#cb40-3"></a>lower <span class="fl">812.7322</span> <span class="fl">916.2962</span> <span class="fl">224.2578</span> <span class="fl">0.5615006</span></span>
+<span id="cb40-4"><a href="#cb40-4"></a>upper <span class="fl">822.3577</span> <span class="fl">919.3079</span> <span class="fl">226.8752</span> <span class="fl">0.6284618</span></span></code></pre></div>
 <p>To fit multiple models to multiple data sets, one can use the <tt>msenlm()</tt> function. The models to fit are specified with the <tt>set_models()</tt> function. The data should be stored in a list. It could be simulated data create using the <tt>create_simulated_datasets()</tt> function.</p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>Models &lt;-<span class="st"> </span><span class="kw">set_models</span> (<span class="dt">mean_class=</span><span class="st">"test"</span>, <span class="dt">err_class=</span><span class="st">"binary"</span>)</span>
 <span id="cb41-2"><a href="#cb41-2"></a>Pars   &lt;-<span class="st"> </span><span class="kw">create_default_par_list</span> (<span class="dt">models=</span>Models)</span>
@@ -1260,6 +1260,468 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i)
 <span id="cb42-27"><a href="#cb42-27"></a>         s           pi      phi npar       nll      AIC     AICc      BIC</span>
 <span id="cb42-28"><a href="#cb42-28"></a><span class="dv">1</span> <span class="fl">213.8882</span> <span class="fl">1.378740e-13</span> <span class="fl">3.044749</span>    <span class="dv">5</span>  <span class="fl">927.2072</span> <span class="fl">1864.414</span> <span class="fl">1864.471</span> <span class="fl">1889.301</span></span>
 <span id="cb42-29"><a href="#cb42-29"></a><span class="dv">2</span> <span class="fl">164.9688</span> <span class="fl">1.548443e-01</span> <span class="fl">1.575696</span>    <span class="dv">5</span> <span class="fl">2910.8488</span> <span class="fl">5831.698</span> <span class="fl">5831.754</span> <span class="fl">5856.584</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="initial-parameter-estimates">Initial Parameter Estimates<a class="anchor" aria-label="anchor" href="#initial-parameter-estimates"></a>
+</h2>
+<p>The maximum likelihood estimation needs good initial parameter estimates to work well. In this section we describe the methods used to obtain these estimates.</p>
+<div class="section level3">
+<h3 id="smoothing-spline">Smoothing spline<a class="anchor" aria-label="anchor" href="#smoothing-spline"></a>
+</h3>
+<p>Given data <span class="math inline">\({x_i, y_i}\)</span>, we first approximate the mean function, using a smoothing spline (<tt>stats::smooth.spline</tt>) resulting in a set of points <span class="math inline">\({x_i,\mu_i}\)</span>. Since our data are non-negative, any negative values of the spline (<span class="math inline">\(\mu_i\)</span> values) are set to zero.</p>
+<p>From this we extract the following estimates.</p>
+<ul>
+<li>
+<span class="math inline">\(H\)</span>: The maximum value (height) of the spline.</li>
+<li>
+<span class="math inline">\(m\)</span>: The location (<span class="math inline">\(x\)</span>) of the maxium height. If the maximum height is reached in multiple locations we average these locations.</li>
+<li>
+<span class="math inline">\(s\)</span>: This is a conservative estimate of the spread of the data. We take one quarter of the range of the <span class="math inline">\(x\)</span>-values where the <span class="math inline">\(\mu\)</span>-value is positive.</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="error-parameter-estimates">Error parameter estimates<a class="anchor" aria-label="anchor" href="#error-parameter-estimates"></a>
+</h3>
+<p>The table below list the parameters of each error model.</p>
+<table class="table">
+<thead><tr class="header">
+<th>Model</th>
+<th align="center">Parameters</th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>bernoulli</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td>binomial.count</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td>binomial.prop</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td>poisson</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td>negbin</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"><span class="math inline">\(\phi\)</span></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td>zip</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"><span class="math inline">\(\pi\)</span></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td>zinb</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"><span class="math inline">\(\pi\)</span></td>
+<td align="center"><span class="math inline">\(\phi\)</span></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td>zipl</td>
+<td align="center"><span class="math inline">\(\gamma_0\)</span></td>
+<td align="center"><span class="math inline">\(\gamma_1\)</span></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td>zinbl</td>
+<td align="center"><span class="math inline">\(\gamma_0\)</span></td>
+<td align="center"><span class="math inline">\(\gamma_1\)</span></td>
+<td align="center"></td>
+<td align="center"><span class="math inline">\(\phi\)</span></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td>zipl.mu</td>
+<td align="center"><span class="math inline">\(\gamma_0\)</span></td>
+<td align="center"><span class="math inline">\(\gamma_1\)</span></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td>zinbl.mu</td>
+<td align="center"><span class="math inline">\(\gamma_0\)</span></td>
+<td align="center"><span class="math inline">\(\gamma_1\)</span></td>
+<td align="center"></td>
+<td align="center"><span class="math inline">\(\phi\)</span></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td>gaussian</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"><span class="math inline">\(\sigma\)</span></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td>tweedie</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"><span class="math inline">\(\phi\)</span></td>
+<td align="center"></td>
+<td align="center"><span class="math inline">\(\rho\)</span></td>
+</tr>
+<tr class="even">
+<td>zig</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"><span class="math inline">\(\pi\)</span></td>
+<td align="center"><span class="math inline">\(\phi\)</span></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td>zigl</td>
+<td align="center"><span class="math inline">\(\gamma_0\)</span></td>
+<td align="center"><span class="math inline">\(\gamma_1\)</span></td>
+<td align="center"></td>
+<td align="center"><span class="math inline">\(\phi\)</span></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td>zigl.mu</td>
+<td align="center"><span class="math inline">\(\gamma_0\)</span></td>
+<td align="center"><span class="math inline">\(\gamma_1\)</span></td>
+<td align="center"></td>
+<td align="center"><span class="math inline">\(\phi\)</span></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td>ziig</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"><span class="math inline">\(\pi\)</span></td>
+<td align="center"><span class="math inline">\(\phi\)</span></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td>ziigl</td>
+<td align="center"><span class="math inline">\(\gamma_0\)</span></td>
+<td align="center"><span class="math inline">\(\gamma_1\)</span></td>
+<td align="center"></td>
+<td align="center"><span class="math inline">\(\phi\)</span></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td>tab</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"><span class="math inline">\(\sigma\)</span></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td>zitab</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"><span class="math inline">\(\pi\)</span></td>
+<td align="center"></td>
+<td align="center"><span class="math inline">\(\sigma\)</span></td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<div class="section level4">
+<h4 id="phi">
+<span class="math inline">\(\phi\)</span><a class="anchor" aria-label="anchor" href="#phi"></a>
+</h4>
+<p>The dispersion parameter, <span class="math inline">\(\phi\)</span>, is estimated as follows.</p>
+<ul>
+<li>Find the residuals, <span class="math inline">\(r_i\)</span>, of the data <span class="math inline">\(y_i\)</span> around the spline fit <span class="math inline">\(\mu_i\)</span>.</li>
+<li>Fit another smoothing spline to the squared residuals versus <span class="math inline">\(x_i\)</span>. Call these points <span class="math inline">\(v_i\)</span>.</li>
+<li>Set any negative values of <span class="math inline">\(v_i\)</span> to zero.</li>
+<li>Estimate <span class="math inline">\(\phi\)</span> as the median of the absolute value of <span class="math inline">\((v_i - \mu_i)/\mu^2\)</span>. (This is motivated by the mean/variance relationship of a negative binomial).</li>
+</ul>
+</div>
+<div class="section level4">
+<h4 id="sigma">
+<span class="math inline">\(\sigma\)</span><a class="anchor" aria-label="anchor" href="#sigma"></a>
+</h4>
+<p>For a guassian error distribution, <span class="math inline">\(\sigma\)</span> is a standard deviation and is estimated as the standard deviation of <span class="math inline">\(y_i - \mu_i\)</span>.</p>
+<p>For a tail-adjusted beta, and a zero-inflated tail adjusted beta, <span class="math inline">\(\sigma\)</span> is a shape parameter which is estimated using the method of moments.</p>
+<ul>
+<li>Let <span class="math inline">\(V\)</span> be the variance of <span class="math inline">\(y_i - \mu_i\)</span>.</li>
+<li>Let <span class="math inline">\(S_i = V/(\mu_i*(1-mu_i) - V)\)</span>.</li>
+<li>Estimate <span class="math inline">\(\sigma\)</span> with the average of the non-negative <span class="math inline">\(S_i\)</span>.</li>
+</ul>
+</div>
+<div class="section level4">
+<h4 id="pi">
+<span class="math inline">\(\pi\)</span><a class="anchor" aria-label="anchor" href="#pi"></a>
+</h4>
+<p>The parameter <span class="math inline">\(\pi\)</span> is usually estimated to be the proportion of zeros in the data (<span class="math inline">\(y\)</span>) minus the expected number of zeros due to the spike. For the zitab model, <span class="math inline">\(\pi\)</span> was estimated using the method of moments.</p>
+<p>If the final estimate of <span class="math inline">\(\pi\)</span> is less than 0.01 then it is set to 0.01.</p>
+</div>
+<div class="section level4">
+<h4 id="gamma_0">
+<span class="math inline">\(\gamma_0\)</span><a class="anchor" aria-label="anchor" href="#gamma_0"></a>
+</h4>
+<p>Given an estimate of <span class="math inline">\(\pi\)</span> as above we estimate the zero spike proportion intercept parameter, <span class="math inline">\(\gamma_0\)</span>, with <span class="math inline">\(\log (\pi/(1 - \pi))\)</span>.</p>
+</div>
+<div class="section level4">
+<h4 id="gamma_1">
+<span class="math inline">\(\gamma_1\)</span><a class="anchor" aria-label="anchor" href="#gamma_1"></a>
+</h4>
+<p>The zero spike proportion slope parameter, <span class="math inline">\(\gamma_1\)</span>, is initially set to 0.</p>
+</div>
+<div class="section level4">
+<h4 id="rho">
+<span class="math inline">\(\rho\)</span><a class="anchor" aria-label="anchor" href="#rho"></a>
+</h4>
+<p>The tweedie exponent parameter, <span class="math inline">\(\rho\)</span>, is initially set to 1.1.</p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="mean-function-parameters">Mean function parameters<a class="anchor" aria-label="anchor" href="#mean-function-parameters"></a>
+</h3>
+<p>The table below list the parameters of each mean function.</p>
+<table class="table">
+<thead><tr class="header">
+<th>Model</th>
+<th align="center">Parameters</th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>constant</td>
+<td align="center"><span class="math inline">\(H\)</span></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td>uniform</td>
+<td align="center"><span class="math inline">\(H\)</span></td>
+<td align="center"><span class="math inline">\(c\)</span></td>
+<td align="center"><span class="math inline">\(d\)</span></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td>beta</td>
+<td align="center"><span class="math inline">\(H\)</span></td>
+<td align="center"><span class="math inline">\(c\)</span></td>
+<td align="center"><span class="math inline">\(d\)</span></td>
+<td align="center"><span class="math inline">\(u\)</span></td>
+<td align="center"><span class="math inline">\(v\)</span></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td>gaussian</td>
+<td align="center"><span class="math inline">\(H\)</span></td>
+<td align="center"><span class="math inline">\(m\)</span></td>
+<td align="center"><span class="math inline">\(s\)</span></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td>mixgaussian</td>
+<td align="center"><span class="math inline">\(H\)</span></td>
+<td align="center">
+<span class="math inline">\(m_1\)</span> <span class="math inline">\(m_2\)</span>
+</td>
+<td align="center">
+<span class="math inline">\(s_1\)</span> <span class="math inline">\(s_2\)</span>
+</td>
+<td align="center"><span class="math inline">\(\alpha\)</span></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td>mixgaussian.equal</td>
+<td align="center"><span class="math inline">\(H\)</span></td>
+<td align="center">
+<span class="math inline">\(m_1\)</span> <span class="math inline">\(m_2\)</span>
+</td>
+<td align="center"><span class="math inline">\(s\)</span></td>
+<td align="center"><span class="math inline">\(\alpha\)</span></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td>sech</td>
+<td align="center"><span class="math inline">\(H\)</span></td>
+<td align="center"><span class="math inline">\(m\)</span></td>
+<td align="center"><span class="math inline">\(s\)</span></td>
+<td align="center"><span class="math inline">\(r\)</span></td>
+<td align="center"><span class="math inline">\(p\)</span></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td>sech.p1</td>
+<td align="center"><span class="math inline">\(H\)</span></td>
+<td align="center"><span class="math inline">\(m\)</span></td>
+<td align="center"><span class="math inline">\(s\)</span></td>
+<td align="center"><span class="math inline">\(r\)</span></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td>sech.r0p1</td>
+<td align="center"><span class="math inline">\(H\)</span></td>
+<td align="center"><span class="math inline">\(m\)</span></td>
+<td align="center"><span class="math inline">\(s\)</span></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td>hofV</td>
+<td align="center"><span class="math inline">\(H\)</span></td>
+<td align="center"><span class="math inline">\(m\)</span></td>
+<td align="center">
+<span class="math inline">\(w_1\)</span> <span class="math inline">\(w_2\)</span>
+</td>
+<td align="center"><span class="math inline">\(k\)</span></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td>hofII</td>
+<td align="center"><span class="math inline">\(H\)</span></td>
+<td align="center"><span class="math inline">\(m\)</span></td>
+<td align="center"><span class="math inline">\(\omega_0\)</span></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td>hofIV</td>
+<td align="center"><span class="math inline">\(H\)</span></td>
+<td align="center"><span class="math inline">\(m\)</span></td>
+<td align="center"><span class="math inline">\(\omega\)</span></td>
+<td align="center"><span class="math inline">\(k\)</span></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td>hofIVb</td>
+<td align="center"><span class="math inline">\(H\)</span></td>
+<td align="center"><span class="math inline">\(m\)</span></td>
+<td align="center"><span class="math inline">\(\omega\)</span></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td>hofVb</td>
+<td align="center"><span class="math inline">\(H\)</span></td>
+<td align="center"><span class="math inline">\(m\)</span></td>
+<td align="center">
+<span class="math inline">\(\omega_1\)</span> <span class="math inline">\(\omega_2\)</span>
+</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<div class="section level4">
+<h4 id="h">H<a class="anchor" aria-label="anchor" href="#h"></a>
+</h4>
+<p>The estimate of <span class="math inline">\(H\)</span> is the average of <span class="math inline">\(y_i\)</span>. When the error distribution is bernoulli, tab, or zitab (i.e. <span class="math inline">\(y_i\)</span> is 0-1), <span class="math inline">\(H\)</span> is thresholded to a maximum value of 0.9.</p>
+</div>
+<div class="section level4">
+<h4 id="uniform-beta">Uniform / Beta<a class="anchor" aria-label="anchor" href="#uniform-beta"></a>
+</h4>
+<p>The boundary parameters <span class="math inline">\(c\)</span> and <span class="math inline">\(d\)</span> are estimated to be the minimum and maximum values of <span class="math inline">\(x_i\)</span> respectively, conditional on the <span class="math inline">\(y_i\)</span> being positive.</p>
+<p>The beta parameters <span class="math inline">\(u\)</span> and <span class="math inline">\(v\)</span> are estimated using the standard method of moments.</p>
+</div>
+<div class="section level4">
+<h4 id="gaussian">Gaussian<a class="anchor" aria-label="anchor" href="#gaussian"></a>
+</h4>
+<p>The <span class="math inline">\(m\)</span> and <span class="math inline">\(s\)</span> parameters are estimated from the smoothing spline above.</p>
+</div>
+<div class="section level4">
+<h4 id="mixgaussianmixgaussian-equal">Mixgaussian/Mixgaussian.equal<a class="anchor" aria-label="anchor" href="#mixgaussianmixgaussian-equal"></a>
+</h4>
+<p>The estimates of the means <span class="math inline">\(m_1\)</span> and <span class="math inline">\(m_2\)</span> are taken to be the 35th and 65th percentiles of the <span class="math inline">\(x\)</span> values (when <span class="math inline">\(y\)</span> is positive). This is largely independent of the <span class="math inline">\(y\)</span> data but is a simple method for keeping the two modes from converging too early in the fitting algorithm.</p>
+<p>The standard deviations <span class="math inline">\(s\)</span>, or <span class="math inline">\(s_1\)</span> and <span class="math inline">\(s_2\)</span>, are taken to be the estimate of <span class="math inline">\(s\)</span> from the smoothing spline.</p>
+<p>The mixing parameter, <span class="math inline">\(\alpha\)</span>, is set to 0.5.</p>
+</div>
+<div class="section level4">
+<h4 id="sech-sech-p1-sech-r0p1">Sech, Sech.p1, Sech.r0p1<a class="anchor" aria-label="anchor" href="#sech-sech-p1-sech-r0p1"></a>
+</h4>
+<p>The mode location parameter, <span class="math inline">\(m\)</span>, is estimated from the smoothing spline.</p>
+<p>The skewness parameter, <span class="math inline">\(r\)</span>, is set to 0.</p>
+<p>The peakedness parameter, <span class="math inline">\(p\)</span>, is set to 1.</p>
+<p>For the spread parameter, <span class="math inline">\(s\)</span>: let <span class="math inline">\(s_x\)</span> be the standard deviation of the <span class="math inline">\(x\)</span> values weighted by the <span class="math inline">\(y\)</span> values, and let <span class="math inline">\(s_0\)</span> be the smallest non-zero distance between the <span class="math inline">\(x\)</span> values. The initial estimate of <span class="math inline">\(s\)</span> is taken to me the maximum of <span class="math inline">\(s_x\)</span> and <span class="math inline">\(s_0\)</span>.</p>
+</div>
+<div class="section level4">
+<h4 id="hofiv-hofivb-hofv-hofvb">HofIV, HofIVb, HofV, HofVb<a class="anchor" aria-label="anchor" href="#hofiv-hofivb-hofv-hofvb"></a>
+</h4>
+<p>The growth rate parameters, <span class="math inline">\(\omega\)</span>, <span class="math inline">\(\omega_1\)</span>, and <span class="math inline">\(\omega_2\)</span> are estimated to be <span class="math inline">\(4\exp(-0.5)/s\)</span> where <span class="math inline">\(s\)</span> is the spread estimate from the smoothing spline.</p>
+<p><span class="math inline">\(k\)</span> is taken to be 1.</p>
+</div>
+<div class="section level4">
+<h4 id="hofii">HofII<a class="anchor" aria-label="anchor" href="#hofii"></a>
+</h4>
+<p>The slope of the hofII curve at <span class="math inline">\(x=m\)</span> equals <span class="math inline">\(H*\omega_0/4\)</span>. We use this fact to estimate this slope by considering points at <span class="math inline">\(x= m - (1/w0)\)</span>, and <span class="math inline">\(x= m + (1/w0)\)</span> and then solving to estimate <span class="math inline">\(\omega_0\)</span>.</p>
+</div>
 </div>
 </div>
   </div>
