@@ -1,0 +1,37 @@
+---
+title: "Modskurt"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{demo}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, echo=FALSE}
+knitr::raw_html(
+'
+<div id="observablehq-chart-e0614ed4"></div>
+<div id="observablehq-viewof-H-e0614ed4"></div>
+<div id="observablehq-viewof-m-e0614ed4"></div>
+<div id="observablehq-viewof-s-e0614ed4"></div>
+<div id="observablehq-viewof-r-e0614ed4"></div>
+<div id="observablehq-viewof-d-e0614ed4"></div>
+<div id="observablehq-viewof-p-e0614ed4"></div>
+
+<script type="module">
+import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+import define from "https://api.observablehq.com/@andrew-primer-e/modskurt.js?v=3";
+new Runtime().module(define, name => {
+  if (name === "chart") return new Inspector(document.querySelector("#observablehq-chart-e0614ed4"));
+  if (name === "viewof H") return new Inspector(document.querySelector("#observablehq-viewof-H-e0614ed4"));
+  if (name === "viewof m") return new Inspector(document.querySelector("#observablehq-viewof-m-e0614ed4"));
+  if (name === "viewof s") return new Inspector(document.querySelector("#observablehq-viewof-s-e0614ed4"));
+  if (name === "viewof r") return new Inspector(document.querySelector("#observablehq-viewof-r-e0614ed4"));
+  if (name === "viewof d") return new Inspector(document.querySelector("#observablehq-viewof-d-e0614ed4"));
+  if (name === "viewof p") return new Inspector(document.querySelector("#observablehq-viewof-p-e0614ed4"));
+  return ["chartUpdater","data","url","copyAction"].includes(name);
+});
+</script>
+'
+)
+```
