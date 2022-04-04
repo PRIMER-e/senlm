@@ -9,7 +9,11 @@ vignette: >
 
 ```{=html}
 <center>
-<div id="observablehq-prettyEquation-84fd610f"></div>
+<div id="observablehq-prettyEquation-84fd610f">
+<h1>
+Loading...
+</h1>
+</div>
 <hr/>
 <div id="observablehq-chart-84fd610f"></div>
 <div id="observablehq-controls-84fd610f"></div>
