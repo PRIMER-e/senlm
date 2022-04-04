@@ -8,21 +8,23 @@ vignette: >
 ---
 
 ```{=html}
-<div id="observablehq-prettyEquation-eb5938f5"></div>
-<div id="observablehq-chart-eb5938f5"></div>
-<div id="observablehq-controls-eb5938f5"></div>
-<div id="observablehq-shareableLink-eb5938f5"></div>
-<div id="observablehq-shareButton-eb5938f5"></div>
+<div id="observablehq-chart-84fd610f"></div>
+<div id="observablehq-prettyEquation-84fd610f"></div>
+<div id="observablehq-controls-84fd610f"></div>
+<div id="observablehq-shareableLink-84fd610f"></div>
+<div id="observablehq-shareButton-84fd610f"></div>
+<div id="observablehq-chartUpdater-84fd610f"></div>
 
 <script type="module">
 import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
 import define from "https://api.observablehq.com/@andrew-primer-e/modskurt/2.js?v=3";
 new Runtime().module(define, name => {
-  if (name === "prettyEquation") return new Inspector(document.querySelector("#observablehq-prettyEquation-eb5938f5"));
-  if (name === "chart") return new Inspector(document.querySelector("#observablehq-chart-eb5938f5"));
-  if (name === "controls") return new Inspector(document.querySelector("#observablehq-controls-eb5938f5"));
-  if (name === "shareableLink") return new Inspector(document.querySelector("#observablehq-shareableLink-eb5938f5"));
-  if (name === "shareButton") return new Inspector(document.querySelector("#observablehq-shareButton-eb5938f5"));
+  if (name === "chart") return new Inspector(document.querySelector("#observablehq-chart-84fd610f"));
+  if (name === "prettyEquation") return new Inspector(document.querySelector("#observablehq-prettyEquation-84fd610f"));
+  if (name === "controls") return new Inspector(document.querySelector("#observablehq-controls-84fd610f"));
+  if (name === "shareableLink") return new Inspector(document.querySelector("#observablehq-shareableLink-84fd610f"));
+  if (name === "shareButton") return new Inspector(document.querySelector("#observablehq-shareButton-84fd610f"));
+  if (name === "chartUpdater") return new Inspector(document.querySelector("#observablehq-chartUpdater-84fd610f"));
 });
 </script>
 ```
