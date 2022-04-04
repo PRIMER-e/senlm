@@ -1,18 +1,20 @@
 ---
-title: "Modskurt"
+title: "ModSkurt"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{demo}
+  %\VignetteIndexEntry{ModSkurt}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 ```{=html}
+<center>
 <div id="observablehq-prettyEquation-84fd610f"></div>
 <hr/>
 <div id="observablehq-chart-84fd610f"></div>
 <div id="observablehq-controls-84fd610f"></div>
 <hr/>
+</center>
 <div id="observablehq-shareableLink-84fd610f"></div>
 <div id="observablehq-shareButton-84fd610f"></div>
 <div id="observablehq-chartUpdater-84fd610f"></div>
