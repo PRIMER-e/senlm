@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   modskurt: modskurt.html
   senlm: senlm.html
-last_built: 2022-04-04T06:20Z
+last_built: 2022-04-04T06:37Z
 urls:
   reference: https://primer-e.github.io/senlm/reference
   article: https://primer-e.github.io/senlm/articles
