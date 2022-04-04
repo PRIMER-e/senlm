@@ -21,7 +21,7 @@ Loading...
 </center>
 <div id="observablehq-shareableLink-84fd610f"></div>
 <div id="observablehq-shareButton-84fd610f"></div>
-<div id="observablehq-chartUpdater-84fd610f"></div>
+<div id="observablehq-chartUpdater-84fd610f" style="display: none"></div>
 
 <script type="module">
 import {Runtime, Inspector, Library} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
