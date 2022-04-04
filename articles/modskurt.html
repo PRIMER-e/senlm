@@ -101,9 +101,19 @@
 <div id="observablehq-chartUpdater-84fd610f"></div>
 
 <script type="module">
-import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+import {Runtime, Inspector, Library} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+
+// Select the element into which we’ll embed the chart.
+const chart = document.querySelector("#observablehq-chart-84fd610f");
+
+// Instantiate a standard library that can be used by the definition of width below.
+const library = new Library();
+
+// Pass the custom library to the runtime when instantiating our notebook.
+const runtime = new Runtime(library);
+
 import define from "https://api.observablehq.com/@andrew-primer-e/modskurt/2.js?v=3";
-new Runtime().module(define, name => {
+const main = runtime.module(define, name => {
   if (name === "chart") return new Inspector(document.querySelector("#observablehq-chart-84fd610f"));
   if (name === "prettyEquation") return new Inspector(document.querySelector("#observablehq-prettyEquation-84fd610f"));
   if (name === "controls") return new Inspector(document.querySelector("#observablehq-controls-84fd610f"));
@@ -115,9 +125,6 @@ new Runtime().module(define, name => {
 // Redefine width as a generator that yields the chart element’s clientWidth (if
 // changed) whenever the window resize event fires. If desired, use a
 // ResizeObserver instead; see the custom-fluid-width-and-height example.
-
-const chart = document.querySelector("#observablehq-chart-84fd610f")
-
 main.redefine("width", library.Generators.observe(notify => {
   let width = notify(chart.clientWidth); // initial width
   function resized() {
@@ -129,6 +136,8 @@ main.redefine("width", library.Generators.observe(notify => {
   addEventListener("resize", resized);
   return () => removeEventListener("resize", resized);
 }));
+
+
 </script>
 </div>
 
