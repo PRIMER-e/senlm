@@ -35,7 +35,7 @@ const library = new Library();
 // Pass the custom library to the runtime when instantiating our notebook.
 const runtime = new Runtime(library);
 
-import define from "https://api.observablehq.com/@andrew-primer-e/mixgaussian.js?v=3";
+import define from "https://api.observablehq.com/@andrew-primer-e/mixgaussian/2.js?v=3";
 const main = runtime.module(define, name => {
   if (name === "chart") return new Inspector(document.querySelector("#chart"));
   if (name === "prettyEquation") return new Inspector(document.querySelector("#prettyEquation"));
