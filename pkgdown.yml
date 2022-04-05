@@ -4,9 +4,12 @@ pkgdown_sha: ~
 articles:
   beta: beta.html
   constant: constant.html
+  gaussian: gaussian.html
   modskurt: modskurt.html
+  sech: sech.html
   senlm: senlm.html
-last_built: 2022-04-04T09:57Z
+  uniform: uniform.html
+last_built: 2022-04-05T03:22Z
 urls:
   reference: https://primer-e.github.io/senlm/reference
   article: https://primer-e.github.io/senlm/articles
