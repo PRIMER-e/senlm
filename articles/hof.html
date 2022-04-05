@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gaussian • senlm</title>
+<title>HOF • senlm</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -17,7 +17,7 @@
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Gaussian">
+<script src="../pkgdown.js"></script><meta property="og:title" content="HOF">
 <meta property="og:description" content="senlm">
 <meta property="og:image" content="https://primer-e.github.io/senlm/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -106,39 +106,39 @@
 
       
 
-      </header><script src="gaussian_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="hof_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Gaussian</h1>
+      <h1 data-toc-skip>HOF</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/PRIMER-e/senlm/blob/HEAD/vignettes/gaussian.Rmd" class="external-link"><code>vignettes/gaussian.Rmd</code></a></small>
-      <div class="hidden name"><code>gaussian.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/PRIMER-e/senlm/blob/HEAD/vignettes/hof.Rmd" class="external-link"><code>vignettes/hof.Rmd</code></a></small>
+      <div class="hidden name"><code>hof.Rmd</code></div>
 
     </div>
 
     
     
 <center>
-<div id="observablehq-prettyEquation-84fd610f">
+<div id="prettyEquation">
 <h1>
 Loading...
 </h1>
 </div>
 <hr>
-<div id="observablehq-chart-84fd610f"></div>
-<div id="observablehq-controls-84fd610f"></div>
+<div id="chart"></div>
+<div id="controls"></div>
 <hr>
 </center>
-<div id="observablehq-shareableLink-84fd610f"></div>
-<div id="observablehq-shareButton-84fd610f"></div>
-<div id="observablehq-chartUpdater-84fd610f" style="display: none"></div>
+<div id="shareableLink"></div>
+<div id="shareButton"></div>
+<div id="chartUpdater" style="display: none"></div>
 
 <script type="module">
 import {Runtime, Inspector, Library} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
 
 // Select the element into which we’ll embed the chart.
-const chart = document.querySelector("#observablehq-chart-84fd610f");
+const chart = document.querySelector("#chart");
 
 // Instantiate a standard library that can be used by the definition of width below.
 const library = new Library();
@@ -146,14 +146,14 @@ const library = new Library();
 // Pass the custom library to the runtime when instantiating our notebook.
 const runtime = new Runtime(library);
 
-import define from "https://api.observablehq.com/@andrew-primer-e/gaussian.js?v=3";
+import define from "https://api.observablehq.com/@andrew-primer-e/hof.js?v=3";
 const main = runtime.module(define, name => {
-  if (name === "chart") return new Inspector(document.querySelector("#observablehq-chart-84fd610f"));
-  if (name === "prettyEquation") return new Inspector(document.querySelector("#observablehq-prettyEquation-84fd610f"));
-  if (name === "controls") return new Inspector(document.querySelector("#observablehq-controls-84fd610f"));
-  if (name === "shareableLink") return new Inspector(document.querySelector("#observablehq-shareableLink-84fd610f"));
-  if (name === "shareButton") return new Inspector(document.querySelector("#observablehq-shareButton-84fd610f"));
-  if (name === "chartUpdater") return new Inspector(document.querySelector("#observablehq-chartUpdater-84fd610f"));
+  if (name === "chart") return new Inspector(document.querySelector("#chart"));
+  if (name === "prettyEquation") return new Inspector(document.querySelector("#prettyEquation"));
+  if (name === "controls") return new Inspector(document.querySelector("#controls"));
+  if (name === "shareableLink") return new Inspector(document.querySelector("#shareableLink"));
+  if (name === "shareButton") return new Inspector(document.querySelector("#shareButton"));
+  if (name === "chartUpdater") return new Inspector(document.querySelector("#chartUpdater"));
 });
 
 // Redefine width as a generator that yields the chart element’s clientWidth (if
@@ -170,7 +170,6 @@ main.redefine("width", library.Generators.observe(notify => {
   addEventListener("resize", resized);
   return () => removeEventListener("resize", resized);
 }));
-
 
 </script>
 </div>

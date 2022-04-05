@@ -5,11 +5,13 @@ articles:
   beta: beta.html
   constant: constant.html
   gaussian: gaussian.html
+  hof: hof.html
+  mixgaussian: mixgaussian.html
   modskurt: modskurt.html
   sech: sech.html
   senlm: senlm.html
   uniform: uniform.html
-last_built: 2022-04-05T03:22Z
+last_built: 2022-04-05T05:36Z
 urls:
   reference: https://primer-e.github.io/senlm/reference
   article: https://primer-e.github.io/senlm/articles
