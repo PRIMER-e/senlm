@@ -1,0 +1,65 @@
+---
+title: "Sech"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Sech}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{=html}
+<center>
+<div id="observablehq-prettyEquation-84fd610f">
+<h1>
+Loading...
+</h1>
+</div>
+<hr/>
+<div id="observablehq-chart-84fd610f"></div>
+<div id="observablehq-controls-84fd610f"></div>
+<hr/>
+</center>
+<div id="observablehq-shareableLink-84fd610f"></div>
+<div id="observablehq-shareButton-84fd610f"></div>
+<div id="observablehq-chartUpdater-84fd610f" style="display: none"></div>
+
+<script type="module">
+import {Runtime, Inspector, Library} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+
+// Select the element into which we’ll embed the chart.
+const chart = document.querySelector("#observablehq-chart-84fd610f");
+
+// Instantiate a standard library that can be used by the definition of width below.
+const library = new Library();
+
+// Pass the custom library to the runtime when instantiating our notebook.
+const runtime = new Runtime(library);
+
+import define from "https://api.observablehq.com/@andrew-primer-e/sech.js?v=3";
+const main = runtime.module(define, name => {
+  if (name === "chart") return new Inspector(document.querySelector("#observablehq-chart-84fd610f"));
+  if (name === "prettyEquation") return new Inspector(document.querySelector("#observablehq-prettyEquation-84fd610f"));
+  if (name === "controls") return new Inspector(document.querySelector("#observablehq-controls-84fd610f"));
+  if (name === "shareableLink") return new Inspector(document.querySelector("#observablehq-shareableLink-84fd610f"));
+  if (name === "shareButton") return new Inspector(document.querySelector("#observablehq-shareButton-84fd610f"));
+  if (name === "chartUpdater") return new Inspector(document.querySelector("#observablehq-chartUpdater-84fd610f"));
+});
+
+// Redefine width as a generator that yields the chart element’s clientWidth (if
+// changed) whenever the window resize event fires. If desired, use a
+// ResizeObserver instead; see the custom-fluid-width-and-height example.
+main.redefine("width", library.Generators.observe(notify => {
+  let width = notify(chart.clientWidth); // initial width
+  function resized() {
+    let newWidth = chart.clientWidth;
+    if (newWidth !== width) {
+      notify(width = newWidth);
+    }
+  }
+  addEventListener("resize", resized);
+  return () => removeEventListener("resize", resized);
+}));
+
+
+</script>
+```
