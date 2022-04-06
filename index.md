@@ -1,6 +1,6 @@
 # SENLM
 
-![Photo of an eel](man/figures/eel.jpg)
+![Photo of an eel](man/figures/eel.jpg)\ 
 
 An R package for modelling ecological data that is sampled across environmental gradients.
 
