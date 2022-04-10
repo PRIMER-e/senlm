@@ -1,0 +1,64 @@
+---
+title: "MixGaussian"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{MixGaussian}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{=html}
+<center>
+<div id="prettyEquation">
+<h1>
+Loading...
+</h1>
+</div>
+<hr/>
+<div id="chart"></div>
+<div id="controls"></div>
+<hr/>
+</center>
+<div id="shareableLink"></div>
+<div id="shareButton"></div>
+<div id="chartUpdater" style="display: none"></div>
+
+<script type="module">
+import {Runtime, Inspector, Library} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+
+// Select the element into which we’ll embed the chart.
+const chart = document.querySelector("#chart");
+
+// Instantiate a standard library that can be used by the definition of width below.
+const library = new Library();
+
+// Pass the custom library to the runtime when instantiating our notebook.
+const runtime = new Runtime(library);
+
+import define from "https://api.observablehq.com/@andrew-primer-e/mixgaussian/2.js?v=3";
+const main = runtime.module(define, name => {
+  if (name === "chart") return new Inspector(document.querySelector("#chart"));
+  if (name === "prettyEquation") return new Inspector(document.querySelector("#prettyEquation"));
+  if (name === "controls") return new Inspector(document.querySelector("#controls"));
+  if (name === "shareableLink") return new Inspector(document.querySelector("#shareableLink"));
+  if (name === "shareButton") return new Inspector(document.querySelector("#shareButton"));
+  if (name === "chartUpdater") return new Inspector(document.querySelector("#chartUpdater"));
+});
+
+// Redefine width as a generator that yields the chart element’s clientWidth (if
+// changed) whenever the window resize event fires. If desired, use a
+// ResizeObserver instead; see the custom-fluid-width-and-height example.
+main.redefine("width", library.Generators.observe(notify => {
+  let width = notify(chart.clientWidth); // initial width
+  function resized() {
+    let newWidth = chart.clientWidth;
+    if (newWidth !== width) {
+      notify(width = newWidth);
+    }
+  }
+  addEventListener("resize", resized);
+  return () => removeEventListener("resize", resized);
+}));
+
+</script>
+```
