@@ -61,12 +61,12 @@ get_parinfo  <- function (ModelInfo) {
   for (i in 1:length(theta)) {
 
     ## --- Group parameters by transformation
-    LogPars    <- c("phi","k","s","s1","s2","w","w1","w2","v","p","sigma") ##    > 0
-    LogitPars  <- c("pi","u","a")                                          ##  0 - 1
-    cLogitPars <- c("r")                                                   ## -1 - 1
-    rLogitPars <- c("rho")                                                 ##  1 - 2
-    nLogitPars <- c()                                                      ##  0 - n
- 
+    LogPars    <- c("phi","k","s","s1","s2","w","w1","w2","v","p","sigma","b") ##    > 0
+    LogitPars  <- c("pi","u","a", "q")                                         ##  0 - 1 **q=r modskurt 
+    cLogitPars <- c("r")                                                       ## -1 - 1
+    rLogitPars <- c("rho")                                                     ##  1 - 2
+    nLogitPars <- c()                                                          ##  0 - n
+    
     ## --- Transformation for H depends on model
     if ( (err_dist == "bernoulli") | (err_dist == "binomial.prop") |
          (err_dist == "tab")       | (err_dist == "zitab")         ) {
@@ -119,13 +119,15 @@ make_unbounded <- function (ModelInfo, theta) {
   ## Height : H
   ## Mixture : a
   ## Kurtosis : k
-  ## Standard deviation : s, s1, s2
+  ## Standard deviation, Spread : s, s1, s2
   ## Precision (or root precision) : w, w1, w2
   ## Beta : u, v
   ## Sech / Sech-p1 - Skewness : r
-  ## Sech - Peakedness : p
+  ## ModSkurt / Sech - Peakedness : p
+  ## ModSkurt - Flatness : b
+  ## ModSkurt - Skewness (Symmetry q=0.5): q (r) 
   ## Gaussian : sigma
-
+  
   ## --- Split model name into error distribution and mean function
   err_dist   <- ModelInfo$err_dist
   mean_fun   <- ModelInfo$mean_fun
@@ -228,7 +230,7 @@ check_par_valid <- function (u.theta, ModelInfo, Dat) {
     valid <- FALSE
     return (valid)
   } 
-
+  
   ## --- Make sure u.theta has model names
   names (u.theta) <- ModelInfo$u.theta
   
@@ -316,6 +318,18 @@ check_par_valid <- function (u.theta, ModelInfo, Dat) {
 
       ## Check endpoints 
       if (abs(r) >= 1) { valid <- FALSE }
+      if (s <= 0)      { valid <- FALSE }
+      if (p <= 0)      { valid <- FALSE }
+    }
+
+    ## --- ModSkurt ****
+    if (mean_fun == "modskurt") {
+      ## Grab parameters
+      q <- theta['q']; b <- theta['b']; s <- theta['s']; p <- theta['p']
+      
+      ## Check endpoints 
+      if (abs(q) >= 1) { valid <- FALSE }
+      if (b <= 0)      { valid <- FALSE }
       if (s <= 0)      { valid <- FALSE }
       if (p <= 0)      { valid <- FALSE }
     }
@@ -519,7 +533,7 @@ NLL.discrete <- function (u.theta, ModelInfo, Dat) {
     ## --- MEAN FUNCTION
     
     ## --- Uniform & modified beta
-    ##     Do nothing for constant and sech mean functions
+    ##     Do nothing for constant and sech/modskurt mean functions
     if ( (mean_fun == "uniform") | (mean_fun == "beta") ) {
       
       ## Remove observations outside of range of uniform
@@ -769,7 +783,7 @@ NLL.continuous <- function (u.theta, ModelInfo, Dat) {
     ## --- MEAN FUNCTION
     
     ## --- Uniform & modified beta
-    ##     Do nothing for constant and sech mean functions
+    ##     Do nothing for constant and sech/modskurt mean functions
     if ( (mean_fun == "uniform") | (mean_fun == "beta") ) {
       
       ## Remove observations outside of range of uniform

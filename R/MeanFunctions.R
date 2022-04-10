@@ -298,6 +298,36 @@ mu_sech.r0p1 <- function (thetaM, x) {
 }
 
 
+## --- Modskurt function
+
+mu_modskurt <- function (thetaM, x) {
+  ## --- Modskurt mean function
+
+  ## Grab parameters
+  H <- thetaM['H']; m <- thetaM['m']; s <- thetaM['s']; q <- thetaM['q']; p <- thetaM['p']; b <- thetaM['b']
+
+  ## Standardise x
+  X <- (x -m)/s
+
+  ## Denominator components
+  A <-  (1/p)*(X/q - b)
+  B <- -(1/p)*(X/(1-q) + b)
+  C <- -b/p
+
+  ## Denominator
+  denom <- q*exp(A) + (1-q)*exp(B) - exp(C) + 1
+
+  ## Log mean
+  logmean <- log(H) - p*log(denom)
+
+  ## Set mean function
+  mu <- exp(logmean)
+  
+  ## Return mu
+  return (mu)
+}
+
+
 ## --- HOF II function
  
 mu_hofII <- function (thetaM, x) {

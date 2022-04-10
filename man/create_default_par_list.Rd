@@ -39,7 +39,7 @@ Create parameter object using default values.
 \examples{
 
 ## Create default parameters from set_models() object
-Models <- set_models (mean_fun=c("gaussian", "beta", "sech"),
+Models <- set_models (mean_fun=c("gaussian", "beta", "sech", "modskurt"),
                       err_dist=c("poisson","zip"), method="crossed")
 Pars <- create_default_par_list (Models)
 

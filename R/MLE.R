@@ -175,7 +175,7 @@ senlm <- function (model=NULL, data=NULL, xvar=NULL, yvar=NULL,
 #'
 predict.senlm <- function (object, newdata, ...) {
   ## --- Predict senlm model
-
+  
   ## --- Check if object is a senlm object
   if (class(object) != "senlm") {
     stop ("object not a semlm object!")
@@ -188,7 +188,7 @@ predict.senlm <- function (object, newdata, ...) {
 
   ## --- Calculate predication
   pred <- senlm::mu_meanfunction (ModelInfo=object$model_info, theta=object$theta, x=newdata)
-
+  
   ## --- Return predication
   return (pred)
 }

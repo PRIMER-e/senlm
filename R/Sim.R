@@ -138,6 +138,7 @@ get_default_par <- function (ModelInfo) {
   if (mean_fun == "sech")              { thetaM <- c(H=60, m=50, s=5, r=0.75, p=1.5) }
   if (mean_fun == "sech.p1")           { thetaM <- c(H=60, m=50, s=5, r=0.75) }
   if (mean_fun == "sech.r0p1")         { thetaM <- c(H=60, m=50, s=5) }
+  if (mean_fun == "modskurt")          { thetaM <- c(H=60, m=50, s=5, q=0.6, p=1.5, b=0.5) }
   if (mean_fun == "hofII")             { thetaM <- c(H=60, m=50, w0=-0.3) }
   if (mean_fun == "hofIV")             { thetaM <- c(H=60, m=50, w=0.3, k=10) }
   if (mean_fun == "hofIVb")            { thetaM <- c(H=60, m=50, w=0.3) }
@@ -204,7 +205,7 @@ get_default_par <- function (ModelInfo) {
 #' @examples
 #'
 #' ## Create default parameters from set_models() object
-#' Models <- set_models (mean_fun=c("gaussian", "beta", "sech"),
+#' Models <- set_models (mean_fun=c("gaussian", "beta", "sech", "modskurt"),
 #'                       err_dist=c("poisson","zip"), method="crossed")
 #' Pars <- create_default_par_list (Models)
 #'

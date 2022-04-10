@@ -46,7 +46,7 @@
 #' 
 print_models <- function (mean_class="all", err_class="all") {
   ## --- Definitions of all possible error distributions and mean functions
-
+  
   ## --- Define mean functions
   MF <- mean_functions (mean_class=mean_class)
   
@@ -105,13 +105,13 @@ mean_functions <- function (mean_fun=NULL, mean_class=NULL) {
 
   ## --- Define mean functions
   MF <- c("constant", "uniform",
-          "beta", "sech", "gaussian", "mixgaussian", "hofV",
+          "beta", "sech", "modskurt", "gaussian", "mixgaussian", "hofV",
           "sech.p1", "sech.r0p1", "mixgaussian.equal", 
           "hofII", "hofIV", "hofIVb", "hofVb")
   
   ## --- Define corresponding mean function classes
   MC <- c("test", "test",
-          "main", "main", "main", "main", "main",
+          "main", "main", "main", "main", "main", "main",
           "sub", "sub", "sub", "sub", "sub", "sub", "sub")
   
   ## --- Create data frame to store mean functions with corresponding mean class
@@ -566,7 +566,7 @@ qres <- function (Fit) {
 #' set_models(mean_fun=c("beta","sech"), err_dist=c("zip","binomial.count"), binomial_n=40)
 #'
 #' @export
-set_models   <- function (mean_fun=NULL, err_dist=NULL, mean_class=NULL, err_class=NULL,
+set_models <- function (mean_fun=NULL, err_dist=NULL, mean_class=NULL, err_class=NULL,
                         binomial_n=NA, method="crossed") {
   ## --- Create data frame of models to fit.
   ## --- Models will be formed by either pairing or crossing the elements of
@@ -901,12 +901,13 @@ get_mean_fun_parnames <- function (mean_fun) {
   if (mean_fun == "sech")              { thetaM <- c("H","m","s","r","p") }
   if (mean_fun == "sech.p1")           { thetaM <- c("H","m","s","r") }
   if (mean_fun == "sech.r0p1")         { thetaM <- c("H","m","s") }
+  if (mean_fun == "modskurt")          { thetaM <- c("H","m","s","q","p","b") }
   if (mean_fun == "hofII")             { thetaM <- c("H","m","w0") }
   if (mean_fun == "hofIV")             { thetaM <- c("H","m","w","k") }
   if (mean_fun == "hofIVb")            { thetaM <- c("H","m","w") }
   if (mean_fun == "hofV")              { thetaM <- c("H","m","w1","w2","k") }
   if (mean_fun == "hofVb")             { thetaM <- c("H","m","w1","w2") }
-
+  
   ## --- Return mean function parameter names
   return (thetaM)
 }

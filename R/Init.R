@@ -446,6 +446,11 @@ init_mean_par <- function (ModelInfo, DF, MF) {
   if ( (mean_fun == "sech") | (mean_fun == "sech.p1") | (mean_fun == "sech.r0p1") ) {
     thetaM <- init_mean_sech (ModelInfo, DF, MF)
   }
+
+  ## --- Modskurt
+  if (mean_fun == "modskurt") {
+    thetaM <- init_mean_modskurt (ModelInfo, DF, MF)
+  }
   
   ## --- HOF-II
   if (mean_fun == "hofII") {
@@ -662,6 +667,47 @@ init_mean_sech <- function (ModelInfo, DF, MF) {
   if (mean_fun == "sech"     ) { thetaM <- c(H=H, m=m, s=s, r=r, p=p) }
   if (mean_fun == "sech.p1"  ) { thetaM <- c(H=H, m=m, s=s, r=r) }
   if (mean_fun == "sech.r0p1") { thetaM <- c(H=H, m=m, s=s) }
+  
+  ## Return mean parameters
+  return (thetaM)
+}
+
+init_mean_modskurt <- function (ModelInfo, DF, MF) {
+  ## --- Estimate mean function parameters : Modskurt
+  
+  ## --- Grab data
+  y <- DF$Dat$y
+  x <- DF$Dat$x
+  
+  ## Grab error distribution
+  err_dist <- ModelInfo$err_dist
+
+  ## Grab mean function
+  mean_fun <- ModelInfo$mean_fun
+
+  ## --- Weighted variance of x
+  
+  ## Mean and variance of x (weighted by y)
+  wm <- sum(x*y)/sum(y)
+  wv <- sum (y*(x-mean(x))^2)/(sum(y))
+    
+  ## --- Estimate parameters from spline
+  H <- MF$H
+  H <- init_adjust_H (err_dist, H)
+  m <- MF$m
+  s <- MF$s
+
+  ## Make sure s is not zero if only one data point
+  s <- max(sqrt(wv), min(diff(unique(sort(DF$Dat$x)))))
+  if ( is.na(s) | is.nan(s) ) { s <- 1 }
+  if ( sum(y>0)==1 ) { s <- sqrt(mean((x-m)^2))/6 }
+  q <- 0.5
+  p <- 1
+  b <- 2
+  
+  ## Store mean parameters
+  if (mean_fun == "modskurt") { thetaM <- c(H=H, m=m, s=s, q=q, p=p, b=b) }
+  #if (mean_fun == "modskurt") { thetaM <- c(H=60, m=50, s=15, q=0.65, p=1.2, b=4) }
   
   ## Return mean parameters
   return (thetaM)

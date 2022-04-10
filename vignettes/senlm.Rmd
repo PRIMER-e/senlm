@@ -167,7 +167,7 @@ H &= \mbox{Mean response} ~(H > 0 ~~\mbox{or}~~ 0 < H < 1 ~~\mbox{or}~~ 0 < H < 
 c &= \mbox{Lower bound} ~(-\infty < c < \infty)  \\
 d &= \mbox{Upper bound} ~(-\infty < d < \infty, ~c < d)  \\
 u &= \mbox{Mean of the beta distribution} ~(0 < u < 1) \\
-v &= \mbox{Shape parameter} ~(v > 0)
+v &= \mbox{Shape parameter} ~(v > 0) \\
 ~ & ~ \\
 \mu_{\theta_M}(x) &= \frac{H}{H_m}\frac{1}{B(a,b)}
 \left(\frac{x-c}{d-c}\right)^{a-1}
@@ -198,7 +198,7 @@ H &= \mbox{Mean response} ~(H > 0 ~~\mbox{or}~~ 0 < H < 1 ~~\mbox{or}~~ 0 < H < 
 m &= \mbox{Mode} ~(-\infty < m < \infty)  \\
 s &= \mbox{Spread parameter} ~(s > \infty)  \\
 r &= \mbox{Skewness parameter} ~(-1 < r < 1) \\
-p &= \mbox{Peakedness parameter} ~(p > 0)
+p &= \mbox{Peakedness parameter} ~(p > 0) \\
 ~ & ~ \\
 \mu_{\theta_M}(x) &= \frac{H}{H_m}
 \exp\left(\frac{rp}{s}(x - (m-x_m))\right)
@@ -232,6 +232,28 @@ This is the same mean function as <tt>sech</tt> but with $r = 0$, and $p = 1$.
 ```{r}
 get_mean_fun_parnames("sech.r0p1")
 ```
+
+### <tt>modskurt</tt> (main)
+
+The modeskurt function is a modified sech function that has new parameter ($b$) that 
+allows flattening of the peak of the previous $sech$ functions. The some of the 
+remaining parameters are renamed/reparameterised.
+
+$$
+\begin{aligned}
+\theta_M &= \{H, m, s, q, p, b\} \\
+H &= \mbox{Mean response} ~(H > 0 ~~\mbox{or}~~ 0 < H < 1 ~~\mbox{or}~~ 0 < H < n) \\
+m &= \mbox{Mode} ~(-\infty < m < \infty)  \\
+s &= \mbox{Spread parameter} ~(s > \infty)  \\
+q &= \mbox{Skewness parameter (modified $r$ from sech)} ~(0 < q < 1) \\
+p &= \mbox{Peakedness parameter} ~(p > 0) \\
+b &= \mbox{Flatness parameter} ~(b > 0) \\
+~ & ~ \\
+\mu_{\theta_M}(x) &= H\left(\frac{1}{q\exp{\left(\frac{1}{p}\left(\frac{x-m}{qs}-b\right)\right)} 
++ (1-q)\exp{ \left(-\frac{1}{p}\left(\frac{x-m}{(1-q)s}+b\right)\right) } - \exp{\left(-\frac{b}{p}\right)}
++ 1}\right)^p
+\end{aligned}
+$$
 
 
 ### <tt>gaussian</tt> (main)
@@ -1304,22 +1326,23 @@ The tweedie exponent parameter, $\rho$,  is initially set to 1.1.
 The table below list the parameters of each mean function.
 
 
-|              Model | Parameters |  |       |        |          |        |
-| ------------------ |:-----:|:-----:|:-----:|:------:|:--------:|:------:|
-|           constant | $H$ | | | | |
-|            uniform | $H$ | $c$ | $d$ | | | 
-|               beta | $H$ | $c$ | $d$ | $u$ | $v$ |
-|           gaussian | $H$ | $m$ | $s$ | | |
-|        mixgaussian | $H$ | $m_1$ $m_2$ | $s_1$ $s_2$ | $\alpha$ | |
-|  mixgaussian.equal | $H$ | $m_1$ $m_2$ | $s$ | $\alpha$ |
-|               sech | $H$ | $m$ | $s$ | $r$ | $p$ |
-|            sech.p1 | $H$ | $m$ | $s$ | $r$ | |
-|          sech.r0p1 | $H$ | $m$ | $s$ |
-|               hofV | $H$ | $m$         | $w_1$ $w_2$ | $k$ | |
-|              hofII | $H$ | $m$ | $\omega_0$ | | |
-|              hofIV | $H$ | $m$ | $\omega$ | $k$ | |
-|             hofIVb | $H$ | $m$ | $\omega$ | | |
-|              hofVb | $H$ | $m$ | $\omega_1$ $\omega_2$ | | 
+|              Model | Parameters |  |       |        |          |        |        |
+| ------------------ |:-----:|:-----:|:-----:|:------:|:--------:|:------:|:------:|
+|           constant | $H$ | | | | | |
+|            uniform | $H$ | $c$ | $d$ | | | |
+|               beta | $H$ | $c$ | $d$ | $u$ | $v$ | |
+|           gaussian | $H$ | $m$ | $s$ | | | |
+|        mixgaussian | $H$ | $m_1$ $m_2$ | $s_1$ $s_2$ | $\alpha$ | | |
+|  mixgaussian.equal | $H$ | $m_1$ $m_2$ | $s$ | $\alpha$ | |
+|               sech | $H$ | $m$ | $s$ | $r$ | $p$ | |
+|            sech.p1 | $H$ | $m$ | $s$ | $r$ | | |
+|          sech.r0p1 | $H$ | $m$ | $s$ | |
+|           modskurt | $H$ | $m$ | $s$ | $q$ | $p$ | $b$ | |
+|               hofV | $H$ | $m$         | $w_1$ $w_2$ | $k$ | | |
+|              hofII | $H$ | $m$ | $\omega_0$ | | | |
+|              hofIV | $H$ | $m$ | $\omega$ | $k$ | | |
+|             hofIVb | $H$ | $m$ | $\omega$ | | | |
+|              hofVb | $H$ | $m$ | $\omega_1$ $\omega_2$ | | |
 
 
 
@@ -1370,6 +1393,18 @@ smallest non-zero distance between the $x$ values. The initial estimate of
 $s$ is taken to me the maximum of $s_x$ and $s_0$.
 
 
+### Modskurt
+
+The parameters $m$, and $s$ are estimated as for the Sech function. 
+
+The skewness parameter, $q$ is set to 0.5 (symmetric).
+
+The peakedness parameter, $p$, is set to 1.
+
+We initially set the flatness parameter to $2$. The parameter estimation works better starting from a
+flatter curve than needed, rather than a more peaked curve.
+
+
 ### HofIV, HofIVb, HofV, HofVb
 
 The growth rate parameters, $\omega$, $\omega_1$, and $\omega_2$ are estimated to
@@ -1379,15 +1414,6 @@ $k$ is taken to be 1.
 
 ### HofII
 
-The slope of the hofII curve at $x=m$ equals $H*\omega_0/4$.
+The slope of the hofII curve at $x=m$ equals $H*\omega_0/4$. 
 We use this fact to estimate this slope by considering points
 at $x= m - (1/w0)$, and $x= m + (1/w0)$ and then solving to estimate $\omega_0$.
-
-  
-
-
-
-
-
-
-
