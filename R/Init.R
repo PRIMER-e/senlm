@@ -706,8 +706,7 @@ init_mean_modskurt <- function (ModelInfo, DF, MF) {
   b <- 2
   
   ## Store mean parameters
-  if (mean_fun == "modskurt") { thetaM <- c(H=H, m=m, s=s, q=q, p=p, b=b) }
-  #if (mean_fun == "modskurt") { thetaM <- c(H=60, m=50, s=15, q=0.65, p=1.2, b=4) }
+  thetaM <- c(H=H, m=m, s=s, q=q, p=p, b=b)
   
   ## Return mean parameters
   return (thetaM)
