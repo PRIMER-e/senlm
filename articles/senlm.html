@@ -170,42 +170,46 @@
 <td align="left">main</td>
 </tr>
 <tr class="odd">
+<td align="left">modskurt</td>
+<td align="left">main</td>
+</tr>
+<tr class="even">
 <td align="left">gaussian</td>
 <td align="left">main</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">mixgaussian</td>
 <td align="left">main</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">hofV</td>
 <td align="left">main</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">sech.p1</td>
 <td align="left">sub</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">sech.r0p1</td>
 <td align="left">sub</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">mixgaussian.equal</td>
 <td align="left">sub</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">hofII</td>
 <td align="left">sub</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">hofIV</td>
 <td align="left">sub</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">hofIVb</td>
 <td align="left">sub</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">hofVb</td>
 <td align="left">sub</td>
 </tr>
@@ -313,7 +317,7 @@ H &amp;= \mbox{Mean response} ~(H &gt; 0 ~~\mbox{or}~~ 0 &lt; H &lt; 1 ~~\mbox{o
 c &amp;= \mbox{Lower bound} ~(-\infty &lt; c &lt; \infty)  \\
 d &amp;= \mbox{Upper bound} ~(-\infty &lt; d &lt; \infty, ~c &lt; d)  \\
 u &amp;= \mbox{Mean of the beta distribution} ~(0 &lt; u &lt; 1) \\
-v &amp;= \mbox{Shape parameter} ~(v &gt; 0)
+v &amp;= \mbox{Shape parameter} ~(v &gt; 0) \\
 ~ &amp; ~ \\
 \mu_{\theta_M}(x) &amp;= \frac{H}{H_m}\frac{1}{B(a,b)}
 \left(\frac{x-c}{d-c}\right)^{a-1}
@@ -337,7 +341,7 @@ H &amp;= \mbox{Mean response} ~(H &gt; 0 ~~\mbox{or}~~ 0 &lt; H &lt; 1 ~~\mbox{o
 m &amp;= \mbox{Mode} ~(-\infty &lt; m &lt; \infty)  \\
 s &amp;= \mbox{Spread parameter} ~(s &gt; \infty)  \\
 r &amp;= \mbox{Skewness parameter} ~(-1 &lt; r &lt; 1) \\
-p &amp;= \mbox{Peakedness parameter} ~(p &gt; 0)
+p &amp;= \mbox{Peakedness parameter} ~(p &gt; 0) \\
 ~ &amp; ~ \\
 \mu_{\theta_M}(x) &amp;= \frac{H}{H_m}
 \exp\left(\frac{rp}{s}(x - (m-x_m))\right)
@@ -362,6 +366,27 @@ p &amp;= \mbox{Peakedness parameter} ~(p &gt; 0)
 <p>This is the same mean function as <tt>sech</tt> but with <span class="math inline">\(r = 0\)</span>, and <span class="math inline">\(p = 1\)</span>.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw">get_mean_fun_parnames</span>(<span class="st">"sech.r0p1"</span>)</span>
 <span id="cb8-2"><a href="#cb8-2"></a>[<span class="dv">1</span>] <span class="st">"H"</span> <span class="st">"m"</span> <span class="st">"s"</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="modskurt-main">
+<tt>modskurt</tt> (main)<a class="anchor" aria-label="anchor" href="#modskurt-main"></a>
+</h4>
+<p>The modeskurt function is a modified sech function that has new parameter (<span class="math inline">\(b\)</span>) that allows flattening of the peak of the previous <span class="math inline">\(sech\)</span> functions. The some of the remaining parameters are renamed/reparameterised.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\theta_M &amp;= \{H, m, s, q, p, b\} \\
+H &amp;= \mbox{Mean response} ~(H &gt; 0 ~~\mbox{or}~~ 0 &lt; H &lt; 1 ~~\mbox{or}~~ 0 &lt; H &lt; n) \\
+m &amp;= \mbox{Mode} ~(-\infty &lt; m &lt; \infty)  \\
+s &amp;= \mbox{Spread parameter} ~(s &gt; \infty)  \\
+q &amp;= \mbox{Skewness parameter (modified $r$ from sech)} ~(0 &lt; q &lt; 1) \\
+p &amp;= \mbox{Peakedness parameter} ~(p &gt; 0) \\
+b &amp;= \mbox{Flatness parameter} ~(b &gt; 0) \\
+~ &amp; ~ \\
+\mu_{\theta_M}(x) &amp;= H\left(\frac{1}{q\exp{\left(\frac{1}{p}\left(\frac{x-m}{qs}-b\right)\right)} 
++ (1-q)\exp{ \left(-\frac{1}{p}\left(\frac{x-m}{(1-q)s}+b\right)\right) } - \exp{\left(-\frac{b}{p}\right)}
++ 1}\right)^p
+\end{aligned}
+\]</span></p>
 </div>
 <div class="section level4">
 <h4 id="gaussian-main">
@@ -1188,8 +1213,10 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i)
 <span id="cb36-31"><a href="#cb36-31"></a><span class="dv">6</span>         hofV    zitab         <span class="ot">NA</span></span>
 <span id="cb36-32"><a href="#cb36-32"></a><span class="dv">7</span>  mixgaussian      tab         <span class="ot">NA</span></span>
 <span id="cb36-33"><a href="#cb36-33"></a><span class="dv">8</span>  mixgaussian    zitab         <span class="ot">NA</span></span>
-<span id="cb36-34"><a href="#cb36-34"></a><span class="dv">9</span>         sech      tab         <span class="ot">NA</span></span>
-<span id="cb36-35"><a href="#cb36-35"></a><span class="dv">10</span>        sech    zitab         <span class="ot">NA</span></span></code></pre></div>
+<span id="cb36-34"><a href="#cb36-34"></a><span class="dv">9</span>     modskurt      tab         <span class="ot">NA</span></span>
+<span id="cb36-35"><a href="#cb36-35"></a><span class="dv">10</span>    modskurt    zitab         <span class="ot">NA</span></span>
+<span id="cb36-36"><a href="#cb36-36"></a><span class="dv">11</span>        sech      tab         <span class="ot">NA</span></span>
+<span id="cb36-37"><a href="#cb36-37"></a><span class="dv">12</span>        sech    zitab         <span class="ot">NA</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="simulated-data">Simulated data<a class="anchor" aria-label="anchor" href="#simulated-data"></a>
@@ -1236,7 +1263,7 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i)
 <span id="cb39-6"><a href="#cb39-6"></a></span>
 <span id="cb39-7"><a href="#cb39-7"></a><span class="op">$</span>theta</span>
 <span id="cb39-8"><a href="#cb39-8"></a>          H           m           s          pi </span>
-<span id="cb39-9"><a href="#cb39-9"></a><span class="fl">817.5307573</span> <span class="fl">917.8020558</span> <span class="fl">225.5627460</span>   <span class="fl">0.5954255</span> </span>
+<span id="cb39-9"><a href="#cb39-9"></a><span class="fl">817.5308097</span> <span class="fl">917.8020152</span> <span class="fl">225.5627265</span>   <span class="fl">0.5954255</span> </span>
 <span id="cb39-10"><a href="#cb39-10"></a></span>
 <span id="cb39-11"><a href="#cb39-11"></a><span class="op">$</span>IC</span>
 <span id="cb39-12"><a href="#cb39-12"></a>    npar      nll      AIC     AICc      BIC </span>
@@ -1244,8 +1271,8 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i)
 <p>Confidence intervals for the estimated parameters can be display as follows. The default confidence level is 95% which is set when fitting the model. Occasionly due to numerical instability of the estimated Hessian matrix the standard errors are not calculated.</p>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="kw">rbind</span> (<span class="dt">lower=</span>Fit<span class="op">$</span>lb, <span class="dt">upper=</span>Fit<span class="op">$</span>ub)</span>
 <span id="cb40-2"><a href="#cb40-2"></a>             H        m        s        pi</span>
-<span id="cb40-3"><a href="#cb40-3"></a>lower <span class="fl">812.7322</span> <span class="fl">916.2962</span> <span class="fl">224.2579</span> <span class="fl">0.5615009</span></span>
-<span id="cb40-4"><a href="#cb40-4"></a>upper <span class="fl">822.3576</span> <span class="fl">919.3079</span> <span class="fl">226.8752</span> <span class="fl">0.6284621</span></span></code></pre></div>
+<span id="cb40-3"><a href="#cb40-3"></a>lower <span class="fl">812.7323</span> <span class="fl">916.2961</span> <span class="fl">224.2578</span> <span class="fl">0.5615009</span></span>
+<span id="cb40-4"><a href="#cb40-4"></a>upper <span class="fl">822.3577</span> <span class="fl">919.3079</span> <span class="fl">226.8752</span> <span class="fl">0.6284621</span></span></code></pre></div>
 <p>To fit multiple models to multiple data sets, one can use the <tt>msenlm()</tt> function. The models to fit are specified with the <tt>set_models()</tt> function. The data should be stored in a list. It could be simulated data create using the <tt>create_simulated_datasets()</tt> function.</p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>Models &lt;-<span class="st"> </span><span class="kw">set_models</span> (<span class="dt">mean_class=</span><span class="st">"test"</span>, <span class="dt">err_class=</span><span class="st">"binary"</span>)</span>
 <span id="cb41-2"><a href="#cb41-2"></a>Pars   &lt;-<span class="st"> </span><span class="kw">create_default_par_list</span> (<span class="dt">models=</span>Models)</span>
@@ -1584,11 +1611,13 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i)
 <th align="center"></th>
 <th align="center"></th>
 <th align="center"></th>
+<th align="center"></th>
 </tr></thead>
 <tbody>
 <tr class="odd">
 <td>constant</td>
 <td align="center"><span class="math inline">\(H\)</span></td>
+<td align="center"></td>
 <td align="center"></td>
 <td align="center"></td>
 <td align="center"></td>
@@ -1603,6 +1632,7 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i)
 <td align="center"></td>
 <td align="center"></td>
 <td align="center"></td>
+<td align="center"></td>
 </tr>
 <tr class="odd">
 <td>beta</td>
@@ -1612,12 +1642,14 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i)
 <td align="center"><span class="math inline">\(u\)</span></td>
 <td align="center"><span class="math inline">\(v\)</span></td>
 <td align="center"></td>
+<td align="center"></td>
 </tr>
 <tr class="even">
 <td>gaussian</td>
 <td align="center"><span class="math inline">\(H\)</span></td>
 <td align="center"><span class="math inline">\(m\)</span></td>
 <td align="center"><span class="math inline">\(s\)</span></td>
+<td align="center"></td>
 <td align="center"></td>
 <td align="center"></td>
 <td align="center"></td>
@@ -1634,6 +1666,7 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i)
 <td align="center"><span class="math inline">\(\alpha\)</span></td>
 <td align="center"></td>
 <td align="center"></td>
+<td align="center"></td>
 </tr>
 <tr class="even">
 <td>mixgaussian.equal</td>
@@ -1645,6 +1678,7 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i)
 <td align="center"><span class="math inline">\(\alpha\)</span></td>
 <td align="center"></td>
 <td align="center"></td>
+<td align="center"></td>
 </tr>
 <tr class="odd">
 <td>sech</td>
@@ -1654,6 +1688,7 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i)
 <td align="center"><span class="math inline">\(r\)</span></td>
 <td align="center"><span class="math inline">\(p\)</span></td>
 <td align="center"></td>
+<td align="center"></td>
 </tr>
 <tr class="even">
 <td>sech.p1</td>
@@ -1661,6 +1696,7 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i)
 <td align="center"><span class="math inline">\(m\)</span></td>
 <td align="center"><span class="math inline">\(s\)</span></td>
 <td align="center"><span class="math inline">\(r\)</span></td>
+<td align="center"></td>
 <td align="center"></td>
 <td align="center"></td>
 </tr>
@@ -1672,8 +1708,19 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i)
 <td align="center"></td>
 <td align="center"></td>
 <td align="center"></td>
+<td align="center"></td>
 </tr>
 <tr class="even">
+<td>modskurt</td>
+<td align="center"><span class="math inline">\(H\)</span></td>
+<td align="center"><span class="math inline">\(m\)</span></td>
+<td align="center"><span class="math inline">\(s\)</span></td>
+<td align="center"><span class="math inline">\(q\)</span></td>
+<td align="center"><span class="math inline">\(p\)</span></td>
+<td align="center"><span class="math inline">\(b\)</span></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
 <td>hofV</td>
 <td align="center"><span class="math inline">\(H\)</span></td>
 <td align="center"><span class="math inline">\(m\)</span></td>
@@ -1683,8 +1730,9 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i)
 <td align="center"><span class="math inline">\(k\)</span></td>
 <td align="center"></td>
 <td align="center"></td>
+<td align="center"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>hofII</td>
 <td align="center"><span class="math inline">\(H\)</span></td>
 <td align="center"><span class="math inline">\(m\)</span></td>
@@ -1692,8 +1740,9 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i)
 <td align="center"></td>
 <td align="center"></td>
 <td align="center"></td>
+<td align="center"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>hofIV</td>
 <td align="center"><span class="math inline">\(H\)</span></td>
 <td align="center"><span class="math inline">\(m\)</span></td>
@@ -1701,8 +1750,9 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i)
 <td align="center"><span class="math inline">\(k\)</span></td>
 <td align="center"></td>
 <td align="center"></td>
+<td align="center"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>hofIVb</td>
 <td align="center"><span class="math inline">\(H\)</span></td>
 <td align="center"><span class="math inline">\(m\)</span></td>
@@ -1710,14 +1760,16 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i)
 <td align="center"></td>
 <td align="center"></td>
 <td align="center"></td>
+<td align="center"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>hofVb</td>
 <td align="center"><span class="math inline">\(H\)</span></td>
 <td align="center"><span class="math inline">\(m\)</span></td>
 <td align="center">
 <span class="math inline">\(\omega_1\)</span> <span class="math inline">\(\omega_2\)</span>
 </td>
+<td align="center"></td>
 <td align="center"></td>
 <td align="center"></td>
 <td align="center"></td>
@@ -1754,6 +1806,14 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i)
 <p>The skewness parameter, <span class="math inline">\(r\)</span>, is set to 0.</p>
 <p>The peakedness parameter, <span class="math inline">\(p\)</span>, is set to 1.</p>
 <p>For the spread parameter, <span class="math inline">\(s\)</span>: let <span class="math inline">\(s_x\)</span> be the standard deviation of the <span class="math inline">\(x\)</span> values weighted by the <span class="math inline">\(y\)</span> values, and let <span class="math inline">\(s_0\)</span> be the smallest non-zero distance between the <span class="math inline">\(x\)</span> values. The initial estimate of <span class="math inline">\(s\)</span> is taken to me the maximum of <span class="math inline">\(s_x\)</span> and <span class="math inline">\(s_0\)</span>.</p>
+</div>
+<div class="section level4">
+<h4 id="modskurt">Modskurt<a class="anchor" aria-label="anchor" href="#modskurt"></a>
+</h4>
+<p>The parameters <span class="math inline">\(m\)</span>, and <span class="math inline">\(s\)</span> are estimated as for the Sech function.</p>
+<p>The skewness parameter, <span class="math inline">\(q\)</span> is set to 0.5 (symmetric).</p>
+<p>The peakedness parameter, <span class="math inline">\(p\)</span>, is set to 1.</p>
+<p>We initially set the flatness parameter to <span class="math inline">\(2\)</span>. The parameter estimation works better starting from a flatter curve than needed, rather than a more peaked curve.</p>
 </div>
 <div class="section level4">
 <h4 id="hofiv-hofivb-hofv-hofvb">HofIV, HofIVb, HofV, HofVb<a class="anchor" aria-label="anchor" href="#hofiv-hofivb-hofv-hofvb"></a>

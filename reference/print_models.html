@@ -143,10 +143,10 @@ Possible values are:</p><dl><dt>"test"</dt>
 <span class="r-in"><span class="fu">print_models</span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $mean_functions</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "constant"          "uniform"           "beta"             </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [4] "sech"              "gaussian"          "mixgaussian"      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "hofV"              "sech.p1"           "sech.r0p1"        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [10] "mixgaussian.equal" "hofII"             "hofIV"            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [13] "hofIVb"            "hofVb"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [4] "sech"              "modskurt"          "gaussian"         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "mixgaussian"       "hofV"              "sech.p1"          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [10] "sech.r0p1"         "mixgaussian.equal" "hofII"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [13] "hofIV"             "hofIVb"            "hofVb"            </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $error_distributions</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "bernoulli"      "binomial.count" "binomial.prop"  "poisson"       </span>
@@ -160,7 +160,8 @@ Possible values are:</p><dl><dt>"test"</dt>
 <span class="r-in"><span class="co">## Display main mean functions and count data error distributions</span></span>
 <span class="r-in"><span class="fu">print_models</span><span class="op">(</span>mean_class<span class="op">=</span><span class="st">"main"</span>, err_class<span class="op">=</span><span class="st">"count"</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $mean_functions</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "beta"        "sech"        "gaussian"    "mixgaussian" "hofV"       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "beta"        "sech"        "modskurt"    "gaussian"    "mixgaussian"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6] "hofV"       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $error_distributions</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "poisson"  "negbin"   "zip"      "zinb"     "zipl"     "zinbl"    "zipl.mu" </span>

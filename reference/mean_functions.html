@@ -129,16 +129,17 @@ functions; if a vector of mean functions is supplied, return corresponding class
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2            uniform       test</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3               beta       main</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4               sech       main</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5           gaussian       main</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6        mixgaussian       main</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7               hofV       main</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8            sech.p1        sub</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9          sech.r0p1        sub</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 mixgaussian.equal        sub</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11             hofII        sub</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12             hofIV        sub</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13            hofIVb        sub</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14             hofVb        sub</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5           modskurt       main</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6           gaussian       main</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7        mixgaussian       main</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8               hofV       main</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9            sech.p1        sub</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10         sech.r0p1        sub</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11 mixgaussian.equal        sub</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12             hofII        sub</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13             hofIV        sub</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14            hofIVb        sub</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15             hofVb        sub</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## Constant and uniform mean functions to test code</span></span>
 <span class="r-in"><span class="fu">mean_functions</span><span class="op">(</span>mean_class<span class="op">=</span><span class="st">"test"</span><span class="op">)</span></span>
@@ -146,7 +147,8 @@ functions; if a vector of mean functions is supplied, return corresponding class
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## Main mean functions</span></span>
 <span class="r-in"><span class="fu">mean_functions</span><span class="op">(</span>mean_class<span class="op">=</span><span class="st">"main"</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "beta"        "sech"        "gaussian"    "mixgaussian" "hofV"       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "beta"        "sech"        "modskurt"    "gaussian"    "mixgaussian"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6] "hofV"       </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## Classes of given mean functions</span></span>
 <span class="r-in"><span class="fu">mean_functions</span><span class="op">(</span>mean_fun<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"beta"</span>, <span class="st">"hofIV"</span><span class="op">)</span><span class="op">)</span></span>
