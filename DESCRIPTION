@@ -40,7 +40,6 @@ Suggests:
     testthat (>= 3.0.0),
     knitr,
     rmarkdown,
-    Rgraphviz,
     proftools,
     covr
 VignetteBuilder: knitr

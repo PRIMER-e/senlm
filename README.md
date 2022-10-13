@@ -1,6 +1,4 @@
-# pkgdown <img src="man/figures/logo.png" align="right" />
-
-# SENLM.
+# senlm <img src="man/figures/logo.png" align="right" height="138" />
 
 An R package for modelling ecological data that is sampled across environmental gradients.
 
