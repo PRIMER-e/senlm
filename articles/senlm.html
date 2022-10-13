@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">senlm</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.2</span>
       </span>
     </div>
 
@@ -123,14 +123,14 @@
 <h2 id="installing-the-senlm-package">Installing the senlm package<a class="anchor" aria-label="anchor" href="#installing-the-senlm-package"></a>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"PRIMER-e/senlm"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"PRIMER-e/senlm"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="loading-the-senlm-package">Loading the senlm package<a class="anchor" aria-label="anchor" href="#loading-the-senlm-package"></a>
 </h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://primer-e.github.io/senlm/">"senlm"</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://primer-e.github.io/senlm/">"senlm"</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="using-the-senlm-package">Using the <code>senlm</code> package<a class="anchor" aria-label="anchor" href="#using-the-senlm-package"></a>
@@ -1121,10 +1121,10 @@ y_i &amp;\in [0,1] \\
 P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i) 
 &amp;\sim \mbox{TAB}(\mu_i, ~\sigma, ~\delta) \\
 &amp;\sim \left\{\begin{array}{ll}
-\frac{p^{(0)}_i}{\delta} &amp; y_i &lt; \delta \\
+\frac{1}{\delta}p^{(0)}_i &amp; y_i &lt; \delta \\
 \dfrac{y_i^{\alpha_i-1}(1-y_i)^{\beta-1}}{B(\alpha,\beta)}
 &amp; \delta &lt; y_i &lt; 1 - \delta \\
-\frac{p^{(1)}_i}{\delta} &amp; y_i &gt; 1 - \delta \\
+\frac{1}{\delta}p^{(1)}_i &amp; y_i &gt; 1 - \delta \\
 \end{array}\right.\\
 \end{aligned}
 \]</span></p>
@@ -1159,10 +1159,10 @@ y_i &amp;\in [0,1] \\
 P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i) 
             &amp;\sim \mbox{ZITAB}(\mu_i, ~\pi, ~\sigma, ~\delta) \\
             &amp;\sim \left\{\begin{array}{ll}
-            \pi + (1-\pi)p^{(0)}_i &amp; y_i &lt; \delta \\
+            \frac{1}{\delta}\left[\pi + (1-\pi)p^{(0)}_i\right] &amp; y_i &lt; \delta \\
             (1-\pi)\dfrac{y_i^{\alpha_i-1}(1-y_i)^{\beta-1}}{B(\alpha,\beta)}
             &amp; \delta &lt; y_i &lt; 1 - \delta \\
-            (1-\pi)p^{(1)}_i &amp; y_i &gt; 1 - \delta \\
+            \frac{1}{\delta}(1-\pi)p^{(1)}_i &amp; y_i &gt; 1 - \delta \\
             \end{array}\right.\\
 \end{aligned}
 \]</span></p>
@@ -1223,14 +1223,14 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i)
 </h3>
 <p>This section describes how to simulate data sets for any possible model. The <tt>create_default_par_list()</tt> function set default parameter values for each selected model.</p>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## --- Set models</span>
-<span class="va">Models</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/set_models.html">set_models</a></span> <span class="op">(</span>mean_fun<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gaussian"</span><span class="op">)</span>, err_dist<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"zip"</span>, <span class="st">"zinb"</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co">## --- Set default parameters list</span>
-<span class="va">Pars</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_default_par_list.html">create_default_par_list</a></span> <span class="op">(</span><span class="va">Models</span><span class="op">)</span>
-
-<span class="co">## --- Simulate data</span>
-<span class="va">Data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_simulated_datasets.html">create_simulated_datasets</a></span> <span class="op">(</span><span class="va">Pars</span>, N<span class="op">=</span><span class="fl">200</span>, xmin<span class="op">=</span><span class="fl">0</span>, xmax<span class="op">=</span><span class="fl">100</span>, seed<span class="op">=</span><span class="fl">12345</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">## --- Set models</span></span>
+<span><span class="va">Models</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/set_models.html">set_models</a></span> <span class="op">(</span>mean_fun<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gaussian"</span><span class="op">)</span>, err_dist<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"zip"</span>, <span class="st">"zinb"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## --- Set default parameters list</span></span>
+<span><span class="va">Pars</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_default_par_list.html">create_default_par_list</a></span> <span class="op">(</span><span class="va">Models</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## --- Simulate data</span></span>
+<span><span class="va">Data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_simulated_datasets.html">create_simulated_datasets</a></span> <span class="op">(</span><span class="va">Pars</span>, N<span class="op">=</span><span class="fl">200</span>, xmin<span class="op">=</span><span class="fl">0</span>, xmax<span class="op">=</span><span class="fl">100</span>, seed<span class="op">=</span><span class="fl">12345</span><span class="op">)</span></span></code></pre></div>
 <p>This code creates simulates data for the <tt>gaussian-zip</tt>, and <tt>gaussian-zinb</tt> models. The objects <tt>Pars</tt> is a list containing parameters for each model. The object <tt>Data</tt> is a list containing the data for each model; <tt>Data[[1]]</tt> is the data for the first model, etc.</p>
 </div>
 <div class="section level3">
@@ -1263,7 +1263,7 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i)
 <span id="cb39-6"><a href="#cb39-6"></a></span>
 <span id="cb39-7"><a href="#cb39-7"></a><span class="op">$</span>theta</span>
 <span id="cb39-8"><a href="#cb39-8"></a>          H           m           s          pi </span>
-<span id="cb39-9"><a href="#cb39-9"></a><span class="fl">817.5307500</span> <span class="fl">917.8020558</span> <span class="fl">225.5627487</span>   <span class="fl">0.5954255</span> </span>
+<span id="cb39-9"><a href="#cb39-9"></a><span class="fl">817.5306873</span> <span class="fl">917.8020633</span> <span class="fl">225.5627591</span>   <span class="fl">0.5954255</span> </span>
 <span id="cb39-10"><a href="#cb39-10"></a></span>
 <span id="cb39-11"><a href="#cb39-11"></a><span class="op">$</span>IC</span>
 <span id="cb39-12"><a href="#cb39-12"></a>    npar      nll      AIC     AICc      BIC </span>
@@ -1271,7 +1271,7 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i)
 <p>Confidence intervals for the estimated parameters can be display as follows. The default confidence level is 95% which is set when fitting the model. Occasionly due to numerical instability of the estimated Hessian matrix the standard errors are not calculated.</p>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="kw">rbind</span> (<span class="dt">lower=</span>Fit<span class="op">$</span>lb, <span class="dt">upper=</span>Fit<span class="op">$</span>ub)</span>
 <span id="cb40-2"><a href="#cb40-2"></a>             H        m        s        pi</span>
-<span id="cb40-3"><a href="#cb40-3"></a>lower <span class="fl">812.7322</span> <span class="fl">916.2962</span> <span class="fl">224.2579</span> <span class="fl">0.5615009</span></span>
+<span id="cb40-3"><a href="#cb40-3"></a>lower <span class="fl">812.7321</span> <span class="fl">916.2962</span> <span class="fl">224.2579</span> <span class="fl">0.5615010</span></span>
 <span id="cb40-4"><a href="#cb40-4"></a>upper <span class="fl">822.3576</span> <span class="fl">919.3079</span> <span class="fl">226.8752</span> <span class="fl">0.6284621</span></span></code></pre></div>
 <p>To fit multiple models to multiple data sets, one can use the <tt>msenlm()</tt> function. The models to fit are specified with the <tt>set_models()</tt> function. The data should be stored in a list. It could be simulated data create using the <tt>create_simulated_datasets()</tt> function.</p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>Models &lt;-<span class="st"> </span><span class="kw">set_models</span> (<span class="dt">mean_class=</span><span class="st">"test"</span>, <span class="dt">err_class=</span><span class="st">"binary"</span>)</span>
@@ -1847,7 +1847,7 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i)
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

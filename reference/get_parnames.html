@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">senlm</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.2</span>
       </span>
     </div>
 
@@ -87,25 +87,28 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">get_parnames</span><span class="op">(</span><span class="va">model_name</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_parnames</span><span class="op">(</span><span class="va">model_name</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>model_name</dt>
 <dd><p>Model_name in the form of "meanfun_errdist".</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>List containing model names, character vector of mean function parameters,
+    
+
+<p>List containing model names, character vector of mean function parameters,
 error distribution parameters, and constant parameters.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="co">## Get parameters for a "gaussian-zinb" model</span></span>
-<span class="r-in"><span class="fu">get_parnames</span> <span class="op">(</span><span class="st">"gaussian_zinb"</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Get parameters for a "gaussian-zinb" model</span></span></span>
+<span class="r-in"><span><span class="fu">get_parnames</span> <span class="op">(</span><span class="st">"gaussian_zinb"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $model_name</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "gaussian_zinb"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -118,7 +121,7 @@ error distribution parameters, and constant parameters.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $theta</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "H"   "m"   "s"   "pi"  "phi"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -133,7 +136,7 @@ error distribution parameters, and constant parameters.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

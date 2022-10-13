@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">senlm</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.2</span>
       </span>
     </div>
 
@@ -87,52 +87,67 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">create_simulated_datasets</span><span class="op">(</span>
-  <span class="va">Pars</span>,
-  x <span class="op">=</span> <span class="cn">NULL</span>,
-  N <span class="op">=</span> <span class="fl">500</span>,
-  xmin <span class="op">=</span> <span class="fl">0</span>,
-  xmax <span class="op">=</span> <span class="fl">100</span>,
-  seed <span class="op">=</span> <span class="cn">NULL</span>,
-  echo <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">create_simulated_datasets</span><span class="op">(</span></span>
+<span>  <span class="va">Pars</span>,</span>
+<span>  x <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  N <span class="op">=</span> <span class="fl">500</span>,</span>
+<span>  xmin <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  xmax <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>  seed <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  echo <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>Pars</dt>
 <dd><p>List containg parameters for the simulated data sets.</p></dd>
+
+
 <dt>x</dt>
 <dd><p>Vector of x values to simulated data. If not given, N, xmin, and xmax must be).</p></dd>
+
+
 <dt>N</dt>
 <dd><p>(optional) Sample size of data set to simulate. Default value 500.</p></dd>
+
+
 <dt>xmin</dt>
 <dd><p>(optional) Minimum value of x variable. Default value 0.</p></dd>
+
+
 <dt>xmax</dt>
 <dd><p>(optional) Maximum value of x variable. Default value 100.</p></dd>
+
+
 <dt>seed</dt>
 <dd><p>Random number seed.</p></dd>
+
+
 <dt>echo</dt>
 <dd><p>If TRUE display list describing data sets simulated</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Data frame containing one x variable and simulated data sets from Pars object.</p>
+    
+
+<p>Data frame containing one x variable and simulated data sets from Pars object.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Set model</span></span>
-<span class="r-in"><span class="va">Models</span> <span class="op">&lt;-</span> <span class="fu"><a href="set_models.html">set_models</a></span> <span class="op">(</span>mean_fun<span class="op">=</span><span class="st">"gaussian"</span>, err_dist<span class="op">=</span><span class="st">"negbin"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Set list of default parameters for each model</span></span>
-<span class="r-in"><span class="va">Pars</span> <span class="op">&lt;-</span> <span class="fu"><a href="create_default_par_list.html">create_default_par_list</a></span> <span class="op">(</span><span class="va">Models</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Simulate data</span></span>
-<span class="r-in"><span class="va">Data</span> <span class="op">&lt;-</span> <span class="fu">create_simulated_datasets</span> <span class="op">(</span><span class="va">Pars</span>, seed<span class="op">=</span><span class="fl">12345</span><span class="op">)</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Set model</span></span></span>
+<span class="r-in"><span><span class="va">Models</span> <span class="op">&lt;-</span> <span class="fu"><a href="set_models.html">set_models</a></span> <span class="op">(</span>mean_fun<span class="op">=</span><span class="st">"gaussian"</span>, err_dist<span class="op">=</span><span class="st">"negbin"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Set list of default parameters for each model</span></span></span>
+<span class="r-in"><span><span class="va">Pars</span> <span class="op">&lt;-</span> <span class="fu"><a href="create_default_par_list.html">create_default_par_list</a></span> <span class="op">(</span><span class="va">Models</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Simulate data</span></span></span>
+<span class="r-in"><span><span class="va">Data</span> <span class="op">&lt;-</span> <span class="fu">create_simulated_datasets</span> <span class="op">(</span><span class="va">Pars</span>, seed<span class="op">=</span><span class="fl">12345</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -147,7 +162,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

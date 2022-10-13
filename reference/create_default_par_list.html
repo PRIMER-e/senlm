@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">senlm</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.2</span>
       </span>
     </div>
 
@@ -87,58 +87,73 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">create_default_par_list</span><span class="op">(</span>
-  models <span class="op">=</span> <span class="cn">NULL</span>,
-  mean_fun <span class="op">=</span> <span class="cn">NULL</span>,
-  mean_class <span class="op">=</span> <span class="cn">NULL</span>,
-  err_dist <span class="op">=</span> <span class="cn">NULL</span>,
-  err_class <span class="op">=</span> <span class="cn">NULL</span>,
-  binomial_n <span class="op">=</span> <span class="cn">NA</span>,
-  method <span class="op">=</span> <span class="st">"paired"</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">create_default_par_list</span><span class="op">(</span></span>
+<span>  models <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  mean_fun <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  mean_class <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  err_dist <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  err_class <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  binomial_n <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"paired"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>models</dt>
 <dd><p>Models defined by set_models() object.</p></dd>
+
+
 <dt>mean_fun</dt>
 <dd><p>Mean function.</p></dd>
+
+
 <dt>mean_class</dt>
 <dd><p>String that indicates the class of mean functions to list.</p></dd>
+
+
 <dt>err_dist</dt>
 <dd><p>Error distribution.</p></dd>
+
+
 <dt>err_class</dt>
 <dd><p>String that indicates the class of error distributions to list.</p></dd>
+
+
 <dt>binomial_n</dt>
 <dd><p>Value of binomial n parameter for binomial models.</p></dd>
+
+
 <dt>method</dt>
 <dd><p>How mean function and error distributions should be combined;
 "paired" or "crossed".</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>List of parameter simulation objects.</p>
+    
+
+<p>List of parameter simulation objects.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="co">## Create default parameters from set_models() object</span></span>
-<span class="r-in"><span class="va">Models</span> <span class="op">&lt;-</span> <span class="fu"><a href="set_models.html">set_models</a></span> <span class="op">(</span>mean_fun<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gaussian"</span>, <span class="st">"beta"</span>, <span class="st">"sech"</span>, <span class="st">"modskurt"</span><span class="op">)</span>,</span>
-<span class="r-in">                      err_dist<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"poisson"</span>,<span class="st">"zip"</span><span class="op">)</span>, method<span class="op">=</span><span class="st">"crossed"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">Pars</span> <span class="op">&lt;-</span> <span class="fu">create_default_par_list</span> <span class="op">(</span><span class="va">Models</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Create parameter object by pairing mean function and error distribution</span></span>
-<span class="r-in"><span class="va">Pars</span> <span class="op">&lt;-</span> <span class="fu">create_default_par_list</span> <span class="op">(</span>method<span class="op">=</span><span class="st">"paired"</span>,</span>
-<span class="r-in">                                 mean_fun<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gaussian"</span>, <span class="st">"beta"</span><span class="op">)</span>, </span>
-<span class="r-in">                                 err_dist<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"zip"</span>, <span class="st">"zinb"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Create parameter object by crossing mean function and error distribution</span></span>
-<span class="r-in"><span class="va">Pars</span> <span class="op">&lt;-</span> <span class="fu">create_default_par_list</span> <span class="op">(</span>method<span class="op">=</span><span class="st">"crossed"</span>,</span>
-<span class="r-in">                                 mean_fun<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gaussian"</span>, <span class="st">"beta"</span><span class="op">)</span>, </span>
-<span class="r-in">                                 err_dist<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"poisson"</span>, <span class="st">"zip"</span>, <span class="st">"zinb"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Create default parameters from set_models() object</span></span></span>
+<span class="r-in"><span><span class="va">Models</span> <span class="op">&lt;-</span> <span class="fu"><a href="set_models.html">set_models</a></span> <span class="op">(</span>mean_fun<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gaussian"</span>, <span class="st">"beta"</span>, <span class="st">"sech"</span>, <span class="st">"modskurt"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                      err_dist<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"poisson"</span>,<span class="st">"zip"</span><span class="op">)</span>, method<span class="op">=</span><span class="st">"crossed"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">Pars</span> <span class="op">&lt;-</span> <span class="fu">create_default_par_list</span> <span class="op">(</span><span class="va">Models</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Create parameter object by pairing mean function and error distribution</span></span></span>
+<span class="r-in"><span><span class="va">Pars</span> <span class="op">&lt;-</span> <span class="fu">create_default_par_list</span> <span class="op">(</span>method<span class="op">=</span><span class="st">"paired"</span>,</span></span>
+<span class="r-in"><span>                                 mean_fun<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gaussian"</span>, <span class="st">"beta"</span><span class="op">)</span>, </span></span>
+<span class="r-in"><span>                                 err_dist<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"zip"</span>, <span class="st">"zinb"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Create parameter object by crossing mean function and error distribution</span></span></span>
+<span class="r-in"><span><span class="va">Pars</span> <span class="op">&lt;-</span> <span class="fu">create_default_par_list</span> <span class="op">(</span>method<span class="op">=</span><span class="st">"crossed"</span>,</span></span>
+<span class="r-in"><span>                                 mean_fun<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gaussian"</span>, <span class="st">"beta"</span><span class="op">)</span>, </span></span>
+<span class="r-in"><span>                                 err_dist<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"poisson"</span>, <span class="st">"zip"</span>, <span class="st">"zinb"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -153,7 +168,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

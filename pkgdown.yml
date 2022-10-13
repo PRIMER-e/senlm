@@ -1,5 +1,5 @@
 pandoc: 2.7.3
-pkgdown: 2.0.2
+pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
   beta: beta.html
@@ -11,7 +11,7 @@ articles:
   sech: sech.html
   senlm: senlm.html
   uniform: uniform.html
-last_built: 2022-04-10T19:45Z
+last_built: 2022-10-13T21:55Z
 urls:
   reference: https://primer-e.github.io/senlm/reference
   article: https://primer-e.github.io/senlm/articles

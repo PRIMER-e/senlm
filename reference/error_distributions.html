@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">senlm</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.2</span>
       </span>
     </div>
 
@@ -87,13 +87,15 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">error_distributions</span><span class="op">(</span>err_dist <span class="op">=</span> <span class="cn">NULL</span>, err_class <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">error_distributions</span><span class="op">(</span>err_dist <span class="op">=</span> <span class="cn">NULL</span>, err_class <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>err_dist</dt>
 <dd><p>Vector of error distribution(s).</p></dd>
+
+
 <dt>err_class</dt>
 <dd><p>String that indicates the which error distributions to list.</p><dl><dt>"binary"</dt>
 <dd><p>0/1 data; ("bernoulli").</p></dd>
@@ -116,10 +118,13 @@
 
 
 </dl></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>If no arguments supplied, return a data frame listing all possible error distributions
+    
+
+<p>If no arguments supplied, return a data frame listing all possible error distributions
 with corresponding error classes; if a vector of error classes is supplied, return
 corresponding error distributions; if a vector of error distributions is supplied, return
 corresponding error classes.</p>
@@ -127,9 +132,9 @@ corresponding error classes.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="co">## Print data frame of all error distributions with corresponding error classes</span></span>
-<span class="r-in"><span class="fu">error_distributions</span><span class="op">(</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Print data frame of all error distributions with corresponding error classes</span></span></span>
+<span class="r-in"><span><span class="fu">error_distributions</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          err_dist  err_class</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1       bernoulli     binary</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2  binomial.count   binomial</span>
@@ -152,25 +157,25 @@ corresponding error classes.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 19       ziigl.mu  abundance</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 20            tab percentage</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 21          zitab percentage</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Print all error distributions</span></span>
-<span class="r-in"><span class="fu">error_distributions</span><span class="op">(</span>err_class<span class="op">=</span><span class="st">"all"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Print all error distributions</span></span></span>
+<span class="r-in"><span><span class="fu">error_distributions</span><span class="op">(</span>err_class<span class="op">=</span><span class="st">"all"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "bernoulli"      "binomial.count" "binomial.prop"  "poisson"       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "negbin"         "zip"            "zinb"           "zipl"          </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "zinbl"          "zipl.mu"        "zinbl.mu"       "gaussian"      </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [13] "tweedie"        "zig"            "zigl"           "zigl.mu"       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [17] "ziig"           "ziigl"          "ziigl.mu"       "tab"           </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [21] "zitab"         </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Print error distributions for count data</span></span>
-<span class="r-in"><span class="fu">error_distributions</span><span class="op">(</span>err_class<span class="op">=</span><span class="st">"count"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Print error distributions for count data</span></span></span>
+<span class="r-in"><span><span class="fu">error_distributions</span><span class="op">(</span>err_class<span class="op">=</span><span class="st">"count"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "poisson"  "negbin"   "zip"      "zinb"     "zipl"     "zinbl"    "zipl.mu" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [8] "zinbl.mu"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Print error classes for poisson and gaussian data</span></span>
-<span class="r-in"><span class="fu">error_distributions</span><span class="op">(</span>err_dist<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"poisson"</span>, <span class="st">"gaussian"</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Print error classes for poisson and gaussian data</span></span></span>
+<span class="r-in"><span><span class="fu">error_distributions</span><span class="op">(</span>err_dist<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"poisson"</span>, <span class="st">"gaussian"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "count"     "abundance"</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -185,7 +190,7 @@ corresponding error classes.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">senlm</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.2</span>
       </span>
     </div>
 
@@ -87,35 +87,40 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">init_mle</span><span class="op">(</span><span class="va">ModelInfo</span>, <span class="va">Dat</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">init_mle</span><span class="op">(</span><span class="va">ModelInfo</span>, <span class="va">Dat</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>ModelInfo</dt>
 <dd><p>Model information object from set_model_info().</p></dd>
+
+
 <dt>Dat</dt>
 <dd><p>Data frame containg x and y data.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Names vector containing initial parameters estimates.</p>
+    
+
+<p>Names vector containing initial parameters estimates.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="co">## Simulate data and get initial model parameter estimates</span></span>
-<span class="r-in"><span class="va">Models</span> <span class="op">&lt;-</span> <span class="fu"><a href="set_models.html">set_models</a></span> <span class="op">(</span>mean_fun<span class="op">=</span><span class="st">"gaussian"</span>, err_dist<span class="op">=</span><span class="st">"zip"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">ModelInfo</span> <span class="op">&lt;-</span> <span class="fu"><a href="set_model_info.html">set_model_info</a></span> <span class="op">(</span><span class="va">Models</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">Pars</span>   <span class="op">&lt;-</span> <span class="fu"><a href="create_default_par_list.html">create_default_par_list</a></span> <span class="op">(</span>models<span class="op">=</span><span class="va">Models</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">Data</span>   <span class="op">&lt;-</span> <span class="fu"><a href="create_simulated_datasets.html">create_simulated_datasets</a></span> <span class="op">(</span><span class="va">Pars</span>, seed<span class="op">=</span><span class="fl">12345</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">theta</span>  <span class="op">&lt;-</span> <span class="fu">init_mle</span> <span class="op">(</span><span class="va">ModelInfo</span>, Dat<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">Data</span><span class="op">$</span><span class="va">x</span>, y<span class="op">=</span><span class="va">Data</span><span class="op">$</span><span class="va">gaussian_zip</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span> <span class="op">(</span><span class="va">Pars</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">theta</span>, <span class="va">theta</span><span class="op">)</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Simulate data and get initial model parameter estimates</span></span></span>
+<span class="r-in"><span><span class="va">Models</span> <span class="op">&lt;-</span> <span class="fu"><a href="set_models.html">set_models</a></span> <span class="op">(</span>mean_fun<span class="op">=</span><span class="st">"gaussian"</span>, err_dist<span class="op">=</span><span class="st">"zip"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ModelInfo</span> <span class="op">&lt;-</span> <span class="fu"><a href="set_model_info.html">set_model_info</a></span> <span class="op">(</span><span class="va">Models</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">Pars</span>   <span class="op">&lt;-</span> <span class="fu"><a href="create_default_par_list.html">create_default_par_list</a></span> <span class="op">(</span>models<span class="op">=</span><span class="va">Models</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">Data</span>   <span class="op">&lt;-</span> <span class="fu"><a href="create_simulated_datasets.html">create_simulated_datasets</a></span> <span class="op">(</span><span class="va">Pars</span>, seed<span class="op">=</span><span class="fl">12345</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">theta</span>  <span class="op">&lt;-</span> <span class="fu">init_mle</span> <span class="op">(</span><span class="va">ModelInfo</span>, Dat<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">Data</span><span class="op">$</span><span class="va">x</span>, y<span class="op">=</span><span class="va">Data</span><span class="op">$</span><span class="va">gaussian_zip</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span> <span class="op">(</span><span class="va">Pars</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">theta</span>, <span class="va">theta</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              H        m        s        pi</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       60.00000 50.00000 10.00000 0.3000000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> theta 45.44242 49.23082 17.99716 0.1191357</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -130,7 +135,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

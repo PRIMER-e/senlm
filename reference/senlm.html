@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">senlm</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.2</span>
       </span>
     </div>
 
@@ -87,65 +87,86 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">senlm</span><span class="op">(</span>
-  model <span class="op">=</span> <span class="cn">NULL</span>,
-  data <span class="op">=</span> <span class="cn">NULL</span>,
-  xvar <span class="op">=</span> <span class="cn">NULL</span>,
-  yvar <span class="op">=</span> <span class="cn">NULL</span>,
-  mean_fun <span class="op">=</span> <span class="cn">NULL</span>,
-  err_dist <span class="op">=</span> <span class="cn">NULL</span>,
-  binomial_n <span class="op">=</span> <span class="cn">NULL</span>,
-  y <span class="op">=</span> <span class="cn">NULL</span>,
-  x <span class="op">=</span> <span class="cn">NULL</span>,
-  conf.level <span class="op">=</span> <span class="fl">0.95</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">senlm</span><span class="op">(</span></span>
+<span>  model <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  data <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  xvar <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  yvar <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  mean_fun <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  err_dist <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  binomial_n <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  y <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  x <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  conf.level <span class="op">=</span> <span class="fl">0.95</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>model</dt>
 <dd><p>Model to fit.</p></dd>
+
+
 <dt>data</dt>
 <dd><p>Data frame of x and y.</p></dd>
+
+
 <dt>xvar</dt>
 <dd><p>Name of x (domain) variable (or column number).</p></dd>
+
+
 <dt>yvar</dt>
 <dd><p>Name of y (response) variable (or column number).</p></dd>
+
+
 <dt>mean_fun</dt>
 <dd><p>Mean function (if model not supplied).</p></dd>
+
+
 <dt>err_dist</dt>
 <dd><p>Error distribution (if model not supplied).</p></dd>
+
+
 <dt>binomial_n</dt>
 <dd><p>The binomial n parameter, if error distribution
 is "binomial.count" or "binomial.percent" (if model not supplied).</p></dd>
+
+
 <dt>y</dt>
 <dd><p>Repsonse variable vector (if data not supplied).</p></dd>
+
+
 <dt>x</dt>
 <dd><p>Vector of x (domain) values (if data not supplied).</p></dd>
+
+
 <dt>conf.level</dt>
 <dd><p>Confidence level for parameter confidence intervals. Default is 0.95.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Object containg model fit to data y and x.</p>
+    
+
+<p>Object containg model fit to data y and x.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="co">## Simulate data</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">dat</span>  <span class="op">&lt;-</span> <span class="fu"><a href="create_simulated_datasets.html">create_simulated_datasets</a></span><span class="op">(</span><span class="va">pars</span>, N<span class="op">=</span><span class="fl">100</span>, xmin<span class="op">=</span><span class="fl">0</span>, xmax<span class="op">=</span><span class="fl">100</span>, seed<span class="op">=</span><span class="fl">12345</span><span class="op">)</span></span>
-<span class="r-in"><span class="co">## Fit model</span></span>
-<span class="r-in"><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">senlm</span><span class="op">(</span>mean_fun<span class="op">=</span><span class="st">"gaussian"</span>, err_dist<span class="op">=</span><span class="st">"poisson"</span>, data<span class="op">=</span><span class="va">dat</span>,</span>
-<span class="r-in">             xvar<span class="op">=</span><span class="st">"x"</span>, yvar<span class="op">=</span><span class="st">"gaussian_poisson"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Real data</span></span>
-<span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="set_models.html">set_models</a></span><span class="op">(</span>mean_fun<span class="op">=</span><span class="st">"gaussian"</span>, err_dist<span class="op">=</span><span class="st">"zip"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">senlm</span><span class="op">(</span>model<span class="op">=</span><span class="va">model</span>, data<span class="op">=</span><span class="va">haul</span>, xvar<span class="op">=</span><span class="st">"depth"</span>, yvar<span class="op">=</span><span class="st">"Sebastolobus.altivelis"</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co">## Simulate data</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">dat</span>  <span class="op">&lt;-</span> <span class="fu"><a href="create_simulated_datasets.html">create_simulated_datasets</a></span><span class="op">(</span><span class="va">pars</span>, N<span class="op">=</span><span class="fl">100</span>, xmin<span class="op">=</span><span class="fl">0</span>, xmax<span class="op">=</span><span class="fl">100</span>, seed<span class="op">=</span><span class="fl">12345</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co">## Fit model</span></span></span>
+<span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">senlm</span><span class="op">(</span>mean_fun<span class="op">=</span><span class="st">"gaussian"</span>, err_dist<span class="op">=</span><span class="st">"poisson"</span>, data<span class="op">=</span><span class="va">dat</span>,</span></span>
+<span class="r-in"><span>             xvar<span class="op">=</span><span class="st">"x"</span>, yvar<span class="op">=</span><span class="st">"gaussian_poisson"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Real data</span></span></span>
+<span class="r-in"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="set_models.html">set_models</a></span><span class="op">(</span>mean_fun<span class="op">=</span><span class="st">"gaussian"</span>, err_dist<span class="op">=</span><span class="st">"zip"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">senlm</span><span class="op">(</span>model<span class="op">=</span><span class="va">model</span>, data<span class="op">=</span><span class="va">haul</span>, xvar<span class="op">=</span><span class="st">"depth"</span>, yvar<span class="op">=</span><span class="st">"Sebastolobus.altivelis"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -160,7 +181,7 @@ is "binomial.count" or "binomial.percent" (if model not supplied).</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

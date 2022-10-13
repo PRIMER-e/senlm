@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">senlm</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.2</span>
       </span>
     </div>
 
@@ -87,42 +87,55 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">set_sim_par</span><span class="op">(</span>
-  mean_fun <span class="op">=</span> <span class="cn">NULL</span>,
-  err_dist <span class="op">=</span> <span class="cn">NULL</span>,
-  Dat <span class="op">=</span> <span class="cn">NULL</span>,
-  thetaM <span class="op">=</span> <span class="cn">NULL</span>,
-  thetaE <span class="op">=</span> <span class="cn">NULL</span>,
-  thetaC <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">set_sim_par</span><span class="op">(</span></span>
+<span>  mean_fun <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  err_dist <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  Dat <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  thetaM <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  thetaE <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  thetaC <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>mean_fun</dt>
 <dd><p>Mean function of model.</p></dd>
+
+
 <dt>err_dist</dt>
 <dd><p>Error distribution of model.</p></dd>
+
+
 <dt>Dat</dt>
 <dd><p>Data frame containg x and y to estimate tail-adjusted beta "delta" parameter.</p></dd>
+
+
 <dt>thetaM</dt>
 <dd><p>Vector of parameters values for mean function.</p></dd>
+
+
 <dt>thetaE</dt>
 <dd><p>Vector of parameters values for error distribution.</p></dd>
+
+
 <dt>thetaC</dt>
 <dd><p>Vector of parameters values for constants.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>List containing parameters to simulated data set.</p>
+    
+
+<p>List containing parameters to simulated data set.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="co">## Sim simulation parameters for gaussian-negbin model</span></span>
-<span class="r-in"><span class="fu">set_sim_par</span><span class="op">(</span>mean_fun<span class="op">=</span><span class="st">"gaussian"</span>, err_dist<span class="op">=</span><span class="st">"negbin"</span>,</span>
-<span class="r-in">            thetaM<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>H<span class="op">=</span><span class="fl">60</span>,m<span class="op">=</span><span class="fl">50</span>,s<span class="op">=</span><span class="fl">10</span><span class="op">)</span>, thetaE<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>phi<span class="op">=</span><span class="fl">1.5</span><span class="op">)</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Sim simulation parameters for gaussian-negbin model</span></span></span>
+<span class="r-in"><span><span class="fu">set_sim_par</span><span class="op">(</span>mean_fun<span class="op">=</span><span class="st">"gaussian"</span>, err_dist<span class="op">=</span><span class="st">"negbin"</span>,</span></span>
+<span class="r-in"><span>            thetaM<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>H<span class="op">=</span><span class="fl">60</span>,m<span class="op">=</span><span class="fl">50</span>,s<span class="op">=</span><span class="fl">10</span><span class="op">)</span>, thetaE<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>phi<span class="op">=</span><span class="fl">1.5</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $model_name</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "gaussian_negbin"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -149,9 +162,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "senlm_par"</span>
-<span class="r-in"><span class="co">## Sim simulation parameters for binomial model</span></span>
-<span class="r-in"><span class="fu">set_sim_par</span><span class="op">(</span>mean_fun<span class="op">=</span><span class="st">"gaussian"</span>, err_dist<span class="op">=</span><span class="st">"binomial.count"</span>,</span>
-<span class="r-in">            thetaM<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>H<span class="op">=</span><span class="fl">60</span>,m<span class="op">=</span><span class="fl">50</span>,s<span class="op">=</span><span class="fl">10</span><span class="op">)</span>, thetaC<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>binomial_n<span class="op">=</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="co">## Sim simulation parameters for binomial model</span></span></span>
+<span class="r-in"><span><span class="fu">set_sim_par</span><span class="op">(</span>mean_fun<span class="op">=</span><span class="st">"gaussian"</span>, err_dist<span class="op">=</span><span class="st">"binomial.count"</span>,</span></span>
+<span class="r-in"><span>            thetaM<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>H<span class="op">=</span><span class="fl">60</span>,m<span class="op">=</span><span class="fl">50</span>,s<span class="op">=</span><span class="fl">10</span><span class="op">)</span>, thetaC<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>binomial_n<span class="op">=</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $model_name</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "gaussian_binomial.count"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -178,7 +191,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "senlm_par"</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -193,7 +206,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

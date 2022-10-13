@@ -18,7 +18,7 @@ parameters given in theta, at the points given by the vector x."><meta property=
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">senlm</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.2</span>
       </span>
     </div>
 
@@ -89,7 +89,7 @@ parameters given in theta, at the points given by the vector x.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">mu_meanfunction</span><span class="op">(</span><span class="va">ModelInfo</span>, <span class="va">theta</span>, <span class="va">x</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">mu_meanfunction</span><span class="op">(</span><span class="va">ModelInfo</span>, <span class="va">theta</span>, <span class="va">x</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -98,21 +98,28 @@ parameters given in theta, at the points given by the vector x.</p>
 <dd><p>A row from the output of set_models(), containing the
 mean_function and error distribution of the model in question. Or a string
 in the form of "meanfun_errdist".</p></dd>
+
+
 <dt>theta</dt>
 <dd><p>Vector containing parameter values of model.</p></dd>
+
+
 <dt>x</dt>
 <dd><p>Values at which to calculate the mean function.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Calculates the constant mean functions defined by thetaM at points x.</p>
+    
+
+<p>Calculates the constant mean functions defined by thetaM at points x.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="va">Models</span> <span class="op">&lt;-</span> <span class="fu"><a href="set_models.html">set_models</a></span> <span class="op">(</span>mean_fun<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gaussian"</span><span class="op">)</span>, err_dist<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"negbin"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">mu_meanfunction</span> <span class="op">(</span>ModelInfo<span class="op">=</span><span class="va">Models</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span>, theta<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>H<span class="op">=</span><span class="fl">60</span>, m<span class="op">=</span><span class="fl">50</span>, s<span class="op">=</span><span class="fl">10</span>, phi<span class="op">=</span><span class="fl">1.5</span><span class="op">)</span>, x<span class="op">=</span><span class="fl">0</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">Models</span> <span class="op">&lt;-</span> <span class="fu"><a href="set_models.html">set_models</a></span> <span class="op">(</span>mean_fun<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gaussian"</span><span class="op">)</span>, err_dist<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"negbin"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">mu_meanfunction</span> <span class="op">(</span>ModelInfo<span class="op">=</span><span class="va">Models</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span>, theta<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>H<span class="op">=</span><span class="fl">60</span>, m<span class="op">=</span><span class="fl">50</span>, s<span class="op">=</span><span class="fl">10</span>, phi<span class="op">=</span><span class="fl">1.5</span><span class="op">)</span>, x<span class="op">=</span><span class="fl">0</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [1] 2.235992e-04 3.668141e-04 5.957703e-04 9.580070e-04 1.525161e-03</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [6] 2.403918e-03 3.751290e-03 5.795605e-03 8.864902e-03 1.342475e-02</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [11] 2.012776e-02 2.987733e-02 4.390815e-02 6.388597e-02 9.202864e-02</span>
@@ -134,7 +141,7 @@ in the form of "meanfun_errdist".</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [91] 2.012776e-02 1.342475e-02 8.864902e-03 5.795605e-03 3.751290e-03</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [96] 2.403918e-03 1.525161e-03 9.580070e-04 5.957703e-04 3.668141e-04</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [101] 2.235992e-04</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -149,7 +156,7 @@ in the form of "meanfun_errdist".</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>
