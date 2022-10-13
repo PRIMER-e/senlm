@@ -1,6 +1,6 @@
 Package: senlm
 Title: Species environment non-linear modelling
-Version: 0.1
+Version: 0.1.2
 Authors@R: c(
     person(given = "Daniel",
            family = "Walsh",

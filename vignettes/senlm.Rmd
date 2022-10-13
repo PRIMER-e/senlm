@@ -1024,16 +1024,6 @@ $$
 get_err_dist_parnames("ziigl.mu")
 ```
 
-
-
-
-
-
-
-
-
-
-
 ### <tt>tab</tt> (percentage)
 
 The tail-adjusted beta (TAB) distribution is a beta distribution where
@@ -1051,10 +1041,10 @@ y_i &\in [0,1] \\
 P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i) 
 &\sim \mbox{TAB}(\mu_i, ~\sigma, ~\delta) \\
 &\sim \left\{\begin{array}{ll}
-\frac{p^{(0)}_i}{\delta} & y_i < \delta \\
+\frac{1}{\delta}p^{(0)}_i & y_i < \delta \\
 \dfrac{y_i^{\alpha_i-1}(1-y_i)^{\beta-1}}{B(\alpha,\beta)}
 & \delta < y_i < 1 - \delta \\
-\frac{p^{(1)}_i}{\delta} & y_i > 1 - \delta \\
+\frac{1}{\delta}p^{(1)}_i & y_i > 1 - \delta \\
 \end{array}\right.\\
 \end{aligned}
 $$
@@ -1103,10 +1093,10 @@ y_i &\in [0,1] \\
 P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i) 
             &\sim \mbox{ZITAB}(\mu_i, ~\pi, ~\sigma, ~\delta) \\
             &\sim \left\{\begin{array}{ll}
-            \pi + (1-\pi)p^{(0)}_i & y_i < \delta \\
+            \frac{1}{\delta}\left[\pi + (1-\pi)p^{(0)}_i\right] & y_i < \delta \\
             (1-\pi)\dfrac{y_i^{\alpha_i-1}(1-y_i)^{\beta-1}}{B(\alpha,\beta)}
             & \delta < y_i < 1 - \delta \\
-            (1-\pi)p^{(1)}_i & y_i > 1 - \delta \\
+            \frac{1}{\delta}(1-\pi)p^{(1)}_i & y_i > 1 - \delta \\
             \end{array}\right.\\
 \end{aligned}
 $$
