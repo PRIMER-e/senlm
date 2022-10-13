@@ -26,7 +26,7 @@
 #'
 #' \dontrun{
 #' ## Simulate data
-#' 
+#'
 #' dat  <- create_simulated_datasets(pars, N=100, xmin=0, xmax=100, seed=12345)
 #' ## Fit model
 #' fit <- senlm(mean_fun="gaussian", err_dist="poisson", data=dat,
@@ -104,7 +104,7 @@ senlm <- function (model=NULL, data=NULL, xvar=NULL, yvar=NULL,
 
   ## --- Model name
   Fit$model <- gsub ("-", "_", ModelInfo$model) ## *** This line should not be needed!
-  
+
   ## --- Model info
   Fit$model_info <- ModelInfo
 
@@ -115,24 +115,24 @@ senlm <- function (model=NULL, data=NULL, xvar=NULL, yvar=NULL,
   ## --- Names
   Fit$yname <- yname
   Fit$xname <- xname
-  
+
   ## --- Fit mle
   FitMLE <- try( mle_default (ModelInfo, Dat, conf.level=conf.level) )
-  
-  ## --- Store fitted values  
+
+  ## --- Store fitted values
   Fit$convergence <- FitMLE$convergence
   Fit$theta <- FitMLE$theta
   Fit$conf.level <- conf.level
   Fit$lb    <- FitMLE$lb
   Fit$ub    <- FitMLE$ub
   Fit$u.hessian <- FitMLE$u.hessian
-  
+
   ## --- Was fit successful?
   if (Fit$convergence  == 0) {
-    
+
     ## --- Goodness of fit
     Fit$IC <- fit_information_criteria (ModelInfo, Dat, Fit$theta)
-     
+
     ## --- Fitted values
     Fit$fitted <- mu_meanfunction (ModelInfo=Fit$model_info, theta=Fit$theta, x=Fit$x)
     ## --- Residuals
@@ -140,7 +140,7 @@ senlm <- function (model=NULL, data=NULL, xvar=NULL, yvar=NULL,
     ## --- Quantile residuals
     Fit$qresiduals <- qres (Fit)
 
-  } 
+  }
 
   ## --- Set class
   class(Fit) <- "senlm"
@@ -175,9 +175,9 @@ senlm <- function (model=NULL, data=NULL, xvar=NULL, yvar=NULL,
 #'
 predict.senlm <- function (object, newdata, ...) {
   ## --- Predict senlm model
-  
+
   ## --- Check if object is a senlm object
-  if (class(object) != "senlm") {
+  if (!inherits(object, "senlm")) {
     stop ("object not a semlm object!")
   }
 
@@ -188,7 +188,7 @@ predict.senlm <- function (object, newdata, ...) {
 
   ## --- Calculate predication
   pred <- senlm::mu_meanfunction (ModelInfo=object$model_info, theta=object$theta, x=newdata)
-  
+
   ## --- Return predication
   return (pred)
 }
@@ -228,7 +228,7 @@ simulate.senlm <- function (object, nsim=1, seed=NULL, newdata=NULL, ...) {
   ## --- Simulate data nsim times from senlm model
 
   ## --- Check if object is a senlm object
-  if (class(object) != "senlm") {
+  if (!inherits(object, "senlm")) {
     stop ("object not a semlm object!")
   }
 
@@ -414,21 +414,21 @@ mle_default <- function (ModelInfo, Dat, theta0=NULL, conf.level=conf.level) {
   ## --- Set negative log-likelihood (with parameter names)
   NLL <- nll_wrapper (ModelInfo=ModelInfo, Dat=Dat)
   bbmle::parnames (NLL) <- names(u.theta0)
-  
+
   ## --- SANN : Find mle using simulated annealing
   FitMLE.sann <- try ( suppressWarnings (
     bbmle::mle2 (minuslogl=NLL, optimizer="optim", method="SANN", vecpar=TRUE,
                  start=u.theta0) ))
-  
+
   ## --- Test if sann model fit
 
   ## Did model fit?
-  if ( (class(FitMLE.sann) == "try-error") | (attributes(FitMLE.sann)$details$convergence!=0) ) {
+  if ( inherits(FitMLE.sann, "try-error") | (attributes(FitMLE.sann)$details$convergence != 0) ) {
     FitError1 <- TRUE
   } else {
     FitError1 <- FALSE
   }
-  
+
   if (FitError1 == FALSE) {
     ## --- Fit using nlminb from sann estimate
     FitMLE.nlsann <- try ( suppressWarnings (
@@ -436,12 +436,12 @@ mle_default <- function (ModelInfo, Dat, theta0=NULL, conf.level=conf.level) {
                    start=bbmle::coef(FitMLE.sann)) ))
 
     ## Did model fit?
-    if ( (class(FitMLE.nlsann) == "try-error") | (attributes(FitMLE.nlsann)$details$convergence!=0) ) {
+    if ( inherits(FitMLE.nlsann, "try-error") | (attributes(FitMLE.nlsann)$details$convergence != 0) ) {
       FitError2 <- TRUE
     } else {
       FitError2 <- FALSE
     }
-    
+
     ## --- Test if nlminb from sann fits
     if (FitError2 == FALSE) {
       ## --- nlminb based on sann succeeded
@@ -452,7 +452,7 @@ mle_default <- function (ModelInfo, Dat, theta0=NULL, conf.level=conf.level) {
       FitType   <- "sann"
       FitMLE <- FitMLE.sann
     }
-    
+
   } else {
 
     ## --- Fit using nlminb from init estimate
@@ -460,12 +460,12 @@ mle_default <- function (ModelInfo, Dat, theta0=NULL, conf.level=conf.level) {
       bbmle::mle2 (minuslogl=NLL, optimizer="nlminb", vecpar=TRUE, start=u.theta0) ))
 
     ## Did model fit?
-    if ( (class(FitMLE.nl) == "try-error") | (attributes(FitMLE.nl)$details$convergence!=0) ) {
+    if ( inherits(FitMLE.nl, "try-error") | (attributes(FitMLE.nl)$details$convergence != 0) ) {
       FitError3 <- TRUE
     } else {
       FitError3 <- FALSE
     }
-    
+
     ## --- Test if nlminb from init fits
     if (FitError3 == FALSE) {
       ## --- nlminb  - use init
@@ -491,10 +491,10 @@ mle_default <- function (ModelInfo, Dat, theta0=NULL, conf.level=conf.level) {
     Fit$u.hessian <- NA
 
   } else {
-    
+
     ## --- Fit successful
     Fit$convergence <- 0
-    
+
     ## --- Calculate confidence interval on unbounded parameter space
     u.theta   <- bbmle::coef(FitMLE)
     u.hessian <- attributes(FitMLE)$details$hessian
@@ -503,18 +503,18 @@ mle_default <- function (ModelInfo, Dat, theta0=NULL, conf.level=conf.level) {
 
     ## --- Is standard error ok?
     StdErrOK <- TRUE
-    
+
     ## --- Check if hessian is composed of finite numbers
     if (any(is.nan(u.hessian)))     { StdErrOK <- FALSE }
     if (any(is.na(u.hessian)))      { StdErrOK <- FALSE }
     if (any(!is.finite(u.hessian))) { StdErrOK <- FALSE }
-   
+
     ## --- Check if inverse hessian is calculable and composed of finite numbers
     if (StdErrOK) {
       ## --- Try solve()
       Invert1Fail <- FALSE
       Invert1 <- try (ihessian1 <- solve(u.hessian), silent=TRUE)
-      if (any(class(Invert1) == "try-error")) {
+      if (inherits(Invert1, "try-error")) {
         Invert1Fail <- TRUE
       } else {
         if (any(is.nan(ihessian1)))     { Invert1Fail <- TRUE }
@@ -526,7 +526,7 @@ mle_default <- function (ModelInfo, Dat, theta0=NULL, conf.level=conf.level) {
       ## --- Try QR
       Invert2Fail <- FALSE
       Invert2 <- try (ihessian2 <- qr.solve(qr(u.hessian)), silent=TRUE)
-      if (any(class(Invert2) == "try-error")) {
+      if (inherits(Invert2, "try-error")) {
         Invert2Fail <- TRUE
       } else {
         if (any(is.nan(ihessian2)))     { Invert2Fail <- TRUE }
@@ -553,10 +553,10 @@ mle_default <- function (ModelInfo, Dat, theta0=NULL, conf.level=conf.level) {
         StdErrOK <- FALSE
       }
     }
-    
+
     ## --- Check if standard errors are non-negative
     if (StdErrOK) { u.stderr  <- sqrt(diag(ihessian)) }
-    
+
     ## --- Calculate approximate confidence intervals
     if (StdErrOK) {
       ## Find confidence interval multiplier
@@ -584,7 +584,7 @@ mle_default <- function (ModelInfo, Dat, theta0=NULL, conf.level=conf.level) {
 mle_constant_bernoulli <- function (ModelInfo, Dat) {
   ## --- MLE for constant-bernoulli mean function
   ## *** THIS FUNCTION IS OUTDATED / NOT CALLED ***
-  
+
   ## MLE
   Fit.theta        <- mean (Dat$y)
   names(Fit.theta) <- c("H")
@@ -652,7 +652,7 @@ mle_uniform_bernoulli <- function (ModelInfo, Dat) {
 #' @param method If "crossed", fit all models to all response variables. If "paired",
 #' fit first model to first response variables, etc.
 #' @param conf.level Confidence level for parameter confidence intervals. Default is 0.95.
-#' 
+#'
 #' @return Object containg model fits to data y and x.
 #'
 #' @keywords fit senlm model, mle
@@ -672,7 +672,7 @@ msenlm <- function (models=NULL, data=NULL, xvar=NULL, yvar=NULL, method="crosse
   ## --- Fit multiple senlm models using maximum likelihood to multiple response variables
 
   ## --- Check inputs
-  
+
   ## Check x and y specified
   if (is.null(xvar) | is.null(yvar)) { stop ("Must specify xvar and yvar!") }
 
@@ -686,11 +686,11 @@ msenlm <- function (models=NULL, data=NULL, xvar=NULL, yvar=NULL, method="crosse
   if ( (method=="paired") & (nrow(models)!=length(yvar)) ) {
     stop ("Length of yvar and number of models must match if method='paired'!")
   }
-  
+
   ## Explanatory variable
   x <- data[,xvar]
   xname <- xvar
-  
+
   ## Response variables
   y <- data[,yvar]
   yname <- yvar
@@ -701,53 +701,53 @@ msenlm <- function (models=NULL, data=NULL, xvar=NULL, yvar=NULL, method="crosse
   Fits <- vector (mode="list", length=length(yvar))
   names(Fits) <- yvar
 
-  
+
   ## --- Initialise model names if method is paired
   if (method == "paired") { ModelNames <- rep (NA, length=nrow(models)) }
 
   ## --- Loop through response variables
   for (i in 1:length(Fits)) {
-    
+
     ## --- Models and y variables paired
     if (method == "paired") {
-   
+
       ## Create object to store model fits to data with ith response variable
       ModelFits <-  vector (mode="list", length=1)
- 
+
       ## --- Fit model
       ModelFits[[1]]   <- senlm (model=models[i,], data=data, xvar=xvar, yvar=yvar[i],
                                  conf.level=conf.level)
       names(ModelFits) <- ModelFits[[1]]$model
     }
-    
+
     ## --- Model and y variables crossed
     if (method == "crossed") {
 
       ## --- Models and y variables crossed
-      
+
       ## Create object to store model fits to data with ith response variable
       ModelFits <-  vector (mode="list", length=nrow(models))
       ModelNames <- rep (NA, length=nrow(models))
-      
+
       ## --- Loop throough models
       for (j in 1:length(ModelFits)) {
 
         ## --- Display model being fit
         print (models[j,])
-        
+
         ## --- Fit model
         Fit <- senlm (model=models[j,], data=data, xvar=xvar, yvar=yvar[i],
                       conf.level=conf.level)
-        
+
         ## --- Store model
         ModelFits[[j]] <- Fit
         ModelNames[j]  <- Fit$model
       }
-    
+
       ## --- Add model names
       names(ModelFits) <- ModelNames
     }
-    
+
     ## --- Store model fits
     Fits[[i]] <- ModelFits
   }
@@ -801,9 +801,9 @@ summary.msenlm <- function (object, best=NULL, ...) {
     ## Stop if best value is illegal
     if (all(best!=GOF)) { stop ('best option must be equal to "nll", "AIC", "AICc", "BIC"!') }
   }
-  
+
   ## --- Grab parameter names of all models
-  
+
   ## Initialise parameter names
   parnames <- c()
   ## Initalise model counts
@@ -817,14 +817,14 @@ summary.msenlm <- function (object, best=NULL, ...) {
       ## Increment model counts
       NModels <- NModels +  1
     }
-  } 
+  }
   ## Extract unique parameter names
   parnames <- unique(parnames)
-  
+
   ## --- Set variable names for summary object
   varnames <- c("convergence", "y", "x", "model", "mean_fun", "err_dist",
                 parnames, "npar", "nll", "AIC", "AICc", "BIC")
-  
+
   ## --- Initialise summary object
   SDat <- as.data.frame (matrix(NA, ncol=length(varnames), nrow=NModels))
   names(SDat) <- varnames
@@ -842,7 +842,7 @@ summary.msenlm <- function (object, best=NULL, ...) {
       ## Did model fit fail
       Convergence <- object[[i]][[j]]$convergence
       SDat[Row,]$convergence <- Convergence
-      
+
       ## Grab x and y variable names
       SDat[Row,]$y <- object[[i]][[j]]$yname
       SDat[Row,]$x <- object[[i]][[j]]$xname
@@ -852,7 +852,7 @@ summary.msenlm <- function (object, best=NULL, ...) {
       SDat[Row,]$model    <- object[[i]][[j]]$model
       SDat[Row,]$mean_fun <- MeanErr[1]
       SDat[Row,]$err_dist <- MeanErr[2]
-      
+
       ## --- Was fit successful?
       if (Convergence == 0) {
 
@@ -868,10 +868,10 @@ summary.msenlm <- function (object, best=NULL, ...) {
       Row <- Row + 1
     }
   }
-  
+
   ## --- Find best models
   if (!is.null(best)) {
-    
+
     ## Initialise row counter
     Row <- 0
     ## Initialise best model index for each response variable
@@ -891,21 +891,21 @@ summary.msenlm <- function (object, best=NULL, ...) {
           ICMat[j,] <- object[[i]][[j]]$IC[grep("npar", names(object[[i]][[j]]$IC), invert=TRUE)]
         }
       }
-      
+
       ## --- Grab select goodness-of-fit metric
       GOF <- ICMat[,best]
-      
+
       ## --- Find row of summary object of best methods
       BestModel[i] <- Row + which(GOF==min(GOF, na.rm=T))
-      
+
       ## Increment row counter
       Row <- Row + length(object[[i]])
     }
-    
+
     ## --- Select best models
     SDat <- SDat[BestModel,]
   }
-  
+
   ## Display summary object
   print (SDat)
 }
@@ -935,7 +935,7 @@ plot.msenlm <- function (Fits) {
 #' the following criteria: "nll", "AIC", "AICc", "BIC".
 #'
 #' @return msenlm object only containing best fitted models.
-#' 
+#'
 #' @keywords best multiple senlm model fit
 #'
 #' @examples
@@ -955,7 +955,7 @@ plot.msenlm <- function (Fits) {
 #'
 msenlm.best <- function (object, best="AICc" ) {
   ## --- Extract best model for each response variable
-   
+
   ## --- Check best value
   if (!is.null(best)) {
     ## Possible values of best
@@ -963,14 +963,14 @@ msenlm.best <- function (object, best="AICc" ) {
     ## Stop if best value is illegal
     if (all(best!=GOF)) { stop ('best option must be equal to "nll", "AIC", "AICc", "BIC"!') }
   }
-  
+
   ## --- Create best fits object
   BFits <- vector (mode="list", length=length(object))
   names(BFits) <- names(object)
   for (i in 1:length(BFits)) {
     BFits[[i]] <- vector (mode="list", length=1)
   }
-  
+
   ## Loop through response variables
   for (i in 1:length(object)) {
 
@@ -985,15 +985,15 @@ msenlm.best <- function (object, best="AICc" ) {
         ICMat[j,] <- object[[i]][[j]]$IC[grep("npar", names(object[[i]][[j]]$IC), invert=TRUE)]
       }
     }
-    
+
     ## --- Grab select goodness-of-fit metric
     GOF <- ICMat[,best]
-    
+
     ## --- Find row of summary object of best methods
     BFits[[i]][[1]] <- object[[i]][[which(GOF==min(GOF, na.rm=T))]]
     names(BFits[[i]]) <- BFits[[i]][[1]]$model
   }
-  
+
   ## --- Set class
   class (BFits) <- "msenlm"
 
