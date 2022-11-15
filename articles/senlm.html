@@ -371,7 +371,7 @@ p &amp;= \mbox{Peakedness parameter} ~(p &gt; 0) \\
 <h4 id="modskurt-main">
 <tt>modskurt</tt> (main)<a class="anchor" aria-label="anchor" href="#modskurt-main"></a>
 </h4>
-<p>The modeskurt function is a modified sech function that has new parameter (<span class="math inline">\(b\)</span>) that allows flattening of the peak of the previous <span class="math inline">\(sech\)</span> functions. The some of the remaining parameters are renamed/reparameterised.</p>
+<p>The modskurt function is a modified sech function that has new parameter (<span class="math inline">\(b\)</span>) that allows flattening of the peak of the previous <span class="math inline">\(sech\)</span> functions. The some of the remaining parameters are renamed/reparameterised.</p>
 <p><span class="math display">\[
 \begin{aligned}
 \theta_M &amp;= \{H, m, s, q, p, b\} \\
@@ -1263,7 +1263,7 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i)
 <span id="cb39-6"><a href="#cb39-6"></a></span>
 <span id="cb39-7"><a href="#cb39-7"></a><span class="op">$</span>theta</span>
 <span id="cb39-8"><a href="#cb39-8"></a>          H           m           s          pi </span>
-<span id="cb39-9"><a href="#cb39-9"></a><span class="fl">817.5306873</span> <span class="fl">917.8020633</span> <span class="fl">225.5627591</span>   <span class="fl">0.5954255</span> </span>
+<span id="cb39-9"><a href="#cb39-9"></a><span class="fl">817.5307540</span> <span class="fl">917.8020537</span> <span class="fl">225.5627466</span>   <span class="fl">0.5954255</span> </span>
 <span id="cb39-10"><a href="#cb39-10"></a></span>
 <span id="cb39-11"><a href="#cb39-11"></a><span class="op">$</span>IC</span>
 <span id="cb39-12"><a href="#cb39-12"></a>    npar      nll      AIC     AICc      BIC </span>
@@ -1271,7 +1271,7 @@ P(Y_i=y_i \mid \theta_M, ~\theta_E, ~\theta_C, ~x_i)
 <p>Confidence intervals for the estimated parameters can be display as follows. The default confidence level is 95% which is set when fitting the model. Occasionly due to numerical instability of the estimated Hessian matrix the standard errors are not calculated.</p>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="kw">rbind</span> (<span class="dt">lower=</span>Fit<span class="op">$</span>lb, <span class="dt">upper=</span>Fit<span class="op">$</span>ub)</span>
 <span id="cb40-2"><a href="#cb40-2"></a>             H        m        s        pi</span>
-<span id="cb40-3"><a href="#cb40-3"></a>lower <span class="fl">812.7321</span> <span class="fl">916.2962</span> <span class="fl">224.2579</span> <span class="fl">0.5615010</span></span>
+<span id="cb40-3"><a href="#cb40-3"></a>lower <span class="fl">812.7322</span> <span class="fl">916.2962</span> <span class="fl">224.2579</span> <span class="fl">0.5615009</span></span>
 <span id="cb40-4"><a href="#cb40-4"></a>upper <span class="fl">822.3576</span> <span class="fl">919.3079</span> <span class="fl">226.8752</span> <span class="fl">0.6284621</span></span></code></pre></div>
 <p>To fit multiple models to multiple data sets, one can use the <tt>msenlm()</tt> function. The models to fit are specified with the <tt>set_models()</tt> function. The data should be stored in a list. It could be simulated data create using the <tt>create_simulated_datasets()</tt> function.</p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>Models &lt;-<span class="st"> </span><span class="kw">set_models</span> (<span class="dt">mean_class=</span><span class="st">"test"</span>, <span class="dt">err_class=</span><span class="st">"binary"</span>)</span>
