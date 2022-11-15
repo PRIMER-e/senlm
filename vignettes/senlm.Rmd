@@ -238,7 +238,7 @@ get_mean_fun_parnames("sech.r0p1")
 
 ### <tt>modskurt</tt> (main)
 
-The modeskurt function is a modified sech function that has new parameter ($b$) that 
+The modskurt function is a modified sech function that has new parameter ($b$) that 
 allows flattening of the peak of the previous $sech$ functions. The some of the 
 remaining parameters are renamed/reparameterised.
 
